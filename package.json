@@ -1,0 +1,23 @@
+{
+    "name": "wifi-remote",
+    "description": "Your home theatre should have a RESTful API.",
+    "main": "app.js",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "express": "3.0.6"
+    },
+    "devDependencies": {
+        "mocha": "*",
+        "should": "*",
+        "sinon": "*"
+    },
+    "scripts": {
+        "test": "make test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/alexbain/wifi-remote.git"
+    },
+    "author": "Alex Bain <alex@alexba.in>"
+}
