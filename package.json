@@ -5,12 +5,18 @@
     "version": "0.0.1",
     "private": true,
     "dependencies": {
-        "express": "3.0.6"
+        "express": "3.0.6",
+        "swig": "*",
+        "consolidate": "*"
     },
     "devDependencies": {
         "mocha": "*",
         "should": "*",
-        "sinon": "*"
+        "sinon": "*",
+        "nodemon": "*",
+        "grunt-contrib-less": "*",
+        "grunt-contrib-uglify": "*",
+        "grunt-contrib-watch": "*"
     },
     "scripts": {
         "test": "make test"
