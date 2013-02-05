@@ -65,8 +65,8 @@ app.get('/', function(req, res) {
 
 // Send a :command to :remote
 app.post('/remotes/:remote/:command', function(req, res) {
-    lirc_node.irsend.send_once(req.params.remote, req.params.command, cb);
-    res.status(200);
+    lirc_node.irsend.send_once(req.params.remote, req.params.command, function() {});
+    res.send(200);
 });
 
 app.listen(3000);

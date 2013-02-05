@@ -11,12 +11,13 @@
 
       <ul class="remotes">
       {% for remote in remotes %}
+        {% set remoteName = loop.key %}
         <li class="remote">
-          <h2>{{ loop.key }}</h2>
+          <h2>{{ remoteName }}</h2>
           <ul class="commands">
           {% for command in remote %}
              <li class="command">
-               <a class="command-link" href="/remotes/{{ remote }}/{{ command }}">{{ command }}</a>
+               <a class="command-link" href="/remotes/{{ remoteName }}/{{ command }}">{{ command }}</a>
              </li>
           {% endfor %}
           </ul>
@@ -24,6 +25,6 @@
       {% endfor %}
       </ul>
     </div>
-    <script src="js/vendor/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/compiled/app.js" type="text/javascript" charset="utf-8"></script>
   </body>
 </html>
