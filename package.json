@@ -9,17 +9,17 @@
         "lirc_node": "*",
         "swig": "*",
         "consolidate": "*",
-        "grunt": "*",
-        "grunt-contrib-less": "*",
-        "grunt-contrib-uglify": "*",
-        "grunt-contrib-watch": "*"
     },
     "devDependencies": {
         "mocha": "*",
         "should": "*",
         "sinon": "*",
         "supertest": "*",
-        "nodemon": "*"
+        "nodemon": "*",
+        "grunt": "*",
+        "grunt-contrib-less": "*",
+        "grunt-contrib-uglify": "*",
+        "grunt-contrib-watch": "*"
     },
     "scripts": {
         "test": "make test"
