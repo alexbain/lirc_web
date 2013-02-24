@@ -16,6 +16,35 @@ It is part of the [Open Source Universal Remote](http://opensourceuniversalremot
 
 You'll need to have LIRC installed and configured on your machine to use ``lirc_web``. Once you have LIRC installed and configured you should be able to start the NodeJS server and access it from the web.
 
+## Getting started
+
+First, clone the repository:
+
+```
+git clone git://github.com/alexbain/lirc_web.git
+```
+
+Install the required modules:
+
+```
+npm install
+```
+
+Use GruntJS to "build" everything:
+
+```
+grunt
+```
+
+Start up the server:
+
+```
+node app.js
+```
+
+Verify the UI web works by opening ``http://SERVER:3000/`` in a web browser.
+
+
 ## Development
 
 Would you like to contribute to and improve this sample app? Fantastic. To contribute
