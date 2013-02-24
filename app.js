@@ -1,5 +1,5 @@
 //
-// WiFi Remote
+// lirc_web
 // v0.0.1
 // Alex Bain <alex@alexba.in>
 //
@@ -10,10 +10,10 @@
 //
 var express = require('express'),
     lirc_node = require('lirc_node'),
-    app = express(),
     consolidate = require('consolidate'),
     swig = require('swig');
 
+var app = module.exports = express();
 
 //
 // Precompile templates
@@ -26,22 +26,13 @@ var JST = {
 //
 // lic_node initialization
 //
-// lirc_node.init();
-lirc_node.remotes = {
-    "yamaha": ["Power", "VolumeUp", "VolumeDown", "HDMI1", "HDMI2"],
-    "tv": ["Power", "ChannelUp", "ChannelDown", "Input1", "Input3"]
-};
-
-
-//
-// Set templating engine
-//
-app.engine('.html', consolidate.swig);
+lirc_node.init();
 
 
 //
 // App configuration
 //
+app.engine('.html', consolidate.swig);
 app.configure(function() {
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
@@ -56,17 +47,20 @@ app.configure(function() {
 // Routes
 //
 
-// Index
+// Web UI endpoint
 app.get('/', function(req, res) {
     res.send(JST['index'].render({
         remotes: lirc_node.remotes
     }));
 });
 
-// Send a :command to :remote
+// API endpoint
 app.post('/remotes/:remote/:command', function(req, res) {
     lirc_node.irsend.send_once(req.params.remote, req.params.command, function() {});
     res.send(200);
 });
 
+
+// Listen on port 3000
 app.listen(3000);
+

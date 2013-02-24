@@ -1,6 +1,6 @@
 {
-    "name": "wifi-remote",
-    "description": "Your home theatre should have a RESTful API.",
+    "name": "lirc_web",
+    "description": "A NodeJS / Express app that creates a web UI + API for LIRC",
     "main": "app.js",
     "version": "0.0.1",
     "private": true,
@@ -13,6 +13,7 @@
         "mocha": "*",
         "should": "*",
         "sinon": "*",
+        "supertest": "*",
         "nodemon": "*",
         "grunt-contrib-less": "*",
         "grunt-contrib-uglify": "*",
@@ -23,7 +24,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git://github.com/alexbain/wifi-remote.git"
+        "url": "git://github.com/alexbain/lirc_web.git"
     },
     "author": "Alex Bain <alex@alexba.in>"
 }

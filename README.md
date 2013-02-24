@@ -1,31 +1,56 @@
-wifi-remote
-=========
+lirc_web
+========
 
-``wifi-remote`` is an Express app that runs a REST API between your home theatre. It's assumed you'll be using the ``node_lirc`` module and LIRC. The reference implementation was built using lirc_rpi on a RaspberryPi.
+``lirc_web`` is a NodeJS / Express app that creates a web UI & API for [LIRC](http://lirc.org). It uses [lirc_node](https://github.com/alexbain/lirc_node) to handle communication between LIRC and NodeJS.
 
-Why? Simple. Hardware needs RESTful APIs.
+It is part of the [Open Source Universal Remote](http://opensourceuniversalremote.com) project.
+
+## What is this?
+
+``lirc_web`` is a sample NodeJS app that uses ``lirc_node`` to facilitate communication with LIRC. This web app provides two major pieces of functionality:
+
+* A listing of all remotes/commands known to LIRC
+* A POST endpoint that a web service can hit to send an IR command
+
+## How do I use it?
+
+You'll need to have LIRC installed and configured on your machine to use ``lirc_web``. Once you have LIRC installed and configured you should be able to start the NodeJS server and access it from the web.
 
 ## Development
 
-To contribute patches, run tests or benchmarks, make sure to clone the
-repository:
+Would you like to contribute to and improve this sample app? Fantastic. To contribute
+patches, run tests or benchmarks, make sure to clone the repository:
 
 ```
-git clone git://github.com/alexbain/wifi-remote.git
+git clone git://github.com/alexbain/lirc_web.git
 ```
 
 Then:
 
 ```
-cd wifi-remote
+cd lirc_web
 npm install
 ```
 
-## Tests
+You can run the test suite by running:
 
 ```
-$ make test
+make test
 ```
+
+## Contributing
+
+Before you submit a pull request with your change, please be sure to:
+
+* Add new tests that prove your change works as expected.
+* Ensure all existing tests are still passing.
+
+Once you're sure everything is still working, open a pull request with a clear
+description of what you changed and why. I will not accept a pull request which
+breaks existing tests or adds new functionality without tests.
+
+The exception to this would be refactoring existing code or changing documentation.
+
 
 ## License
 
