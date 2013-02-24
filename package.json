@@ -8,17 +8,18 @@
         "express": "3.0.6",
         "lirc_node": "*",
         "swig": "*",
-        "consolidate": "*"
+        "consolidate": "*",
+        "grunt": "*",
+        "grunt-contrib-less": "*",
+        "grunt-contrib-uglify": "*",
+        "grunt-contrib-watch": "*"
     },
     "devDependencies": {
         "mocha": "*",
         "should": "*",
         "sinon": "*",
         "supertest": "*",
-        "nodemon": "*",
-        "grunt-contrib-less": "*",
-        "grunt-contrib-uglify": "*",
-        "grunt-contrib-watch": "*"
+        "nodemon": "*"
     },
     "scripts": {
         "test": "make test"

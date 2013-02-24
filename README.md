@@ -22,13 +22,18 @@ First, clone the repository:
 
 ```
 git clone git://github.com/alexbain/lirc_web.git
+cd lirc_web
 ```
 
 Install the required modules:
 
 ```
 npm install
+npm install -g grunt-cli
+npm install -g grunt-init
 ```
+
+**You'll need to reload your shell before continuing so the Grunt binares are detected.**
 
 Use GruntJS to "build" everything:
 
@@ -48,17 +53,12 @@ Verify the UI web works by opening ``http://SERVER:3000/`` in a web browser.
 ## Development
 
 Would you like to contribute to and improve this sample app? Fantastic. To contribute
-patches, run tests or benchmarks, make sure to clone the repository:
+patches, run tests or benchmarks, make sure to follow the instructions above.
+
+You'll want to run the ``grunt watch`` task in your shell so that all JS and LESS changes are picked up and recompiled upon save:
 
 ```
-git clone git://github.com/alexbain/lirc_web.git
-```
-
-Then:
-
-```
-cd lirc_web
-npm install
+grunt watch
 ```
 
 You can run the test suite by running:

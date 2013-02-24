@@ -1,9 +1,16 @@
 
 module.exports = function(grunt) {
 
+    // Load some tasks
+    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+
     // Project configuration.
     grunt.initConfig({
-        min: {
+        pkg: grunt.file.readJSON('package.json'),
+
+        uglify: {
             app: {
                 src: ['js/vendor/zepto.min.js',
                       'js/app/*.js'],
@@ -32,8 +39,7 @@ module.exports = function(grunt) {
 
     });
 
-    grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.registerTask('default', 'min less');
+    grunt.registerTask('default', ['uglify', 'less']);
 
 };
 
