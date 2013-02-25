@@ -8,7 +8,7 @@
         "express": "3.0.6",
         "lirc_node": "*",
         "swig": "*",
-        "consolidate": "*",
+        "consolidate": "*"
     },
     "devDependencies": {
         "mocha": "*",
