@@ -1,6 +1,12 @@
 body {
   margin: 0;
   padding: 0;
+
+  -webkit-touch-callout: none;
+  -webkit-text-size-adjust: none;
+  -webkit-user-select: none;
+  -webkit-highlight: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 ul {
@@ -17,7 +23,7 @@ ul {
 h1 {
   background: #34495e;
   color: #fff;
-  margin: 0 0 40px;
+  margin: 0 0 30px;
   padding: 10px 0;
   text-align: center;
 }
@@ -25,7 +31,7 @@ h1 {
 h2 {
   background: #95a5a6;
   color: #fff;
-  margin: 40px 0;
+  margin: 30px 0;
   padding: 10px 0;
   text-align: center;
 }
@@ -47,6 +53,7 @@ h2 {
 .remote {
   margin: 0;
   padding: 0;
+  position: relative;
 }
 
 .remotes-nav {
@@ -58,7 +65,20 @@ h2 {
 
 .return-to-top {
   float: right;
-  position: relative;
-  top: -3px;
+  position: absolute;
+  top: 7px;
   right: 8px;
+}
+
+a,
+a:hover,
+a:active,
+.btn,
+.btn:hover,
+.btn:active {
+  -webkit-transition: 0s !important;
+  -moz-transition: 0s !important;
+  -o-transition: 0s !important;
+  transition: 0s !important;
+  -webkit-backface-visibility: hidden !important;
 }
