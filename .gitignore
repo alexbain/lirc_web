@@ -1,3 +1,4 @@
 node_modules/
 css/compiled/
 js/compiled/
+.DS_Store
