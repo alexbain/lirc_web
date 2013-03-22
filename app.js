@@ -1,9 +1,11 @@
 //
 // lirc_web
-// v0.0.1
+// v0.0.2
 // Alex Bain <alex@alexba.in>
 //
 
+// Set this to true if you'd like to emulate a list of remotes for development
+var DEVELOPER_MODE = true;
 
 //
 // Requirements
@@ -26,8 +28,55 @@ var JST = {
 //
 // lic_node initialization
 //
-lirc_node.init();
+// lirc_node.init();
 
+//
+// Overwrite the remotes to be a default set if DEVELOPER_MODE is true
+//
+if (DEVELOPER_MODE) {
+    lirc_node.remotes = {
+        'Yamaha': [
+            'power',
+            'vaux',
+            'hdmi1',
+            'volup',
+            'voldown'
+        ],
+        'SonyTV': [
+            'power',
+            'volumeup',
+            'volumedown',
+            'channelup',
+            'channeldown'
+        ],
+        Microsoft_Xbox360: [
+            'OpenClose',
+            'XboxFancyButton',
+            'OnOff',
+            'Stop',
+            'Pause',
+            'Rewind',
+            'FastForward',
+            'Prev',
+            'Next',
+            'Play',
+            'Display',
+            'Title',
+            'DVD_Menu',
+            'Back',
+            'Info',
+            'UpArrow',
+            'LeftArrow',
+            'RightArrow',
+            'DownArrow',
+            'OK',
+            'Y',
+            'X',
+            'A',
+            'B',
+        ]
+    };
+}
 
 //
 // App configuration
@@ -49,6 +98,7 @@ app.configure(function() {
 
 // Web UI endpoint
 app.get('/', function(req, res) {
+    console.log("Viewed index");
     res.send(JST['index'].render({
         remotes: lirc_node.remotes
     }));
@@ -57,10 +107,11 @@ app.get('/', function(req, res) {
 // API endpoint
 app.post('/remotes/:remote/:command', function(req, res) {
     lirc_node.irsend.send_once(req.params.remote, req.params.command, function() {});
+    console.log("Sending " + req.params.command + " to " + req.params.remote);
     res.send(200);
 });
 
 
 // Listen on port 3000
 app.listen(3000);
-
+console.log("Open Source Universal Remote UI + API has started on port 3000.");
