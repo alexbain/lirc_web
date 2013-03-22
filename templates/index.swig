@@ -22,7 +22,10 @@
       {% for remote in remotes %}
         {% set remoteName = loop.key %}
         <li class="remote">
-          <h2 id="{{ remoteName }}">{{ remoteName }} <a class="return-to-top" href="#"><img src="/images/up-arrow.png" height="40" width="40" /></a></h2>
+          <h2 id="{{ remoteName }}">
+            <a class="return-to-top" href="#"><img src="/images/up-arrow.png" height="40" width="40" /></a>
+            {{ remoteName }}
+          </h2>
           <ul class="commands">
           {% for command in remote %}
             {% set commandName = loop.key %}
