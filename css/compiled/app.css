@@ -1,25 +1,27 @@
 body {
-  padding: 15px 20px;
+  margin: 0;
+  padding: 0;
 }
 ul {
   list-style-type: none;
-  margin: 0 20px;
+  margin: 0;
   padding: 0;
 }
-li {
-  margin: 0;
+.commands li {
+  margin: 20px;
   padding: 0;
 }
 h1 {
   background: #34495e;
   color: #fff;
+  margin: 0 0 40px;
   padding: 10px 0;
   text-align: center;
 }
 h2 {
   background: #95a5a6;
   color: #fff;
-  margin: 20px 0;
+  margin: 40px 0;
   padding: 10px 0;
   text-align: center;
 }
@@ -33,4 +35,11 @@ h2 {
   padding-left: 0;
   padding-right: 0;
   width: 100%;
+}
+.remote {
+  margin: 0;
+  padding: 0;
+}
+.remotes-nav li {
+  margin: 20px;
 }

@@ -11,12 +11,18 @@
   <body>
     <div id="container">
       <h1>Universal Remote</h1>
+      <ul class="remotes-nav">
+      {% for remote in remotes %}
+        {% set remoteName = loop.key %}
+        <li><a class="btn btn-wide btn-large btn-info" href="#{{ remoteName }}">{{ remoteName }}</a></li>
+      {% endfor %}
+      </ul>
 
       <ul class="remotes">
       {% for remote in remotes %}
         {% set remoteName = loop.key %}
         <li class="remote">
-          <h2>{{ remoteName }}</h2>
+          <h2 id="{{ remoteName }}">{{ remoteName }}</h2>
           <ul class="commands">
           {% for command in remote %}
             {% set commandName = loop.key %}
