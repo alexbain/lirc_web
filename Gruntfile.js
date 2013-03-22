@@ -13,6 +13,7 @@ module.exports = function(grunt) {
         uglify: {
             app: {
                 src: ['js/vendor/zepto.min.js',
+                      'js/vendor/fastclick.js',
                       'js/app/*.js'],
                 dest: 'js/compiled/app.js'
             }
