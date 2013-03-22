@@ -43,3 +43,9 @@ h2 {
 .remotes-nav li {
   margin: 20px;
 }
+.return-to-top {
+  float: right;
+  position: relative;
+  top: -3px;
+  right: 8px;
+}

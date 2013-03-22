@@ -88,6 +88,7 @@ app.configure(function() {
 
     app.use(express.compress());
     app.use('/css', express.static(__dirname + '/css'));
+    app.use('/images', express.static(__dirname + '/images'));
     app.use('/js', express.static(__dirname + '/js'));
 });
 
