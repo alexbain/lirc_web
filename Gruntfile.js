@@ -29,7 +29,7 @@ module.exports = function(grunt) {
         watch: {
             scripts: {
                 files: ['js/app/*.js', 'js/vendor/*.js'],
-                tasks: ['min']
+                tasks: ['uglify:app']
             },
             stylesheets: {
                 files: ['css/*.less'],
