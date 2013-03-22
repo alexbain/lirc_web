@@ -1,4 +1,3 @@
-
 module.exports = function(grunt) {
 
     // Load some tasks
@@ -43,5 +42,3 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['uglify', 'less']);
 
 };
-
-
