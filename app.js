@@ -5,7 +5,7 @@
 //
 
 // Set this to true if you'd like to emulate a list of remotes for development
-var DEVELOPER_MODE = false;
+var DEVELOPER_MODE = true;
 
 //
 // Requirements
@@ -28,7 +28,7 @@ var JST = {
 //
 // lic_node initialization
 //
-lirc_node.init();
+// lirc_node.init();
 
 //
 // Overwrite the remotes to be a default set if DEVELOPER_MODE is true
