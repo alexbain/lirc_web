@@ -27,6 +27,7 @@ $(function() {
     });
 
     // Sticky headers
+    /*
     window.onscroll = function(evt) {
         var bodyTop = document.body.scrollTop;
 
@@ -44,6 +45,7 @@ $(function() {
             });
         }
     };
+    */
 
     // Clicking on the header should bring it to the top
     $('h2').on('click', function(evt) {
