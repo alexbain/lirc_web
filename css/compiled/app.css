@@ -37,11 +37,17 @@ h1.is-remote {
 .command:nth-child(even) .btn-primary {
   background: #16a085;
 }
-.command:nth-child(even) .btn-primary:hover {
+.no-touch .command-link:hover {
   background: #2fe2bf;
 }
-.command:nth-child(even) .btn-primary:active {
+.no-touch .command-link:active {
   background: #16a085;
+}
+.command-link.active {
+  background: #2fe2bf !important;
+}
+.remote-link.active {
+  background: #5dade2 !important;
 }
 .btn-wide {
   padding-left: 0;

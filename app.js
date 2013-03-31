@@ -29,7 +29,9 @@ var JST = {
 //
 // lic_node initialization
 //
-lirc_node.init();
+if (!DEVELOPER_MODE) {
+    lirc_node.init();
+}
 
 
 //

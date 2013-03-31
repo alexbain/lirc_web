@@ -1,4 +1,6 @@
-var OSUR = {};
+var OSUR = {
+        util: {}
+    };
 
 $(function() {
 
@@ -12,15 +14,19 @@ $(function() {
     });
 
     // Flash highlighted state on touch device to indicate command was received
-    $('.command-link').on('touchend', function(evt) {
-        var that = this;
-        $(this).attr('data-color', $(this).css('background'));
-        $(this).css('background', '#2fe2bf');
-        setTimeout(function() {
-            $(that).css('background', $(that).attr('data-color'));
-        }, 100);
+    if (OSUR.util.hasTouchEvents()) {
+        $('body').addClass('has-touch');
 
-    });
+        $('.command-link, .remote-link').on('touchstart', function(evt) {
+            $(this).addClass('active');
+        });
+
+        $('.command-link, .remote-link').on('touchend', function(evt) {
+            $(this).removeClass('active');
+        });
+    } else {
+        $('body').addClass('no-touch');
+    }
 
     // Back button shown on remote pages
     $('.back').on('click', function(evt) {
@@ -42,8 +48,19 @@ $(function() {
         $('#titlebar').addClass('is-remote');
     });
 
-
     // Remove 300ms delay after tapping
     OSUR.fastClick = new FastClick(document.body);
 
 });
+
+OSUR.util.hasTouchEvents = function() {
+    // From Modernizr
+    // https://github.com/Modernizr/Modernizr/blob/master/feature-detects/touchevents.js
+    var bool;
+
+    if(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
+        bool = true;
+    }
+
+    return bool;
+};
