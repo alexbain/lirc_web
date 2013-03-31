@@ -258,7 +258,7 @@ h6 {
     padding-top: 13px; }
   .btn.btn-primary {
     background-color: #1abc9c; }
-    .btn.btn-primary:hover, .btn.btn-primary:focus {
+    .btn.btn-primary:hover, /*.btn.btn-primary:focus*/ {
       background-color: #2fe2bf; }
     .btn.btn-primary:active, .btn.btn-primary.active {
       background-color: #16a085; }

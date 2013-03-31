@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  padding: 0;
+  padding: 70px 0 0 0;
   -webkit-touch-callout: none;
   -webkit-text-size-adjust: none;
   -webkit-user-select: none;
@@ -13,7 +13,7 @@ ul {
   padding: 0;
 }
 .commands li {
-  margin: 20px;
+  margin: 20px 0;
   padding: 0;
 }
 h1 {
@@ -22,19 +22,32 @@ h1 {
   margin: 0 0 30px;
   padding: 10px 0;
   text-align: center;
+  z-index: 5;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
-h2 {
-  background: #95a5a6;
-  color: #fff;
-  margin: 30px 0;
-  padding: 10px 0;
-  text-align: center;
+h1.is-remote {
+  background: #3498db;
 }
 .command {
   margin: 20px 0;
 }
 .command:nth-child(even) .btn-primary {
-  background: #16A085;
+  background: #16a085;
+}
+.no-touch .command-link:hover {
+  background: #2fe2bf;
+}
+.no-touch .command-link:active {
+  background: #16a085;
+}
+.command-link.active {
+  background: #2fe2bf !important;
+}
+.remote-link.active {
+  background: #5dade2 !important;
 }
 .btn-wide {
   padding-left: 0;
@@ -47,9 +60,9 @@ h2 {
   position: relative;
 }
 .remotes-nav li {
-  margin: 20px;
+  margin: 20px 0;
 }
-.return-to-top {
+.back {
   position: absolute;
   top: 7px;
   left: 8px;
@@ -65,4 +78,16 @@ a:active,
   -o-transition: 0s !important;
   transition: 0s !important;
   -webkit-backface-visibility: hidden !important;
+}
+#container {
+  margin: 0 40px;
+}
+.remote {
+  display: none;
+}
+.remote.active {
+  display: block;
+}
+.hidden {
+  display: none !important;
 }

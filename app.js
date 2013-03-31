@@ -17,6 +17,7 @@ var express = require('express'),
 
 var app = module.exports = express();
 
+
 //
 // Precompile templates
 //
@@ -28,7 +29,10 @@ var JST = {
 //
 // lic_node initialization
 //
-lirc_node.init();
+if (!DEVELOPER_MODE) {
+    lirc_node.init();
+}
+
 
 //
 // Overwrite the remotes to be a default set if DEVELOPER_MODE is true
@@ -78,6 +82,7 @@ if (DEVELOPER_MODE) {
     };
 }
 
+
 //
 // App configuration
 //
@@ -97,6 +102,7 @@ app.configure(function() {
 // Routes
 //
 
+
 // Web UI endpoint
 app.get('/', function(req, res) {
     console.log("Viewed index");
@@ -105,10 +111,11 @@ app.get('/', function(req, res) {
     }));
 });
 
+
 // API endpoint
 app.post('/remotes/:remote/:command', function(req, res) {
-    lirc_node.irsend.send_once(req.params.remote, req.params.command, function() {});
     console.log("Sending " + req.params.command + " to " + req.params.remote);
+    lirc_node.irsend.send_once(req.params.remote, req.params.command, function() {});
     res.send(200);
 });
 

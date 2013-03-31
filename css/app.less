@@ -1,6 +1,15 @@
+// Colors
+@colorWetAsphalt: #34495E;
+@colorConcrete: #95A5A6;
+@colorSilver: #BDC3C7;
+@colorClouds: #ECF0F1;
+@colorPeterRiver: #3498DB;
+@colorGreenSea: #16A085;
+@colorTurqoise: #1ABC9C;
+
 body {
   margin: 0;
-  padding: 0;
+  padding: 70px 0 0 0;
 
   -webkit-touch-callout: none;
   -webkit-text-size-adjust: none;
@@ -16,24 +25,26 @@ ul {
 }
 
 .commands li {
-  margin: 20px;
+  margin: 20px 0;
   padding: 0;
 }
 
 h1 {
-  background: #34495e;
+  background: @colorWetAsphalt;
   color: #fff;
   margin: 0 0 30px;
   padding: 10px 0;
   text-align: center;
-}
+  z-index: 5;
 
-h2 {
-  background: #95a5a6;
-  color: #fff;
-  margin: 30px 0;
-  padding: 10px 0;
-  text-align: center;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+
+  &.is-remote {
+    background: @colorPeterRiver;
+  }
 }
 
 .command {
@@ -41,7 +52,23 @@ h2 {
 }
 
 .command:nth-child(even) .btn-primary {
-  background: #16A085;
+  background: @colorGreenSea;
+}
+
+.no-touch .command-link:hover {
+  background: #2fe2bf;
+}
+
+.no-touch .command-link:active {
+  background: #16a085;
+}
+
+.command-link.active {
+  background: #2fe2bf !important;
+}
+
+.remote-link.active {
+  background: #5dade2 !important;
 }
 
 .btn-wide {
@@ -60,10 +87,10 @@ h2 {
 }
 
 .remotes-nav li {
-  margin: 20px;
+  margin: 20px 0;
 }
 
-.return-to-top {
+.back {
   position: absolute;
   top: 7px;
   left: 8px;
@@ -80,4 +107,20 @@ a:active,
   -o-transition: 0s !important;
   transition: 0s !important;
   -webkit-backface-visibility: hidden !important;
+}
+
+#container {
+  margin: 0 40px;
+}
+
+.remote {
+  display: none;
+}
+
+.remote.active {
+  display: block;
+}
+
+.hidden {
+  display: none !important;
 }
