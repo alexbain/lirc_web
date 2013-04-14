@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/flat-ui.css" />
     <link rel="stylesheet" href="css/compiled/app.css" />
   </head>
-  <body>
+  <body ontouchstart="">
     <div id="container">
       <h1 id="titlebar">
         <a class="back hidden" href="#"><img src="/images/left-arrow.png" height="40" width="40" /></a>

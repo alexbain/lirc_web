@@ -13,16 +13,16 @@ $(function() {
         });
     });
 
-    // Flash highlighted state on touch device to indicate command was received
     if (OSUR.util.hasTouchEvents()) {
         $('body').addClass('has-touch');
-
         $('.command-link, .remote-link').on('touchstart', function(evt) {
             $(this).addClass('active');
         });
-
         $('.command-link, .remote-link').on('touchend', function(evt) {
             $(this).removeClass('active');
+        });
+        $('body').on('touchcancel', function(evt) {
+            $('.command-link').removeClass('active');
         });
     } else {
         $('body').addClass('no-touch');
