@@ -6,10 +6,13 @@ $(function() {
 
     // Handle command buttons with AJAX
     $('.command-link').on('click', function(evt) {
-        evt.preventDefault();
         $.ajax({
             type: "POST",
-            url: $(this).attr('href')
+            url: $(this).attr('href'),
+            success: function(data) {
+            },
+            error: function(xhr, type) {
+            }
         });
     });
 

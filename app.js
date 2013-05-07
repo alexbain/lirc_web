@@ -1,6 +1,6 @@
 //
 // lirc_web
-// v0.0.3
+// v0.0.4
 // Alex Bain <alex@alexba.in>
 //
 
@@ -116,6 +116,7 @@ app.get('/', function(req, res) {
 app.post('/remotes/:remote/:command', function(req, res) {
     console.log("Sending " + req.params.command + " to " + req.params.remote);
     lirc_node.irsend.send_once(req.params.remote, req.params.command, function() {});
+    res.setHeader('Cache-Control', 'no-cache');
     res.send(200);
 });
 
