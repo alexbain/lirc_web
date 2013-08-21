@@ -1,6 +1,20 @@
 var OSUR = {
-        util: {}
-    };
+    util: {}
+};
+
+// From Modernizr
+// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/touchevents.js
+OSUR.util.hasTouchEvents = function() {
+    var bool;
+
+    if(('ontouchstart' in window) ||
+            window.DocumentTouch &&
+            document instanceof DocumentTouch) {
+        bool = true;
+    }
+
+    return bool;
+};
 
 $(function() {
 
@@ -9,13 +23,12 @@ $(function() {
         $.ajax({
             type: "POST",
             url: $(this).attr('href'),
-            success: function(data) {
-            },
-            error: function(xhr, type) {
-            }
+            success: function(data) {},
+            error: function(xhr, type) {}
         });
     });
 
+    // Setup touch events if the browser supports them
     if (OSUR.util.hasTouchEvents()) {
         $('body').addClass('has-touch');
         $('.command-link, .remote-link').on('touchstart', function(evt) {
@@ -56,14 +69,3 @@ $(function() {
 
 });
 
-OSUR.util.hasTouchEvents = function() {
-    // From Modernizr
-    // https://github.com/Modernizr/Modernizr/blob/master/feature-detects/touchevents.js
-    var bool;
-
-    if(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
-        bool = true;
-    }
-
-    return bool;
-};

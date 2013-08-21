@@ -2,12 +2,12 @@
     "name": "lirc_web",
     "description": "A NodeJS / Express app that creates a web UI + API for LIRC",
     "main": "app.js",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "private": true,
     "dependencies": {
         "express": "3.0.6",
         "lirc_node": "*",
-        "swig": "*",
+        "swig": "0.13.5",
         "consolidate": "*"
     },
     "devDependencies": {
