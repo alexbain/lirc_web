@@ -92,9 +92,7 @@ app.configure(function() {
     app.set('view engine', 'jade');
 
     app.use(express.compress());
-    app.use('/css', express.static(__dirname + '/css'));
-    app.use('/images', express.static(__dirname + '/images'));
-    app.use('/js', express.static(__dirname + '/js'));
+    app.use(express.static(__dirname + '/static'));
 });
 
 
@@ -119,7 +117,6 @@ app.post('/remotes/:remote/:command', function(req, res) {
     res.setHeader('Cache-Control', 'no-cache');
     res.send(200);
 });
-
 
 // Listen on port 3000
 app.listen(3000);
