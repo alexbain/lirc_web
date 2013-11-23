@@ -5,7 +5,7 @@
 //
 
 // Set this to true if you'd like to emulate a list of remotes for development
-var DEVELOPER_MODE = false;
+var DEVELOPER_MODE = true;
 
 //
 // Requirements
@@ -44,7 +44,8 @@ if (DEVELOPER_MODE) {
             'vaux',
             'hdmi1',
             'volup',
-            'voldown'
+            'voldown',
+            'DTV/CBL'
         ],
         'SonyTV': [
             'power',
