@@ -33,7 +33,6 @@ describe('lirc_web', function() {
 					jsdom.env(res.text, ["http://code.jquery.com/jquery.js"], function (errors, window) {
 						var $ = window.$;
 						$("button.command-link").each(function(idx, elem) {
-						    console.log($(elem).attr('href'));
 						    var s = $(elem).attr('href').split("/");
 						    assert.equal(4, s.length);
 						    assert.equal("", s[0]);
