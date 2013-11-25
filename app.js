@@ -5,7 +5,7 @@
 //
 
 // Set this to true if you'd like to emulate a list of remotes for development
-var DEVELOPER_MODE = true;
+var DEVELOPER_MODE = false;
 
 //
 // Requirements
