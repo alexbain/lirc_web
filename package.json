@@ -19,7 +19,8 @@
         "grunt": "*",
         "grunt-contrib-less": "*",
         "grunt-contrib-uglify": "*",
-        "grunt-contrib-watch": "*"
+        "grunt-contrib-watch": "*",
+    	"jsdom": "*"
     },
     "scripts": {
         "test": "make test"

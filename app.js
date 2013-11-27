@@ -44,7 +44,8 @@ if (DEVELOPER_MODE) {
             'vaux',
             'hdmi1',
             'volup',
-            'voldown'
+            'voldown',
+            'DTV/CBL'
         ],
         'SonyTV': [
             'power',

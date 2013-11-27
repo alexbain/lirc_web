@@ -31,7 +31,7 @@
           {% for command in remote %}
             {% set commandName = loop.key %}
              <li class="command">
-               <button class="command-link btn btn-wide btn-large btn-primary" href="/remotes/{{ remoteName }}/{{ command }}">{{ command }}</button>
+               <button class="command-link btn btn-wide btn-large btn-primary" href="/remotes/{{ remoteName }}/{{ command|url_encode }}">{{ command }}</button>
              </li>
           {% endfor %}
           </ul>
