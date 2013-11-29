@@ -44,4 +44,30 @@ describe('lirc_web', function() {
 		});
     });
 
+    describe('json api', function() {
+
+		it('should return a list of all remotes (and commands) when /remotes.json is accessed', function(done) {
+			request(app)
+				.get('/remotes.json')
+				.end(function(err, res) {
+                    console.log(err);
+                    console.log(res);
+                    done();
+				});
+		});
+
+		it('should return a list of all commands for a remote when /remotes/:remote.json is accessed', function(done) {
+			request(app)
+				.get('/remotes/Microsoft_Xbox360.json')
+				.end(function(err, res) {
+                    console.log(err);
+                    console.log(res);
+                    done();
+				});
+		});
+
+
+
+    });
+
 });

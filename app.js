@@ -5,7 +5,7 @@
 //
 
 // Set this to true if you'd like to emulate a list of remotes for development
-var DEVELOPER_MODE = false;
+var DEVELOPER_MODE = true;
 
 //
 // Requirements
@@ -110,6 +110,17 @@ app.get('/', function(req, res) {
     }));
 });
 
+// Get all remotes (JSON API)
+app.get('/remotes.json', function(req, res) {
+    console.log("Got listing of remotes (JSON API)");
+    res.json(lirc_node.remotes);
+});
+
+// Get all commands for a remote (JSON API)
+app.get('/remotes/:remote.json', function(req, res) {
+    console.log("Got listing of remotes (JSON API)");
+    res.json(lirc_node.remotes[req.params.remote]);
+});
 
 // API endpoint
 app.post('/remotes/:remote/:command', function(req, res) {
