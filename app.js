@@ -1,6 +1,6 @@
 //
 // lirc_web
-// v0.0.5
+// v0.0.6
 // Alex Bain <alex@alexba.in>
 //
 
