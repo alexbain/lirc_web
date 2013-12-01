@@ -45,13 +45,11 @@ describe('lirc_web', function() {
     });
 
     describe('json api', function() {
-
 		it('should return a list of all remotes (and commands) when /remotes.json is accessed', function(done) {
 			request(app)
 				.get('/remotes.json')
 				.end(function(err, res) {
-                    console.log(err);
-                    console.log(res);
+                    assert.equal(res.status, 200);
                     done();
 				});
 		});
@@ -60,14 +58,19 @@ describe('lirc_web', function() {
 			request(app)
 				.get('/remotes/Microsoft_Xbox360.json')
 				.end(function(err, res) {
-                    console.log(err);
-                    console.log(res);
+                    assert.equal(res.status, 200);
                     done();
 				});
 		});
 
-
-
+		it('should return a 404 for an unknown remote', function(done) {
+            request(app)
+				.get('/remotes/DOES_NOT_EXIST.json')
+				.end(function(err, res) {
+                    assert.equal(res.status, 404);
+                    done();
+				});
+		});
     });
 
 });

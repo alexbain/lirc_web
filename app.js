@@ -5,7 +5,7 @@
 //
 
 // Set this to true if you'd like to emulate a list of remotes for development
-var DEVELOPER_MODE = true;
+var DEVELOPER_MODE = false;
 
 //
 // Requirements
@@ -89,9 +89,9 @@ if (DEVELOPER_MODE) {
 //
 app.engine('.html', consolidate.swig);
 app.configure(function() {
+    app.use(express.logger());
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
-
     app.use(express.compress());
     app.use(express.static(__dirname + '/static'));
 });
@@ -104,7 +104,6 @@ app.configure(function() {
 
 // Web UI endpoint
 app.get('/', function(req, res) {
-    console.log("Viewed index");
     res.send(JST['index'].render({
         remotes: lirc_node.remotes
     }));
@@ -112,19 +111,20 @@ app.get('/', function(req, res) {
 
 // Get all remotes (JSON API)
 app.get('/remotes.json', function(req, res) {
-    console.log("Got listing of remotes (JSON API)");
     res.json(lirc_node.remotes);
 });
 
 // Get all commands for a remote (JSON API)
 app.get('/remotes/:remote.json', function(req, res) {
-    console.log("Got listing of remotes (JSON API)");
-    res.json(lirc_node.remotes[req.params.remote]);
+    if (lirc_node.remotes[req.params.remote]) {
+        res.json(lirc_node.remotes[req.params.remote]);
+    } else {
+        res.send(404);
+    }
 });
 
 // API endpoint
 app.post('/remotes/:remote/:command', function(req, res) {
-    console.log("Sending " + req.params.command + " to " + req.params.remote);
     lirc_node.irsend.send_once(req.params.remote, req.params.command, function() {});
     res.setHeader('Cache-Control', 'no-cache');
     res.send(200);

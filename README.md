@@ -16,6 +16,16 @@ It is part of the [Open Source Universal Remote](http://opensourceuniversalremot
 
 You'll need to have LIRC installed and configured on your machine to use ``lirc_web``. Once you have LIRC installed and configured you should be able to start the NodeJS server and access it from the web.
 
+## Using the JSON API
+
+If you'd prefer to avoid using ``lirc_web``'s UI and instead use the API (so that you could build your own UI, use ``lirc_web`` in a native app, or tie this in to an existing home automation system) you can easily do so using built in functionality.
+
+Endpoints:
+
+* ``GET`` ``/remotes.json`` - Returns all known remotes and commands
+* ``GET`` ``/remotes/:remote.json`` - Returns all known commands for remote ``:remote``
+* ``POST`` ``/remotes/:remote/:command`` - Send ``:command`` to ``:remote``
+
 ## Getting started
 
 First, clone the repository:
