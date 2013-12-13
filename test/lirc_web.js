@@ -54,7 +54,34 @@ describe('lirc_web', function() {
 				});
 		});
 
-		it('should return a list of all commands for a remote when /remotes/:remote.json is accessed', function(done) {
+        it('should return JSON in the format { remotes: [{name: ..., commands: [...]}]} when /remotes.json is accessed', function(done) {
+			request(app)
+			.get('/remotes.json')
+			.end(function(err, res) {
+				assert.equal(err, null);
+				json = JSON.parse(res.text);
+				var keys = Object.keys(json);
+				assert(keys.indexOf('remotes') != -1);
+				assert(Array.isArray(json.remotes));
+				for (var i in json.remotes) {
+					var remote = json.remotes[i];
+					keys = Object.keys(remote);
+					assert(keys.indexOf('name') != -1);
+					assert(!Array.isArray(remote.name));
+					assert(typeof remote.name != 'object');
+					assert(keys.indexOf('commands') != -1);
+					assert(Array.isArray(remote.commands));
+					for (var s in remote.commands) {
+						var string = remote.commands[s];
+						assert(!Array.isArray(string));
+						assert(typeof string != 'object');
+					}
+				}
+			    done();
+			});
+        });
+
+        it('should return a list of all commands for a remote when /remotes/:remote.json is accessed', function(done) {
 			request(app)
 				.get('/remotes/Microsoft_Xbox360.json')
 				.end(function(err, res) {
@@ -63,7 +90,22 @@ describe('lirc_web', function() {
 				});
 		});
 
-		it('should return a 404 for an unknown remote', function(done) {
+        it('should return JSON in the format ["string", "string", ...] when /remotes/<remote>.json is accessed', function(done) {
+			request(app)
+			.get('/remotes/Microsoft_Xbox360.json')
+			.end(function(err, res) {
+				assert.equal(err, null);
+				commands = JSON.parse(res.text);
+				for (var s in commands) {
+					var string = commands[s];
+					assert(!Array.isArray(string));
+					assert(typeof string != 'object');
+				}
+			    done();
+			});
+        });
+
+        it('should return a 404 for an unknown remote', function(done) {
             request(app)
 				.get('/remotes/DOES_NOT_EXIST.json')
 				.end(function(err, res) {
