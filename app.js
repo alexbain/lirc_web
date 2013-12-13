@@ -120,13 +120,13 @@ app.get('/remotes.json', function(req, res) {
         remotes.push(remote);
     }
     result.remotes = remotes;
-    res.send(result);
+    res.json(result);
 });
 
 // Get all commands for a remote (JSON API)
 app.get('/remotes/:remote.json', function(req, res) {
     if (lirc_node.remotes[req.params.remote]) {
-        res.send(lirc_node.remotes[req.params.remote]);
+        res.json(lirc_node.remotes[req.params.remote]);
     } else {
         res.send(404);
     }
