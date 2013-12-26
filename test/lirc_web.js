@@ -59,7 +59,7 @@ describe('lirc_web', function() {
 			.get('/remotes.json')
 			.end(function(err, res) {
 				assert.equal(err, null);
-				json = JSON.parse(res.text);
+				var json = JSON.parse(res.text);
 				var keys = Object.keys(json);
 				assert(keys.indexOf('remotes') != -1);
 				assert(Array.isArray(json.remotes));
@@ -95,7 +95,7 @@ describe('lirc_web', function() {
 			.get('/remotes/Microsoft_Xbox360.json')
 			.end(function(err, res) {
 				assert.equal(err, null);
-				commands = JSON.parse(res.text);
+				var commands = JSON.parse(res.text);
 				for (var s in commands) {
 					var string = commands[s];
 					assert(!Array.isArray(string));
