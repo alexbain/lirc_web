@@ -111,7 +111,16 @@ app.get('/', function(req, res) {
 
 // Get all remotes (JSON API)
 app.get('/remotes.json', function(req, res) {
-    res.json(lirc_node.remotes);
+    var result = {};
+    var remotes = [];
+    for(var r in lirc_node.remotes){
+        var remote = {};
+        remote.name = r;
+        remote.commands = lirc_node.remotes[r];
+        remotes.push(remote);
+    }
+    result.remotes = remotes;
+    res.json(result);
 });
 
 // Get all commands for a remote (JSON API)
