@@ -1,33 +1,34 @@
 {
-    "name": "lirc_web",
-    "description": "A NodeJS / Express app that creates a web UI + API for LIRC",
-    "main": "app.js",
-    "version": "0.0.6",
-    "private": true,
-    "dependencies": {
-        "express": "3.0.6",
-        "lirc_node": "*",
-        "swig": "0.13.5",
-        "consolidate": "*"
-    },
-    "devDependencies": {
-        "mocha": "*",
-        "should": "*",
-        "sinon": "*",
-        "supertest": "*",
-        "nodemon": "*",
-        "grunt": "*",
-        "grunt-contrib-less": "*",
-        "grunt-contrib-uglify": "*",
-        "grunt-contrib-watch": "*",
-    	"jsdom": "*"
-    },
-    "scripts": {
-        "test": "make test"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/alexbain/lirc_web.git"
-    },
-    "author": "Alex Bain <alex@alexba.in>"
+  "name": "lirc_web",
+  "description": "A NodeJS / Express app that creates a web UI + API for LIRC",
+  "main": "app.js",
+  "version": "0.0.7",
+  "private": true,
+  "dependencies": {
+    "express": "3.0.6",
+    "lirc_node": "*",
+    "swig": "0.13.5",
+    "consolidate": "*"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*",
+    "sinon": "*",
+    "supertest": "*",
+    "nodemon": "*",
+    "grunt": "*",
+    "grunt-contrib-less": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-watch": "*",
+    "jsdom": "*",
+    "grunt-develop": "~0.3.0"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/alexbain/lirc_web.git"
+  },
+  "author": "Alex Bain <alex@alexba.in>"
 }

@@ -9,14 +9,21 @@ describe('lirc_web', function() {
 
     describe('routes', function() {
 
-        it('should have an index route accessible via GET', function(done) {
+        it('should have an index route "/"', function(done) {
             assert(request(app).get('/').expect(200, done));
         });
 
-        it('should have an API route accessible via POST', function(done) {
+        it('should have a POST route for sending a command', function(done) {
             assert(request(app).post('/remotes/tv/power').expect(200, done));
         });
 
+        it('should have a POST route to start repeatedly sending a command', function(done) {
+            assert(request(app).post('/remotes/tv/volumeup/send_start').expect(200, done));
+        });
+
+        it('should have a POST route to stop repeatedly sending a command', function(done) {
+            assert(request(app).post('/remotes/tv/volumeup/send_stop').expect(200, done));
+        });
     });
 
     describe('index action', function() {

@@ -1,0 +1,43 @@
+{
+  "Yamaha": [
+    "Power",
+    "Xbox360",
+    "Wii",
+    "VolumeUp",
+    "VolumeDown",
+    "DTV/CBL"
+  ],
+  "SonyTV": [
+    "Power",
+    "VolumeUp",
+    "VolumeDown",
+    "ChannelUp",
+    "ChannelDown"
+  ],
+  "Xbox360": [
+    "OpenClose",
+    "FancyButton",
+    "OnOff",
+    "Stop",
+    "Pause",
+    "Rewind",
+    "FastForward",
+    "Prev",
+    "Next",
+    "Play",
+    "Display",
+    "Title",
+    "DVD_Menu",
+    "Back",
+    "Info",
+    "UpArrow",
+    "LeftArrow",
+    "RightArrow",
+    "DownArrow",
+    "OK",
+    "Y",
+    "X",
+    "A",
+    "B"
+  ]
+}

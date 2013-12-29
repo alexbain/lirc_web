@@ -18,8 +18,8 @@ OSUR.util.hasTouchEvents = function() {
 
 $(function() {
 
-    // Handle command buttons with AJAX
-    $('.command-link').on('click', function(evt) {
+    // command-once buttons send a single command when clicked
+    $('.command-once').on('click', function(evt) {
         $.ajax({
             type: "POST",
             url: $(this).attr('href'),
@@ -28,15 +28,47 @@ $(function() {
         });
     });
 
-    // Setup touch events if the browser supports them
+    // command-repeater buttons repeatedly send the command while being clicked
+    // (uses send_start and send_stop behind the scenes)
+    $('.command-repeater').on('mousedown touchstart', function(evt) {
+        $.ajax({
+            type: "POST",
+            url: $(this).attr('href') + '/send_start',
+            success: function(data) {},
+            error: function(xhr, type) {}
+        });
+        $(this).attr('data-active', true);
+    });
+
+    // Capture any kind of mouse or touch "out" event
+    $('.command-repeater').on('mouseup touchend touchleave touchcancel', function(evt) {
+        $.ajax({
+            type: "POST",
+            url: $(this).attr('href') + '/send_stop',
+            success: function(data) {},
+            error: function(xhr, type) {}
+        });
+        $(this).attr('data-active', false);
+    });
+
+    // If the user clicks, holds, and drags mouse outside of window - handle that too
+    $(window).on('mouseup', function(evt) {
+        $('.command-repeater[data-active=true]').trigger('mouseup');
+    });
+
+    // Different visual behavior for touch devices
     if (OSUR.util.hasTouchEvents()) {
         $('body').addClass('has-touch');
+
         $('.command-link, .remote-link').on('touchstart', function(evt) {
             $(this).addClass('active');
+
         });
-        $('.command-link, .remote-link').on('touchend', function(evt) {
+
+        $('.command-link, .remote-link').on('touchend touchleave touchcancel', function(evt) {
             $(this).removeClass('active');
         });
+
         $('body').on('touchcancel', function(evt) {
             $('.command-link').removeClass('active');
         });
