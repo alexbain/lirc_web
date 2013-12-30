@@ -1,75 +1,79 @@
 lirc_web
 ========
 
-``lirc_web`` is a NodeJS / Express app that creates a web UI & API for [LIRC](http://lirc.org). It uses [lirc_node](https://github.com/alexbain/lirc_node) to handle communication between LIRC and NodeJS.
+``lirc_web`` is a [nodejs](http://nodejs.org) app that creates a web interface & JSON API for the [LIRC](http://lirc.org) project. It uses [lirc_node](https://github.com/alexbain/lirc_node) to handle communication between LIRC and nodejs.
 
-It is part of the [Open Source Universal Remote](http://opensourceuniversalremote.com) project.
+This project allows you to control LIRC from any web browser - phone, tablet, or desktop. The mobile web interface is responsive and optimized for all sized displays. In addition, with the JSON API, you can control LIRC from any web connected device - pebble watch, myo armband, emotiv EEG headset, or beyond.
 
-## What is this?
+This is part of the [Open Source Universal Remote](http://opensourceuniversalremote.com) project.
 
-``lirc_web`` is a sample NodeJS app that uses ``lirc_node`` to facilitate communication with LIRC. This web app provides two major pieces of functionality:
 
-* A listing of all remotes/commands known to LIRC
-* A POST endpoint that a web service can hit to send an IR command
+## Installation
 
-## How do I use it?
+You'll need to have [LIRC](http://lirc.org) installed and configured on your machine to use ``lirc_web``. In addition, you'll need to install [nodejs](http://nodejs.org). Once you have LIRC and nodejs installed and configured, you'll be able to install ``lirc_web`` and it's dependencies:
 
-You'll need to have LIRC installed and configured on your machine to use ``lirc_web``. Once you have LIRC installed and configured you should be able to start the NodeJS server and access it from the web.
+    git clone git://github.com/alexbain/lirc_web.git
+    cd lirc_web
+    npm install
+    node app.js
+
+You're set! Verify the web interface works by opening ``http://SERVER:3000/`` in a web browser.
+
+If you want to have the app available via port 80 and start on boot, there are example NGINX and Upstart configuration files included in the ``example_configs/`` directory.
+
+
+## Configuration
+
+As of v0.0.7, ``lirc_web`` will start supporting customization options through a configuration file (``config.json``) in the root of the project. There is only one available configuration option, but more are expected in future releases:
+
+1. ``repeaters`` - buttons that repeatedly send their commands while pressed. A common example are the volume buttons on most remote controls. While you hold the volume buttons down, the remote will repeatedly send the volume command to your device.
+2. (suggestions welcome)
+
+
+#### Example:
+
+
+    {
+      "repeaters": {
+        "SonyTV": {
+          "VolumeUp": true,
+          "VolumeDown": true
+        }
+      }
+    }
+
 
 ## Using the JSON API
 
-If you'd prefer to avoid using ``lirc_web``'s UI and instead use the API (so that you could build your own UI, use ``lirc_web`` in a native app, or tie this in to an existing home automation system) you can easily do so using built in functionality.
+Want to build your own app or device that uses ``lirc_web``? No problem - an HTTP API is built in. If the language you are writing your app or device supports HTTP, you're set. 
 
-Endpoints:
+API endpoints:
 
 * ``GET`` ``/remotes.json`` - Returns all known remotes and commands
 * ``GET`` ``/remotes/:remote.json`` - Returns all known commands for remote ``:remote``
-* ``POST`` ``/remotes/:remote/:command`` - Send ``:command`` to ``:remote``
-
-## Getting started
-
-First, clone the repository:
-
-```
-git clone git://github.com/alexbain/lirc_web.git
-cd lirc_web
-```
-
-Install the required modules:
-
-```
-npm install
-```
-
-Start up the server:
-
-```
-node app.js
-```
-
-Verify the UI web works by opening ``http://SERVER:3000/`` in a web browser.
+* ``POST`` ``/remotes/:remote/:command`` - Send ``:command`` to ``:remote`` one time
+* ``POST`` ``/remotes/:remote/:command/send_start`` - Begin sending ``:command``
+* ``POST`` ``/remotes/:remote/:command/send_stop`` - Stop sending ``:command``
 
 
 ## Development
 
-Would you like to contribute to and improve this sample app? Fantastic. To contribute
-patches, run tests or benchmarks, make sure to follow the instructions above.
+Would you like to contribute to and improve ``lirc_web``? Fantastic. To contribute
+patches, run tests or benchmarks, install ``lirc_web`` using the instructions above. Once that is complete, you'll need to setup the development environment.
 
-You'll want to run the ``grunt watch`` task in your shell so that all JS and LESS changes are picked up and recompiled upon save:
+Now, you'll need to setup the development environment. ``lirc_web`` uses the [GruntJS](http://gruntjs.com/) built system to make development easier.
 
 Install GruntJS (build environment):
 
-```
-npm install -g grunt-cli
-npm install -g grunt-init
-grunt
-```
+    npm install -g grunt-cli
+    npm install -g grunt-init
+    grunt server
+
 
 **You may need to reload your shell before continuing so the Grunt binares are detected.**
 
-Running ``grunt`` will create all of the static assets.
-
-Running ``grunt watch`` will recreate static assets every time you save a file.
+* ``grunt`` will create all of the static assets.
+* ``grunt server`` will start a development server (using sample data) and watch all static assets for change
 
 You can run the test suite by running:
 
@@ -108,10 +112,3 @@ the following conditions:
 The above copyright notice and this permission notice shall be
 included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

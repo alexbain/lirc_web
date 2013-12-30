@@ -1,0 +1,8 @@
+{
+  "repeaters": {
+    "SonyTV": {
+      "VolumeUp": true,
+      "VolumeDown": true
+    }
+  }
+}
