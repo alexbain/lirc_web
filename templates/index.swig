@@ -21,6 +21,16 @@
       {% endfor %}
       </ul>
 
+      <hr />
+
+      <ul class="macros-nav">
+      {% for macro in macros %}
+        {% set macroName = loop.key %}
+        <li><button class="btn btn-wide btn-large btn-warning macro-link" href="/macros/{{ macroName }}">{{ macroName }}</button></li>
+      {% endfor %}
+      </ul>
+
+
       <div class="prev"></div>
 
       <ul class="remotes">
