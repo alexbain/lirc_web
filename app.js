@@ -1,4 +1,4 @@
-// lirc_web - v0.0.7
+// lirc_web - v0.0.8
 // Alex Bain <alex@alexba.in>
 
 // Requirements
