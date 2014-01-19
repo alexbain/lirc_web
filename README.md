@@ -24,13 +24,13 @@ If you want to have the app available via port 80 and start on boot, there are e
 
 ## Configuration
 
-As of v0.0.7, ``lirc_web`` will start supporting customization options through a configuration file (``config.json``) in the root of the project. There is only one available configuration option, but more are expected in future releases:
+As of v0.0.8, ``lirc_web`` supports customization through a configuration file (``config.json``) in the root of the project. There are currently two configuration options:
 
 1. ``repeaters`` - buttons that repeatedly send their commands while pressed. A common example are the volume buttons on most remote controls. While you hold the volume buttons down, the remote will repeatedly send the volume command to your device.
-2. (suggestions welcome)
+2. ``macros`` - a collection of commands that should be executed one after another. This allows you to automate actions like "Play Xbox 360" or "Listen to music via AirPlay"
 
 
-#### Example:
+#### Example config.json:
 
 
     {
@@ -39,18 +39,32 @@ As of v0.0.7, ``lirc_web`` will start supporting customization options through a
           "VolumeUp": true,
           "VolumeDown": true
         }
+      },
+      "macros": {
+        "Play Xbox 360": [
+          [ "SonyTV", "Power" ],
+          [ "SonyTV", "Xbox360" ],
+          [ "Yamaha", "Power" ],
+          [ "Yamaha", "Xbox360" ],
+          [ "Xbox360", "Power" ]
+        ],
+        "Listen to Music": [
+          [ "Yamaha", "Power" ],
+          [ "Yamaha", "AirPlay" ]
+        ]
       }
     }
 
 
 ## Using the JSON API
 
-Want to build your own app or device that uses ``lirc_web``? No problem - an HTTP API is built in. If the language you are writing your app or device supports HTTP, you're set. 
+Building an app on top of lirc_web is straight forward with the included JSON based RESTful API.
 
 API endpoints:
 
 * ``GET`` ``/remotes.json`` - Returns all known remotes and commands
 * ``GET`` ``/remotes/:remote.json`` - Returns all known commands for remote ``:remote``
+* ``GET`` ``/macros.json`` - Returns all known macros
 * ``POST`` ``/remotes/:remote/:command`` - Send ``:command`` to ``:remote`` one time
 * ``POST`` ``/remotes/:remote/:command/send_start`` - Begin sending ``:command``
 * ``POST`` ``/remotes/:remote/:command/send_stop`` - Stop sending ``:command``
