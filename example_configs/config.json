@@ -4,5 +4,14 @@
       "VolumeUp": true,
       "VolumeDown": true
     }
+  },
+  "macros": {
+    "Xbox360": [
+      { "SonyTV": "Power" },
+      { "SonyTV": "Xbox360" },
+      { "Yamaha": "Power" },
+      { "Yamaha": "Xbox360" },
+      { "Xbox360": "Power" }
+    ]
   }
 }

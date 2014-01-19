@@ -53,6 +53,7 @@ if (process.env.NODE_ENV == 'test' || process.env.NODE_ENV == 'development') {
 app.get('/', function(req, res) {
     res.send(JST['index'].render({
         remotes: lirc_node.remotes,
+        macros: config.macros,
         repeaters: config.repeaters
     }));
 });
@@ -70,6 +71,21 @@ app.get('/remotes/:remote.json', function(req, res) {
         res.send(404);
     }
 });
+
+// List all macros in JSON format
+app.get('/macros.json', function(req, res) {
+    res.json(config.macros);
+});
+
+// List all commands for :macro in JSON format
+app.get('/macros/:macro.json', function(req, res) {
+    if (config.macros && config.macros[req.params.macro]) {
+        res.json(config.macros[req.params.macro]);
+    } else {
+        res.send(404);
+    }
+});
+
 
 // Send :remote/:command one time
 app.post('/remotes/:remote/:command', function(req, res) {
@@ -91,6 +107,32 @@ app.post('/remotes/:remote/:command/send_stop', function(req, res) {
     res.setHeader('Cache-Control', 'no-cache');
     res.send(200);
 });
+
+// Execute a macro (a collection of commands to one or more remotes)
+app.post('/macros/:macro', function(req, res) {
+
+    // If the macro exists, execute each command in the macro with 100msec
+    // delay between each command.
+    if (config.macros && config.macros[req.params.macro]) {
+        var i = 0;
+        var interval = function() {
+            if (config.macros[req.params.macro][i]) {
+                var command = config.macros[req.params.macro][i];
+                lirc_node.irsend.send_once(command[0], command[1], function() {});
+            } else {
+                clearInterval(interval);
+            }
+
+            i += 1;
+        };
+
+        setInterval(interval, 100);
+    }
+
+    res.setHeader('Cache-Control', 'no-cache');
+    res.send(200);
+});
+
 
 // Default port is 3000
 app.listen(3000);

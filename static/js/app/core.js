@@ -52,8 +52,19 @@ $(function() {
     });
 
     // If the user clicks, holds, and drags mouse outside of window - handle that too
-    $(window).on('mouseup', function(evt) {
+    $(window).on('mouseup touchend touchleave touchcancel', function(evt) {
         $('.command-repeater[data-active=true]').trigger('mouseup');
+    });
+
+    // macro-link buttons send a command to execute the macro when clicked
+    $('.macro-link').on('click', function(evt) {
+        evt.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: $(this).attr('href'),
+            success: function(data) {},
+            error: function(xhr, type) {}
+        });
     });
 
     // Different visual behavior for touch devices
@@ -80,6 +91,7 @@ $(function() {
     $('.back').on('click', function(evt) {
         $('.remote.active').removeClass('active');
         $('.remotes-nav').removeClass('hidden');
+        $('.macros-nav').removeClass('hidden');
         $('.back').addClass('hidden');
         $('#title').html($('#title').attr('data-text'));
         $('#titlebar').removeClass('is-remote');
@@ -90,6 +102,7 @@ $(function() {
         evt.preventDefault();
         var href = $(this).attr('href');
         $('.remotes-nav').addClass('hidden');
+        $('.macros-nav').addClass('hidden');
         $(href).addClass('active');
         $('.back').removeClass('hidden');
         $('#title').html($(this).html());

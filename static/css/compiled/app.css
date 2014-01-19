@@ -65,7 +65,8 @@ h1.is-remote {
   padding: 0;
   position: relative;
 }
-.remotes-nav li {
+.remotes-nav li,
+.macros-nav li {
   margin: 20px 0;
 }
 .back {
