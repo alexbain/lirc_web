@@ -115,7 +115,7 @@ app.post('/macros/:macro', function(req, res) {
     // delay between each command.
     if (config.macros && config.macros[req.params.macro]) {
         var i = 0;
-        var interval = function() {
+        var intervalFunc = function() {
             if (config.macros[req.params.macro][i]) {
                 var command = config.macros[req.params.macro][i];
                 lirc_node.irsend.send_once(command[0], command[1], function() {});
@@ -126,7 +126,7 @@ app.post('/macros/:macro', function(req, res) {
             i += 1;
         };
 
-        setInterval(interval, 100);
+        var interval = setInterval(intervalFunc, 100);
     }
 
     res.setHeader('Cache-Control', 'no-cache');
