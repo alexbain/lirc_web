@@ -115,18 +115,25 @@ app.post('/macros/:macro', function(req, res) {
     // delay between each command.
     if (config.macros && config.macros[req.params.macro]) {
         var i = 0;
-        var intervalFunc = function() {
-            if (config.macros[req.params.macro][i]) {
-                var command = config.macros[req.params.macro][i];
-                lirc_node.irsend.send_once(command[0], command[1], function() {});
-            } else {
-                clearInterval(interval);
-            }
 
-            i += 1;
+        var nextCommand = function() {
+            var command = config.macros[req.params.macro][i];
+
+    	    if (!command) { return true; }
+
+            // increment
+            i = i + 1;
+
+            if (command[0] == "delay") {
+                setTimeout(nextCommand, command[1]);
+            } else {
+                // By default, wait 100msec before calling next command
+                lirc_node.irsend.send_once(command[0], command[1], function() { setTimeout(nextCommand, 100); });
+            }
         };
 
-        var interval = setInterval(intervalFunc, 100);
+        // kick off macro w/ first command
+        nextCommand();
     }
 
     res.setHeader('Cache-Control', 'no-cache');
