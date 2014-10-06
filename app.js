@@ -6,7 +6,8 @@ var express = require('express'),
     lirc_node = require('lirc_node'),
     consolidate = require('consolidate'),
     path = require('path'),
-    swig = require('swig');
+    swig = require('swig'),
+    labels = require('./lib/labels');
 
 // Precompile templates
 var JST = {
@@ -48,13 +49,16 @@ if (process.env.NODE_ENV == 'test' || process.env.NODE_ENV == 'development') {
 
 // Routes
 
+var labelFor = labels(config.remoteLabels, config.commandLabels)
 
 // Web UI
 app.get('/', function(req, res) {
     res.send(JST['index'].render({
         remotes: lirc_node.remotes,
         macros: config.macros,
-        repeaters: config.repeaters
+        repeaters: config.repeaters,
+        labelForRemote: labelFor.remote,
+        labelForCommand: labelFor.command
     }));
 });
 

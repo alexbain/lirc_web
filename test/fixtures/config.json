@@ -17,5 +17,17 @@
       [ "Yamaha", "Power" ],
       [ "Yamaha", "AirPlay" ]
     ]
+  },
+  "commandLabels": {
+    "LircNamespace": {
+      "KEY_POWER": "Power",
+      "KEY_VOLUMEUP": "Vol+",
+      "KEY_VOLUMEDOWN": "Vol-",
+      "KEY_CHANNELUP": "Channel Up",
+      "KEY_CHANNELDOWN": "Channel Down"
+    }
+  },
+  "remoteLabels": {
+    "LircNamespace": "LIRC namespace"
   }
 }
