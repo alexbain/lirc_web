@@ -39,5 +39,12 @@
     "X",
     "A",
     "B"
+  ],
+  "LircNamespace": [
+    "KEY_POWER",
+    "KEY_VOLUMEUP",
+    "KEY_VOLUMEDOWN",
+    "KEY_CHANNELUP",
+    "KEY_CHANNELDOWN"
   ]
 }
