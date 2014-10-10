@@ -13,5 +13,15 @@
       { "Yamaha": "Xbox360" },
       { "Xbox360": "Power" }
     ]
+  },
+  "commandLabels": {
+    "Yamaha": {
+      "Xbox360": "Xbox 360",
+      "VolumeUp": "Volume Up",
+      "VolumeDown": "Volume Down"
+    }
+  },
+  "remoteLabels": {
+     "Xbox360": "Xbox 360"
   }
 }

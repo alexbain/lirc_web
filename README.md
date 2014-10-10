@@ -28,6 +28,8 @@ As of v0.0.8, ``lirc_web`` supports customization through a configuration file (
 
 1. ``repeaters`` - buttons that repeatedly send their commands while pressed. A common example are the volume buttons on most remote controls. While you hold the volume buttons down, the remote will repeatedly send the volume command to your device.
 2. ``macros`` - a collection of commands that should be executed one after another. This allows you to automate actions like "Play Xbox 360" or "Listen to music via AirPlay". Each step in a macro is described in the format ``[ "REMOTE", "COMMAND" ]``, where ``REMOTE`` and ``COMMAND`` are defined by what you have programmed into LIRC. You can add delays between steps of macros in the format of ``[ "delay", 500 ]``. Note that the delay is measured in milliseconds so 1000 milliseconds = 1 second.
+3. ``commandLabels`` - a way to rename commands that LIRC understands (``KEY_POWER``, ``KEY_VOLUMEUP``) with labels that humans prefer (``Power``, ``Volume Up``).
+4. ``remoteLabels`` - a way to rename the remotes that LIRC understands (``XBOX360``) with labels that humans prefer (``Xbox 360``).
 
 
 #### Example config.json:
@@ -55,6 +57,17 @@ As of v0.0.8, ``lirc_web`` supports customization through a configuration file (
           [ "delay", 500 ],
           [ "Yamaha", "AirPlay" ]
         ]
+      },
+      "commandLabels": {
+        "Yamaha": {
+          "Power": "Power",
+          "Xbox360": "Xbox 360",
+          "VolumeUp": "Volume Up",
+          "VolumeDown": "Volume Down"
+        }
+      },
+      "remoteLabels": {
+         "Xbox360": "Xbox 360"
       }
     }
 
