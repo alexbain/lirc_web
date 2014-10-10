@@ -73,6 +73,7 @@ h1.is-remote {
   position: absolute;
   top: 7px;
   left: 8px;
+  cursor: pointer;
 }
 a,
 a:hover,
