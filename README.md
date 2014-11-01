@@ -84,6 +84,7 @@ API endpoints:
 * ``POST`` ``/remotes/:remote/:command`` - Send ``:command`` to ``:remote`` one time
 * ``POST`` ``/remotes/:remote/:command/send_start`` - Begin sending ``:command``
 * ``POST`` ``/remotes/:remote/:command/send_stop`` - Stop sending ``:command``
+* ``POST`` ``/macros/:macro`` - Send all commands for ``:macro`` one time
 
 
 ## Development
