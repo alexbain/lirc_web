@@ -1,27 +1,233 @@
 {
+"colors":{
+	"colorShow":{
+		"0": "#000099",
+		"1": "#3399FF",
+		"2": "#CC33FF",
+		"3": "#FF0000",
+		"4": "#003300",
+		"5": "#00CC00",
+		"6": "#669999",
+		"7": "#663300",
+		"8": "#666633"
+	}	
+  },
+
+  "simulators":{
+	"Outlets":{
+	 "Upstairs_Outlet_On": true,
+	 "Upstairs_Outlet_Off": true,
+ 	 "Downstairs_Outlet_On": true,
+	 "Downstairs_Outlet_Off": true
+		}
+	},
+
+  "codes":{
+     "Outlets":{
+	"Upstairs_Outlet_On": "0000000000000001",
+	"Upstairs_Outlet_Off": "0000000000000002",
+	"Downstairs_Outlet_On": "0000000000000003",
+	"Downstairs_Outlet_Off": "0000000000000004"		
+     }
+   },
+
   "repeaters": {
-    "SonyTV": {
-      "VolumeUp": true,
-      "VolumeDown": true
+    "Receiver": {
+      "Vol+": true,
+      "Vol-": true
+    },
+	"Receiver_Zone2": {
+      "Vol+": true,
+      "Vol-": true
     }
   },
-  "macros": {
-    "Xbox360": [
-      { "SonyTV": "Power" },
-      { "SonyTV": "Xbox360" },
-      { "Yamaha": "Power" },
-      { "Yamaha": "Xbox360" },
-      { "Xbox360": "Power" }
-    ]
-  },
+	"macros": {
+		"Living Room": {
+			"Turn Off": [
+				[ "SEND_ONCE", "SamsungTv", "DiscreteOff" ],
+				[ "SEND_ONCE", "Receiver", "DiscreteOff" ],
+				[ "delay", "1000", "1000"],
+				[ "SIMULATE", "Outlets", "Upstairs_Outlet_Off"]
+			],
+			"Apple Tv": [
+				[ "SEND_ONCE", "SamsungTv", "DiscreteOn" ],
+				[ "SIMULATE", "Outlets", "Upstairs_Outlet_On"],
+				[ "delay", "750", "750"],
+				[ "SIMULATE", "Outlets", "Upstairs_Outlet_On"],
+				[ "delay", "1000", "1000"],
+				[ "SEND_ONCE", "Receiver", "DiscreteOn" ],
+				[ "SEND_ONCE", "Receiver", "AppleTv" ],
+				[ "SEND_ONCE", "SamsungTv", "HDMI1" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ]
+			],
+			"Plex": [
+				[ "SEND_ONCE", "SamsungTv", "DiscreteOn" ],
+				[ "SIMULATE", "Outlets", "Upstairs_Outlet_On"],
+				[ "delay", "750", "750"],
+				[ "SIMULATE", "Outlets", "Upstairs_Outlet_On"],
+				[ "delay", "1000", "1000"],
+				[ "SEND_ONCE", "Receiver", "DiscreteOn" ],
+				[ "SEND_ONCE", "Receiver", "AppleTv" ],
+				[ "SEND_ONCE", "SamsungTv", "HDMI1" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ],
+				[ "SEND_ONCE", "AppleTv", "Down" ],
+				[ "SEND_ONCE", "AppleTv", "Right" ],
+				[ "SEND_ONCE", "AppleTv", "Select" ]
+			],
+			"Netflix": [
+				[ "SEND_ONCE", "SamsungTv", "DiscreteOn" ],
+				[ "SIMULATE", "Outlets", "Upstairs_Outlet_On"],
+				[ "delay", "750", "750"],
+				[ "SIMULATE", "Outlets", "Upstairs_Outlet_On"],
+				[ "delay", "1000", "1000"],
+				[ "SEND_ONCE", "Receiver", "DiscreteOn" ],
+				[ "SEND_ONCE", "Receiver", "AppleTv" ],
+				[ "SEND_ONCE", "SamsungTv", "HDMI1" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ],
+				[ "SEND_ONCE", "AppleTv", "Menu" ],
+				[ "SEND_ONCE", "AppleTv", "Down" ],
+				[ "SEND_ONCE", "AppleTv", "Right" ],
+				[ "SEND_ONCE", "AppleTv", "Right" ],
+				[ "SEND_ONCE", "AppleTv", "Select" ]
+			],
+			"Cable": [
+				[ "SEND_ONCE", "SamsungTv", "DiscreteOn" ],
+				[ "delay", "1000", "1000"],
+				[ "SEND_ONCE", "Receiver", "DiscreteOff" ],
+				[ "SIMULATE", "Outlets", "Upstairs_Outlet_Off"],
+				[ "delay", "750", "750"],
+				[ "SIMULATE", "Outlets", "Upstairs_Outlet_Off"],
+				[ "SEND_ONCE", "SamsungTv", "Tv" ],
+				[ "delay", "2000", "2000"],
+				[ "SEND_ONCE", "SamsungTv", "Tv" ],
+				[ "delay", "3000", "3000"],
+				[ "SEND_ONCE", "SamsungTv", "Tv" ],
+				[ "delay", "4000", "4000"]
+			],
+			"Radio": [
+				[ "SIMULATE", "Outlets", "Upstairs_Outlet_On"],
+				[ "delay", "500", "500"],
+				[ "SIMULATE", "Outlets", "Upstairs_Outlet_On"],
+				[ "delay", "1000", "1000"],
+				[ "SEND_ONCE", "Receiver", "DiscreteOn" ],
+				[ "SEND_ONCE", "Receiver", "Tuner" ]
+			]
+	},
+	"Downstairs": {
+		"Cable": [
+			[ "SIMULATE", "Outlets", "Downstairs_Outlet_On"],
+			[ "delay", "500", "500"],
+			[ "SIMULATE", "Outlets", "Downstairs_Outlet_On"],
+			[ "delay", "4500", "4500"],
+			[ "SEND_ONCE", "Basement", "LGDiscreteOn" ],
+			[ "delay", "500", "500"],
+			[ "SEND_ONCE", "Basement", "LGDiscreteOn" ],
+			[ "delay", "500", "500"],
+			[ "SEND_ONCE", "Basement", "LGDiscreteHDMI2" ]
+		],
+		"Apple Tv": [
+			[ "SIMULATE", "Outlets", "Downstairs_Outlet_On"],
+			[ "delay", "500", "500"],
+			[ "SIMULATE", "Outlets", "Downstairs_Outlet_On"],
+			[ "delay", "4500", "4500"],
+			[ "SEND_ONCE", "Basement", "LGDiscreteOn" ],
+			[ "delay", "500", "500"],
+			[ "SEND_ONCE", "Basement", "LGDiscreteOn" ],
+			[ "delay", "500", "500"],
+			[ "SEND_ONCE", "Basement", "LGDiscreteHDMI1" ],
+			[ "SEND_ONCE", "AppleTv", "Menu" ],
+			[ "SEND_ONCE", "AppleTv", "Menu" ],
+			[ "SEND_ONCE", "AppleTv", "Menu" ],
+			[ "SEND_ONCE", "AppleTv", "Menu" ],
+			[ "SEND_ONCE", "AppleTv", "Menu" ],
+			[ "SEND_ONCE", "AppleTv", "Menu" ],
+			[ "SEND_ONCE", "AppleTv", "Menu" ]
+		],
+		"Turn Off": [
+			[ "SEND_ONCE", "Basement", "LGDiscreteOff" ],
+			[ "delay", "500", "500"],
+			[ "SEND_ONCE", "Basement", "LGDiscreteOff" ],
+			[ "delay", "5000", "5000"],
+			[ "SIMULATE", "Outlets", "Downstairs_Outlet_Off"],
+			[ "delay", "1000", "1000"],
+			[ "SIMULATE", "Outlets", "Downstairs_Outlet_Off"]
+		],
+		"Mute All": [
+			[ "SEND_ONCE", "Receiver", "Mute" ],
+			[ "SEND_ONCE", "Receiver_Zone2", "Mute" ],
+			[ "SEND_ONCE", "Cable", "Mute" ]
+		]
+	},
+	"Fish Tank": {
+		"Skimmer": [
+			[ "SIMULATE", "Outlets", "Downstairs_Outlet_On1"],
+			[ "delay", "500", "500"]
+		],
+		"Return Pump": [
+			[ "SIMULATE", "Outlets", "Downstairs_Outlet_On"],
+			[ "delay", "500", "500"],
+			[ "SIMULATE", "Outlets", "Downstairs_Outlet_On"],
+			[ "delay", "4500", "4500"],
+			[ "SEND_ONCE", "Basement", "LGDiscreteOn" ],
+			[ "delay", "500", "500"],
+			[ "SEND_ONCE", "Basement", "LGDiscreteOn" ],
+			[ "delay", "500", "500"],
+			[ "SEND_ONCE", "Basement", "LGDiscreteHDMI1" ],
+			[ "SEND_ONCE", "AppleTv", "Menu" ],
+			[ "SEND_ONCE", "AppleTv", "Menu" ],
+			[ "SEND_ONCE", "AppleTv", "Menu" ],
+			[ "SEND_ONCE", "AppleTv", "Menu" ],
+			[ "SEND_ONCE", "AppleTv", "Menu" ],
+			[ "SEND_ONCE", "AppleTv", "Menu" ],
+			[ "SEND_ONCE", "AppleTv", "Menu" ]
+		],
+		"Power Heads": [
+			[ "SEND_ONCE", "Basement", "LGDiscreteOff" ],
+			[ "delay", "500", "500"],
+			[ "SEND_ONCE", "Basement", "LGDiscreteOff" ],
+			[ "delay", "5000", "5000"],
+			[ "SIMULATE", "Outlets", "Downstairs_Outlet_Off"],
+			[ "delay", "1000", "1000"],
+			[ "SIMULATE", "Outlets", "Downstairs_Outlet_Off"]
+		],
+		"Sump Light": [
+			[ "SEND_ONCE", "Receiver", "Mute" ],
+			[ "SEND_ONCE", "Receiver_Zone2", "Mute" ],
+			[ "SEND_ONCE", "Cable", "Mute" ]
+		]
+  }
+},
+
   "commandLabels": {
-    "Yamaha": {
-      "Xbox360": "Xbox 360",
-      "VolumeUp": "Volume Up",
-      "VolumeDown": "Volume Down"
+    "LircNamespace": {
+      "KEY_POWER": "Power",
+      "KEY_VOLUMEUP": "Vol+",
+      "KEY_VOLUMEDOWN": "Vol-",
+      "KEY_CHANNELUP": "Channel Up",
+      "KEY_CHANNELDOWN": "Channel Down"
     }
   },
   "remoteLabels": {
-     "Xbox360": "Xbox 360"
+    "LircNamespace": "LIRC namespace"
   }
 }

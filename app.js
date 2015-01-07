@@ -90,10 +90,16 @@ app.get('/macros/:macro.json', function(req, res) {
     }
 });
 
-
 // Send :remote/:command one time
 app.post('/remotes/:remote/:command', function(req, res) {
     lirc_node.irsend.send_once(req.params.remote, req.params.command, function() {});
+    res.setHeader('Cache-Control', 'no-cache');
+    res.send(200);
+});
+
+// Send the remote command as a SIMULATE action in Lirc
+app.post('/remotes/:remote/:command/:code/simulate', function(req, res) {
+    lirc_node.irsend.simulate(req.params.code + ' 00 ' + req.params.command + ' ' + req.params.remote, function() {});
     res.setHeader('Cache-Control', 'no-cache');
     res.send(200);
 });
@@ -128,11 +134,21 @@ app.post('/macros/:macro', function(req, res) {
             // increment
             i = i + 1;
 
-            if (command[0] == "delay") {
+            if (command[0] == "delay") 
+			{
                 setTimeout(nextCommand, command[1]);
-            } else {
-                // By default, wait 100msec before calling next command
-                lirc_node.irsend.send_once(command[0], command[1], function() { setTimeout(nextCommand, 100); });
+            } 
+			else if(command[0] == "SIMULATE")
+			{
+				var code = config.codes[command[1]][command[2]];
+		
+				var codeString = code + " 00 " + command[2] + " " + command[1];
+				
+				lirc_node.irsend.simulate(codeString, function() { setTimeout(nextCommand, 100); });
+			} 
+			else 
+			{
+                lirc_node.irsend.send_once(command[1], command[2], function() { setTimeout(nextCommand, 100); });
             }
         };
 

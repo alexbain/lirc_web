@@ -45,6 +45,10 @@ describe('lirc_web', function() {
         it('should have POST route to start repeatedly sending a command', function(done) {
             assert(request(app).post('/remotes/tv/volumeup/send_start').expect(200, done));
         });
+		
+		it('should have POST route to send a simulate command', function(done) {
+            assert(request(app).post('/remotes/:remote/:command/:code/simulate').expect(200, done));
+        });
 
         it('should have POST route to stop repeatedly sending a command', function(done) {
             assert(request(app).post('/remotes/tv/volumeup/send_stop').expect(200, done));

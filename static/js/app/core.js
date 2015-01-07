@@ -27,6 +27,16 @@ $(function() {
             error: function(xhr, type) {}
         });
     });
+	
+	//command-simulator buttons send a command as a SIMULATE Lirc event
+    $('.command-simulator').on('click', function(evt) {
+        $.ajax({
+            type: "POST",
+            url: $(this).attr('href')+'/simulate',
+            success: function(data) {},
+            error: function(xhr, type) {}
+        });
+    });
 
     // command-repeater buttons repeatedly send the command while being clicked
     // (uses send_start and send_stop behind the scenes)
