@@ -10,7 +10,6 @@
 		window.onscroll = function() 
 		{
 			var v = document.getElementById("statusText");
-
 			v.style.position = "fixed";
 			v.style.bottom = "0px";
 		} 
@@ -34,9 +33,7 @@
 		function removeExtraText()
 		{
 			clearInterval(counter);
-			
 			counter = setInterval('decreaseOpacity(.05)', 100);	
-			//document.getElementById("statusText").innerHTML = "";
 		}
 
 		function decreaseOpacity(val)
@@ -78,26 +75,26 @@
         <span id="title" data-text="Universal Remote">Universal Remote</span>
       </h1>
 
-{% for macro in macros %}
-	{% set area = loop.key %}
-
-      <div class="macros-nav">
-		<h3>{{area}}</h3>
-		{% for aMacroCommand in macro %}
-        		{% set macroName = loop.key %}
-        		<button style="width:75px; height:75px;" onClick="outputCommand('{{aMacroCommand }}')" class="btn btn-large btn-warning macro-link" href="/macros/{{area}}/{{ macroName }}">{{ macroName }}</button>
-      		{% endfor %}
-      </div>
-{% endfor %}
+	{% for macro in macros %}
+		{% set area = loop.key %}
+	
+	      <div class="macros-nav">
+			<h3>{{area}}</h3>
+			{% for aMacroCommand in macro %}
+	        		{% set macroName = loop.key %}
+	        		<button style="width:75px; height:75px;" onClick="outputCommand('{{aMacroCommand }}')" class="btn btn-large btn-warning macro-link" href="/macros/{{area}}/{{ macroName }}">{{ macroName }}</button>
+	      		{% endfor %}
+	      </div>
+	{% endfor %}
 
 	<hr />
 
 	<div class="remotes-nav">
-      {% for remote in remotes %}
-        {% set remoteName = loop.key %}
-        <a style="width:33%; height:25px; margin:0px 0px 5px 5px;" class="btn btn-large btn-info" href="#{{ remoteName }}">{{ labelForRemote(remoteName) }}</a>
-      {% endfor %}
-      </div>
+      		{% for remote in remotes %}
+        	{% set remoteName = loop.key %}
+        		<a style="width:33%; height:25px; margin:0px 0px 5px 5px;" class="btn btn-large btn-info" href="#{{ remoteName }}">{{ labelForRemote(remoteName) }}</a>
+      		{% endfor %}
+      	</div>
 
 
       <div class="prev"></div>
@@ -113,9 +110,6 @@
         </div>
       {% endfor %}
       </div>
-
-
-    
 
     <div class="next"></div>
 		<div style="word-wrap: break-word; background-color:white; width:100%;" id="statusText" width="auto"> Status on and ready...</div>
