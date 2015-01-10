@@ -1,17 +1,18 @@
 {
-"colors":{
-	"colorShow":{
-		"0": "#000099",
-		"1": "#3399FF",
-		"2": "#CC33FF",
-		"3": "#FF0000",
-		"4": "#003300",
-		"5": "#00CC00",
-		"6": "#669999",
-		"7": "#663300",
-		"8": "#666633"
-	}	
-  },
+"schedule": {
+	"items": [
+		[ "SEND_ONCE", "Receiver_Zone2", "Power", "MON", 1, 1 ],
+		[ "SEND_ONCE", "Receiver_Zone2", "VolUp2", "TUE", 19, 0 ],
+		[ "SEND_ONCE", "Receiver_Zone2", "VolUp3", "WED", 23, 50 ],
+		[ "SEND_ONCE", "Receiver_Zone2", "Power4", "THUR", 2, 50 ],
+		[ "SEND_ONCE", "Receiver_Zone2", "VolUp5", "FRI", 6, 0 ],
+		[ "SEND_ONCE", "Receiver_Zone2", "VolUp6", "SAT", 23,58 ],
+		[ "SEND_ONCE", "Receiver_Zone2", "Power7", "SUN", 6,0 ]
+	],
+	"timezone": [
+		[ "America/Denver" ]
+	]	
+},
 
   "simulators":{
 	"Outlets":{
