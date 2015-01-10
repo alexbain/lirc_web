@@ -210,6 +210,7 @@ app.post('/macros/:area/:macro', function(req, res) {
             // increment
             i = i + 1;
 
+<<<<<<< HEAD
             if (command[0] == "delay") {
                 setTimeout(nextCommand, command[1]);
             } else if(command[0] == "SIMULATE"){
@@ -221,6 +222,22 @@ app.post('/macros/:area/:macro', function(req, res) {
 		lirc_node.irsend.simulate(codeString, function() { setTimeout(nextCommand, 100); });
 	     } else {
 		  // By default, wait 100msec before calling next command
+=======
+            	if (command[0] == "delay") 
+		{
+                	setTimeout(nextCommand, command[1]);
+            	} 
+		else if(command[0] == "SIMULATE")
+		{
+			var code = config.codes[command[1]][command[2]];
+	
+			var codeString = code + " 00 " + command[2] + " " + command[1];
+			
+			lirc_node.irsend.simulate(codeString, function() { setTimeout(nextCommand, 100); });
+		} 
+		else 
+		{
+>>>>>>> origin/master
                 lirc_node.irsend.send_once(command[1], command[2], function() { setTimeout(nextCommand, 100); });
             }
         };
