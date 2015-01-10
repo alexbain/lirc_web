@@ -82,6 +82,7 @@
 
 			var newTable = document.createElement("table");
 			newTable.style.width = "100%";
+			newTable.className = "table table-striped table-hover";
 			newTable.id = "ScheduleTable";
 			var newRow = document.createElement("tr");
 			var newHeader1 = document.createElement("th");
@@ -100,6 +101,9 @@
 				newHeader3.appendChild(header3Node);
 				newRow.appendChild(newHeader3);
 			newTable.appendChild(newRow);
+			var tableBody = document.createElement("tbody");
+			newTable.appendChild(tableBody);
+
 
 			for(var i = 0; i < items.length; i++)
 			{
@@ -142,7 +146,7 @@
 					daysFromNow = (6 - currDate.day()) + daysIndex+1;
 				}	
 
-				//console.log("Days From Now: " + daysFromNow);	
+				//console.log("Days From Now: " + daysFromNow);
 				var currMonth;
 				var currDay;
 				if(currDate.month()+1 < 10)
@@ -154,7 +158,7 @@
 				else
 					currDay= "" + currDate.date();
 
-				var dater = currDate.year() + "-0" + (currDate.month()+1) + "-0" + currDate.date() + " 00:00";
+				var dater = currDate.year() + "-" + currMonth + "-" + currDay + " 00:00";
 				
 				var tempDay = moment(dater);
 				tempDay.add(daysFromNow, 'days');
@@ -166,7 +170,6 @@
 				//console.log(currDate.format());
 				
 				var timeText = secondsToString(tempDay.diff(currDate)*0.001);		
-
 				var newRow = document.createElement("tr");
 				var newColumn = document.createElement("td");
 				newColumn.align = "center";
@@ -190,7 +193,7 @@
 					newColumn2.appendChild(triggerTextNode );
 				newRow.appendChild(newColumn2);
 
-				newTable.appendChild(newRow);
+				tableBody.appendChild(newRow);
 
 				setTimeout(updateTimer, 1000, i, tempDay.diff(currDate), items[i][1], items[i][2]);
 			}
@@ -202,7 +205,7 @@
 		function updateTimer(element, time, remote, command)
 		{
 			var timeText = secondsToString((time - 1000)*0.001);
-			//console.log(timeText);
+			console.log("Time Text: " + timeText);
 			var newElement = document.getElementById(element + remote);
 			newElement .innerHTML = timeText;
 			if(time <= 0)
@@ -227,13 +230,13 @@
 			if(numyears > 0)
 				output += numyears + " years ";
 			if(numdays > 0)
-				output += numdays + " days ";
+				output += numdays + " d ";
 			if(numhours > 0)
-				output += numhours + " hours ";
+				output += numhours + " h ";
 			if(numminutes > 0)
-				output += numminutes + " minutes ";
+				output += numminutes + " m ";
 			if(numseconds)
-				output += numseconds + " seconds";
+				output += numseconds + " s";
 			return output;		
 		}
 </script>
