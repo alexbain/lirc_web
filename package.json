@@ -8,7 +8,9 @@
     "express": "3.0.6",
     "lirc_node": "*",
     "swig": "0.13.5",
-    "consolidate": "*"
+    "consolidate": "*",
+    "moment": "2.9.0",
+    "moment-timezone": "0.2.5"
   },
   "devDependencies": {
     "mocha": "*",
