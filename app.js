@@ -93,6 +93,15 @@ function createTimers()
 			daysFromNow = (6 - currDate.day()) + daysIndex+1;
 		}	
 
+		if(currDate.month()+1 < 10)
+			currMonth = "0" + (currDate.month()+1);
+		else
+			currMonth = "" + (currDate.month()+1);
+		if(currDate.date() < 10)
+			currDay= "0" + currDate.date();
+		else
+			currDay= "" + currDate.date();
+
 		var dater = currDate.year() + "-0" + (currDate.month()+1) + "-0" + currDate.date() + " 00:00";
 		
 		var tempDay = moment.tz(dater, ""+config.schedule["timezone"][0]);

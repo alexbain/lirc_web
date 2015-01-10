@@ -38,9 +38,7 @@
 		function removeExtraText()
 		{
 			clearInterval(counter);
-			
 			counter = setInterval('decreaseOpacity(.05)', 100);	
-			//document.getElementById("statusText").innerHTML = "";
 		}
 
 		function decreaseOpacity(val)
@@ -146,7 +144,6 @@
 					daysFromNow = (6 - currDate.day()) + daysIndex+1;
 				}	
 
-				//console.log("Days From Now: " + daysFromNow);
 				var currMonth;
 				var currDay;
 				if(currDate.month()+1 < 10)
