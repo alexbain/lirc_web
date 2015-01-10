@@ -27,8 +27,8 @@ $(function() {
             error: function(xhr, type) {}
         });
     });
-	
-	//command-simulator buttons send a command as a SIMULATE Lirc event
+
+    // command-simulator buttons send a single command acting as an LIRC simulator when clicked
     $('.command-simulator').on('click', function(evt) {
         $.ajax({
             type: "POST",
@@ -100,6 +100,8 @@ $(function() {
     // Back button shown on remote pages
     $('.back').on('click', function(evt) {
         $('.remote.active').removeClass('active');
+	 $('.scheduledItems.active').removeClass('active');
+	 $('.scheduleBtn').removeClass('hidden');
         $('.remotes-nav').removeClass('hidden');
         $('.macros-nav').removeClass('hidden');
         $('.back').addClass('hidden');
@@ -113,6 +115,19 @@ $(function() {
         var href = $(this).attr('href');
         $('.remotes-nav').addClass('hidden');
         $('.macros-nav').addClass('hidden');
+	 $('.scheduleBtn').addClass('hidden');
+        $(href).addClass('active');
+        $('.back').removeClass('hidden');
+        $('#title').html($(this).html());
+        $('#titlebar').addClass('is-remote');
+    });
+
+$('.scheduleBtn a').on('click', function(evt) {
+        evt.preventDefault();
+        var href = $(this).attr('href');
+        $('.remotes-nav').addClass('hidden');
+        $('.macros-nav').addClass('hidden');
+	 $('.scheduleBtn').addClass('hidden');
         $(href).addClass('active');
         $('.back').removeClass('hidden');
         $('#title').html($(this).html());
@@ -123,4 +138,3 @@ $(function() {
     OSUR.fastClick = new FastClick(document.body);
 
 });
-
