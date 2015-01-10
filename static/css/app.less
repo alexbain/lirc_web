@@ -1,112 +1,110 @@
-// Colors
-@colorWetAsphalt: #34495E;
-@colorConcrete: #95A5A6;
-@colorSilver: #BDC3C7;
-@colorClouds: #ECF0F1;
-@colorPeterRiver: #3498DB;
-@colorGreenSea: #16A085;
-@colorTurqoise: #1ABC9C;
-
 html {
   height: 100%;
 }
-
 body {
   height: 100%;
 }
-
 body {
-  margin: 0;
-  padding: 70px 0 0 0;
-
+  margin: 0 0 50px 0;
+  padding: 70px 0 150px 0;
   -webkit-touch-callout: none;
   -webkit-text-size-adjust: none;
   -webkit-user-select: none;
   -webkit-highlight: none;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-
+.colorSync body {
+  background-color: #000;
+  margin: 0;
+  padding: 70px 0 0 0;
+  -webkit-touch-callout: none;
+  -webkit-text-size-adjust: none;
+  -webkit-user-select: none;
+  -webkit-highlight: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
 ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
-
 .commands li {
   margin: 20px 0;
   padding: 0;
 }
-
 h1 {
-  background: @colorWetAsphalt;
+  background: #34495e;
   color: #fff;
   margin: 0 0 30px;
   padding: 10px 0;
   text-align: center;
   z-index: 5;
-
   left: 0;
   position: fixed;
   top: 0;
   width: 100%;
-
-  &.is-remote {
-    background: @colorPeterRiver;
-  }
 }
-
+h1.is-remote {
+  background: #3498db;
+}
 .command {
   margin: 20px 0;
 }
-
 .command:nth-child(even) .btn-primary {
-  background: @colorGreenSea;
+  background: #16a085;
 }
-
 .no-touch .command-link:hover {
   background: #2fe2bf;
 }
-
 .no-touch .command-link:active {
   background: #16a085;
 }
-
 .command-link.active {
   background: #2fe2bf !important;
 }
-
 .remote-link.active {
   background: #5dade2 !important;
 }
-
 .btn-wide {
   padding-left: 0;
   padding-right: 0;
   width: 100%;
 }
-
 .remote {
   margin: 0;
   padding: 0;
   position: relative;
 }
-
-.remotes-nav,
-.macros-nav {
+.remotes-nav {
+  text-align: center;
+}
+.remotes-nav a {
+  margin-left: auto;
+  margin-right: auto;
+  width: 33%;
+  height: 25px;
+  margin: 0px 0px 5px 5px;
 }
 
-.remotes-nav li,
-.macros-nav li {
-  margin: 20px 0;
+.scheduleBtn {
+  text-align: center;
 }
-
+.scheduleBtn a {
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  height: 25px;
+  margin: 0px 0px 5px 5px;
+}
+.macros-nav button {
+  margin: 0px 0px 5px 5px;
+}
 .back {
   position: absolute;
   top: 7px;
   left: 8px;
   cursor: pointer;
 }
-
 a,
 a:hover,
 a:active,
@@ -119,16 +117,20 @@ a:active,
   transition: 0s !important;
   -webkit-backface-visibility: hidden !important;
 }
-
 #container {
   margin: 0 40px;
 }
-
 .remote {
   display: none;
 }
-
 .remote.active {
+  display: block;
+}
+
+.scheduledItems {
+  display: none;
+}
+.scheduledItems.active {
   display: block;
 }
 
