@@ -12,8 +12,6 @@ var moment = require('moment-timezone');
 // Precompile templates
 var JST = {
 	index: swig.compileFile(__dirname + '/templates/index.swig'),
-	schedule: swig.compileFile(__dirname + '/templates/schedule.swig')
-
 };
 
 // Create app
@@ -54,6 +52,7 @@ function createTimers()
 {	
 	var daysOfWeek = ["SUN", "MON", "TUE", "WED", "THUR", "FRI", "SAT"];
 	
+
 	for(var i = 0; i < config.schedule["items"].length; i++)
 	{
 		var currDate = moment().tz("" + config.schedule["timezone"][0]);
@@ -210,7 +209,6 @@ app.post('/macros/:area/:macro', function(req, res) {
             // increment
             i = i + 1;
 
-<<<<<<< HEAD
             if (command[0] == "delay") {
                 setTimeout(nextCommand, command[1]);
             } else if(command[0] == "SIMULATE"){
@@ -222,22 +220,6 @@ app.post('/macros/:area/:macro', function(req, res) {
 		lirc_node.irsend.simulate(codeString, function() { setTimeout(nextCommand, 100); });
 	     } else {
 		  // By default, wait 100msec before calling next command
-=======
-            	if (command[0] == "delay") 
-		{
-                	setTimeout(nextCommand, command[1]);
-            	} 
-		else if(command[0] == "SIMULATE")
-		{
-			var code = config.codes[command[1]][command[2]];
-	
-			var codeString = code + " 00 " + command[2] + " " + command[1];
-			
-			lirc_node.irsend.simulate(codeString, function() { setTimeout(nextCommand, 100); });
-		} 
-		else 
-		{
->>>>>>> origin/master
                 lirc_node.irsend.send_once(command[1], command[2], function() { setTimeout(nextCommand, 100); });
             }
         };
