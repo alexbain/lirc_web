@@ -143,6 +143,17 @@
 				}	
 
 				//console.log("Days From Now: " + daysFromNow);	
+				var currMonth;
+				var currDay;
+				if(currDate.month()+1 < 10)
+					currMonth = "0" + (currDate.month()+1);
+				else
+					currMonth = "" + (currDate.month()+1);
+				if(currDate.date() < 10)
+					currDay= "0" + currDate.date();
+				else
+					currDay= "" + currDate.date();
+
 				var dater = currDate.year() + "-0" + (currDate.month()+1) + "-0" + currDate.date() + " 00:00";
 				
 				var tempDay = moment(dater);
