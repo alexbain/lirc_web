@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
 "schedule": {
 	"items": [
 		[ "SEND_ONCE", "Receiver_Zone2", "Power", "MON", 1, 1 ],
@@ -15,8 +14,6 @@
 	]	
 },
 
-=======
->>>>>>> origin/master
   "simulators":{
 	"Outlets":{
 	 "Upstairs_Outlet_On": true,
