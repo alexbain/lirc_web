@@ -47,7 +47,7 @@ describe('lirc_web', function() {
         });
 		
 		it('should have POST route to send a simulate command', function(done) {
-            assert(request(app).post('/remotes/:remote/:command/:code/simulate').expect(200, done));
+            assert(request(app).post('/remotes/Outlets/Upstairs_Outlet_On/0000000000000001/simulate').expect(200, done));
         });
 
         it('should have POST route to stop repeatedly sending a command', function(done) {
