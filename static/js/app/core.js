@@ -100,8 +100,8 @@ $(function() {
     // Back button shown on remote pages
     $('.back').on('click', function(evt) {
         $('.remote.active').removeClass('active');
-	 $('.scheduledItems.active').removeClass('active');
-	 $('.scheduleBtn').removeClass('hidden');
+		$('.scheduledItems.active').removeClass('active');
+		$('.scheduleBtn').removeClass('hidden');
         $('.remotes-nav').removeClass('hidden');
         $('.macros-nav').removeClass('hidden');
         $('.back').addClass('hidden');
@@ -112,10 +112,12 @@ $(function() {
     // Navigate to remote pages
     $('.remotes-nav a').on('click', function(evt) {
         evt.preventDefault();
+		var new_position = $('body').offset();
+		window.scrollTo(new_position.left,new_position.top);
         var href = $(this).attr('href');
         $('.remotes-nav').addClass('hidden');
         $('.macros-nav').addClass('hidden');
-	 $('.scheduleBtn').addClass('hidden');
+		$('.scheduleBtn').addClass('hidden');
         $(href).addClass('active');
         $('.back').removeClass('hidden');
         $('#title').html($(this).html());
@@ -124,10 +126,12 @@ $(function() {
 
 $('.scheduleBtn a').on('click', function(evt) {
         evt.preventDefault();
+		var new_position = $('body').offset();
+		window.scrollTo(new_position.left,new_position.top);
         var href = $(this).attr('href');
         $('.remotes-nav').addClass('hidden');
         $('.macros-nav').addClass('hidden');
-	 $('.scheduleBtn').addClass('hidden');
+		$('.scheduleBtn').addClass('hidden');
         $(href).addClass('active');
         $('.back').removeClass('hidden');
         $('#title').html($(this).html());
