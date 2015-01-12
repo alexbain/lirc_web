@@ -5,6 +5,16 @@ body {
   height: 100%;
 }
 body {
+  margin: 0 0 50px 0;
+  padding: 70px 0 150px 0;
+  -webkit-touch-callout: none;
+  -webkit-text-size-adjust: none;
+  -webkit-user-select: none;
+  -webkit-highlight: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.colorSync body {
+  background-color: #000;
   margin: 0;
   padding: 70px 0 0 0;
   -webkit-touch-callout: none;
@@ -65,9 +75,29 @@ h1.is-remote {
   padding: 0;
   position: relative;
 }
-.remotes-nav li,
-.macros-nav li {
-  margin: 20px 0;
+.remotes-nav {
+  text-align: center;
+}
+.remotes-nav a {
+  margin-left: auto;
+  margin-right: auto;
+  width: 33%;
+  height: 25px;
+  margin: 0px 0px 5px 5px;
+}
+
+.scheduleBtn {
+  text-align: center;
+}
+.scheduleBtn a {
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  height: 25px;
+  margin: 0px 0px 5px 5px;
+}
+.macros-nav button {
+  margin: 0px 0px 5px 5px;
 }
 .back {
   position: absolute;
@@ -96,6 +126,14 @@ a:active,
 .remote.active {
   display: block;
 }
+
+.scheduledItems {
+  display: none;
+}
+.scheduledItems.active {
+  display: block;
+}
+
 .hidden {
   display: none !important;
 }

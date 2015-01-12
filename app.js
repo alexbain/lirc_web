@@ -8,10 +8,10 @@ var express = require('express'),
     path = require('path'),
     swig = require('swig'),
     labels = require('./lib/labels');
-
+var moment = require('moment-timezone');
 // Precompile templates
 var JST = {
-    index: swig.compileFile(__dirname + '/templates/index.swig')
+	index: swig.compileFile(__dirname + '/templates/index.swig'),
 };
 
 // Create app
@@ -46,6 +46,87 @@ if (process.env.NODE_ENV == 'test' || process.env.NODE_ENV == 'development') {
     }
 }
 
+createTimers();
+
+function createTimers()
+{	
+	var daysOfWeek = ["SUN", "MON", "TUE", "WED", "THUR", "FRI", "SAT"];
+	
+
+	for(var i = 0; i < config.schedule["items"].length; i++)
+	{
+		var currDate = moment().utcOffset("" + config.schedule["timezone"][0]);
+		var daysIndex;
+		for(var j = 0; j < daysOfWeek.length; j++)
+		{
+			if(config.schedule["items"][i][3] == daysOfWeek[j])
+				daysIndex = j;
+		}
+
+		var daysFromNow;
+
+		if(currDate.day() == daysIndex)
+		{
+			//if the current hour is greater than the desired hour
+			if(currDate.hour() > config.schedule["items"][i][4])
+			{
+				daysFromNow = 7;
+			}
+			else if(currDate.hour() == config.schedule["items"][i][4])
+			{
+				if(currDate.minute() >= config.schedule["items"][i][5])
+					daysFromNow = 7;
+				else
+					daysFromNow = 0;
+			}
+			else
+			{
+				daysFromNow = 0;
+			}			
+		}
+		else if(currDate.day() < daysIndex)
+		{
+			daysFromNow = daysIndex - currDate.day();
+		}
+		else
+		{
+			daysFromNow = (6 - currDate.day()) + daysIndex+1;
+		}	
+
+		if(currDate.month()+1 < 10)
+			currMonth = "0" + (currDate.month()+1);
+		else
+			currMonth = "" + (currDate.month()+1);
+		if(currDate.date() < 10)
+			currDay= "0" + currDate.date();
+		else
+			currDay= "" + currDate.date();
+
+		var dater = currDate.year() + "-0" + (currDate.month()+1) + "-0" + currDate.date() + " 00:00";
+		
+		var tempDay = moment().utcOffset(dater, ""+config.schedule["timezone"][0]);
+		tempDay.add(daysFromNow, 'days');
+		tempDay.hour(config.schedule["items"][i][4]);
+		tempDay.minute(config.schedule["items"][i][5]);
+
+		if(config.schedule["items"][i][0] == "SEND_ONCE")
+		{
+			setTimeout(sendOnce, tempDay.diff(currDate), config.schedule["items"][i][1], config.schedule["items"][i][2]);
+		}
+		else if(config.schedule["items"][i][0] == "SIMULATE")
+		{
+			lirc_node.irsend.simulate(req.params.code + ' 00 ' + req.params.command + ' ' + req.params.remote, function() {});
+
+		}
+	}
+
+}
+
+function sendOnce(command1, command2)
+{
+	lirc_node.irsend.send_once(command1, command2, function() { });
+	console.log("Schedule Triggered. Remote " + command1+ " and Command: " + command2);
+}
 
 // Routes
 
@@ -57,8 +138,11 @@ app.get('/', function(req, res) {
         remotes: lirc_node.remotes,
         macros: config.macros,
         repeaters: config.repeaters,
+	 simulators: config.simulators,
+	 codes: config.codes,
         labelForRemote: labelFor.remote,
-        labelForCommand: labelFor.command
+        labelForCommand: labelFor.command,
+	items: config.schedule["items"]
     }));
 });
 
@@ -90,10 +174,16 @@ app.get('/macros/:macro.json', function(req, res) {
     }
 });
 
-
 // Send :remote/:command one time
 app.post('/remotes/:remote/:command', function(req, res) {
     lirc_node.irsend.send_once(req.params.remote, req.params.command, function() {});
+    res.setHeader('Cache-Control', 'no-cache');
+    res.send(200);
+});
+
+// Send the remote command as a SIMULATE action in Lirc
+app.post('/remotes/:remote/:command/:code/simulate', function(req, res) {
+    lirc_node.irsend.simulate(req.params.code + ' 00 ' + req.params.command + ' ' + req.params.remote, function() {});
     res.setHeader('Cache-Control', 'no-cache');
     res.send(200);
 });
@@ -113,15 +203,15 @@ app.post('/remotes/:remote/:command/send_stop', function(req, res) {
 });
 
 // Execute a macro (a collection of commands to one or more remotes)
-app.post('/macros/:macro', function(req, res) {
+app.post('/macros/:area/:macro', function(req, res) {
 
     // If the macro exists, execute each command in the macro with 100msec
     // delay between each command.
-    if (config.macros && config.macros[req.params.macro]) {
+    if (config.macros && config.macros[req.params.area]) {
         var i = 0;
 
         var nextCommand = function() {
-            var command = config.macros[req.params.macro][i];
+            var command = config.macros[req.params.area][req.params.macro][i];
 
     	    if (!command) { return true; }
 
@@ -130,9 +220,16 @@ app.post('/macros/:macro', function(req, res) {
 
             if (command[0] == "delay") {
                 setTimeout(nextCommand, command[1]);
-            } else {
-                // By default, wait 100msec before calling next command
-                lirc_node.irsend.send_once(command[0], command[1], function() { setTimeout(nextCommand, 100); });
+            } else if(command[0] == "SIMULATE"){
+
+		var code = config.codes[command[1]][command[2]];
+	
+		var codeString = code + " 00 " + command[2] + " " + command[1];
+		
+		lirc_node.irsend.simulate(codeString, function() { setTimeout(nextCommand, 100); });
+	     } else {
+		  // By default, wait 100msec before calling next command
+                lirc_node.irsend.send_once(command[1], command[2], function() { setTimeout(nextCommand, 100); });
             }
         };
 

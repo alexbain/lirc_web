@@ -15,6 +15,8 @@ module.exports = function(grunt) {
                 src: ['static/js/vendor/zepto.min.js',
                       'static/js/vendor/zepto.touch.js',
                       'static/js/vendor/fastclick.js',
+			 'static/js/vendor/moment.min.js',
+			 'static/js/vendor/moment-timezone.js',			 
                       'static/js/app/*.js'],
                 dest: 'static/js/compiled/app.js'
             }
