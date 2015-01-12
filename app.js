@@ -55,7 +55,7 @@ function createTimers()
 
 	for(var i = 0; i < config.schedule["items"].length; i++)
 	{
-		var currDate = moment().tz("" + config.schedule["timezone"][0]);
+		var currDate = moment().utcOffset("" + config.schedule["timezone"][0]);
 		var daysIndex;
 		for(var j = 0; j < daysOfWeek.length; j++)
 		{
@@ -104,7 +104,7 @@ function createTimers()
 
 		var dater = currDate.year() + "-0" + (currDate.month()+1) + "-0" + currDate.date() + " 00:00";
 		
-		var tempDay = moment.tz(dater, ""+config.schedule["timezone"][0]);
+		var tempDay = moment().utcOffset(dater, ""+config.schedule["timezone"][0]);
 		tempDay.add(daysFromNow, 'days');
 		tempDay.hour(config.schedule["items"][i][4]);
 		tempDay.minute(config.schedule["items"][i][5]);
