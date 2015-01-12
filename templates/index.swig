@@ -291,7 +291,7 @@
         {% set remoteName = loop.key %}
         <div class="remote" id="{{ remoteName }}">
           {% for command in remote %}
-               <button style="width:30%; height:50px; margin:0px 0px 5px 5px;" onClick="outputCommand('{{remoteName}} {{command}}')" class="{% if repeaters[remoteName][command] %}command-repeater{% else %}command-link{% endif %} {% if simulators[remoteName][command] %}command-simulator{% else %}command-once{% endif %} btn btn-large btn-primary" {% if simulators[remoteName][command] %} href="/remotes/{{ remoteName }}/{{ command|url_encode }}/{{ codes[remoteName][command] }}" {% else %} href="/remotes/{{ remoteName }}/{{ command|url_encode }}" {% endif%}
+               <button style="width:30%; height:50px; margin:0px 0px 5px 5px;" onClick="outputCommand('{{remoteName}} {{command}}')" class="{% if repeaters[remoteName][command] %}command-repeater{% else if simulators[remoteName][command] %}command-simulator{% else %}command-link{% endif %} {% if simulators[remoteName][command] %}{% else %}command-once{% endif %} btn btn-large btn-primary" {% if simulators[remoteName][command] %} href="/remotes/{{ remoteName }}/{{ command|url_encode }}/{{ codes[remoteName][command] }}" {% else %} href="/remotes/{{ remoteName }}/{{ command|url_encode }}" {% endif%}
 >{{ labelForCommand(remoteName, command) }}</button>
           {% endfor %}
         </div>
