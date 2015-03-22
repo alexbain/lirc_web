@@ -139,6 +139,14 @@ app.get('/refresh', function (req, res) {
   res.redirect('/');
 });
 
+// Get all capabilities of remote
+app.get('/capabilities.json', function(req, res) {
+    res.json({
+        "devices": config.devices,
+        "remotes": lirc_node.remotes
+    });
+});
+
 // List all remotes in JSON format
 app.get('/remotes.json', function (req, res) {
   res.json(refineRemotes(lircNode.remotes));
@@ -167,6 +175,38 @@ app.get('/macros/:macro.json', function (req, res) {
   }
 });
 
+// List all devices in JSON format
+app.get('/devices.json', function(req, res) {
+    res.json(config.devices);
+});
+
+// List all commands for :device in JSON format
+app.get('/devices/:device.json', function(req, res) {
+    if (config.devices && config.devices[req.params.device]) {
+        res.json(config.devices[req.params.device]);
+    } else {
+        res.send(404);
+    }
+});
+
+// Execute device action
+app.post('/devices/:device/:command', function(req, res) {
+
+    // access command:
+    // config.devices[req.param.device].commands[req.params.command]
+
+    var device = config.devices[req.param.device],
+        command = device.commands[req.param.command];
+
+    request({
+        method: command.method,
+        url: command.url,
+        form: command.body
+    });
+
+    res.setHeader('Cache-Control', 'no-cache');
+    res.send(200);
+});
 
 // Send :remote/:command one time
 app.post('/remotes/:remote/:command', function (req, res) {
