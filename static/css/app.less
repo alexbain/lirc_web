@@ -91,26 +91,33 @@ h1 {
   background: @colorGreyBtn !important;
 }
 
+.device-link.active {
+  background: #5dade2 !important;
+}
+
 .btn-wide {
   padding-left: 0;
   padding-right: 0;
   width: 100%;
 }
 
-.remote {
+.remote,
+.device {
   margin: 0;
   padding: 0;
   position: relative;
 }
 
 .remotes-nav,
-.macros-nav,
-.gpios-nav {
+.devices-nav,
+.gpios-nav,
+.macros-nav {
 }
 
 .remotes-nav li,
-.macros-nav li,
-.gpios-nav li {
+.devices-nav li,
+.gpios-nav li,
+.macros-nav li {
   margin: 20px 0;
 }
 
@@ -138,11 +145,13 @@ a:active,
   margin: 0 40px;
 }
 
-.remote {
+.remote,
+.device {
   display: none;
 }
 
-.remote.active {
+.remote.active,
+.device.active {
   display: block;
 }
 

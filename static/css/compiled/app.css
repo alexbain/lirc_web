@@ -21,7 +21,7 @@ ul {
   padding: 0;
 }
 h1 {
-  background: #34495e;
+  background: #34495E;
   color: #fff;
   font-family: LatoBold;
   margin: 0 0 30px;
@@ -34,13 +34,13 @@ h1 {
   width: 100%;
 }
 h1.is-remote {
-  background: #3498db;
+  background: #3498DB;
 }
 .command {
   margin: 20px 0;
 }
 .command:nth-child(even) .btn-primary {
-  background: #16a085;
+  background: #16A085;
 }
 .no-touch .command-link:hover {
   background: #2fe2bf;
@@ -63,19 +63,24 @@ h1.is-remote {
 .gpio-link.active {
   background: #cccccc !important;
 }
+.device-link.active {
+  background: #5dade2 !important;
+}
 .btn-wide {
   padding-left: 0;
   padding-right: 0;
   width: 100%;
 }
-.remote {
+.remote,
+.device {
   margin: 0;
   padding: 0;
   position: relative;
 }
 .remotes-nav li,
-.macros-nav li,
-.gpios-nav li {
+.devices-nav li,
+.gpios-nav li,
+.macros-nav li {
   margin: 20px 0;
 }
 .back {
@@ -99,10 +104,12 @@ a:active,
 #container {
   margin: 0 40px;
 }
-.remote {
+.remote,
+.device {
   display: none;
 }
-.remote.active {
+.remote.active,
+.device.active {
   display: block;
 }
 .hidden {

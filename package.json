@@ -30,6 +30,7 @@
     "mocha": "2.3.4",
     "nodemon": "1.8.1",
     "should": "^8.1.1",
+    "request": "~2.53.0",
     "sinon": "1.17.2",
     "supertest": "1.1.0"
   },
