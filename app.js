@@ -35,6 +35,10 @@ if (process.env.NODE_ENV == 'test' || process.env.NODE_ENV == 'development') {
     lirc_node.remotes = require(__dirname + '/test/fixtures/remotes.json');
     config = require(__dirname + '/test/fixtures/config.json');
 } else {
+    _init();
+}
+
+function _init() {
     lirc_node.init();
 
     // Config file is optional
@@ -45,7 +49,6 @@ if (process.env.NODE_ENV == 'test' || process.env.NODE_ENV == 'development') {
         console.log("WARNING: Cannot find config.json!");
     }
 }
-
 
 // Routes
 
@@ -60,6 +63,12 @@ app.get('/', function(req, res) {
         labelForRemote: labelFor.remote,
         labelForCommand: labelFor.command
     }));
+});
+
+// Refresh
+app.get('/refresh', function(req, res) {
+    _init();
+    res.redirect('/');
 });
 
 // List all remotes in JSON format
