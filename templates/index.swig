@@ -57,8 +57,10 @@
     <div class="next"></div>
 
     <footer>
-    <a href="/refresh">Refresh</a> | <a href="http://opensourceuniversalremote.com/">powered by Open Source Universal Remote</a>
+	    <p><a href="/refresh">Refresh</a></p>
+      <p><a href="http://opensourceuniversalremote.com/">Powered by Open Source Universal Remote</a></p>
     </footer>
+
     <script src="js/compiled/app.js" type="text/javascript" charset="utf-8"></script>
   </body>
 </html>
