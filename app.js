@@ -38,6 +38,8 @@ if (process.env.NODE_ENV == 'test' || process.env.NODE_ENV == 'development') {
     _init();
 }
 
+lirc_node.remotes = refineRemotes(lirc_node.remotes);
+
 function _init() {
     lirc_node.init();
 
@@ -49,6 +51,15 @@ function _init() {
         console.log("WARNING: Cannot find config.json!");
     }
 }
+
+function refineRemotes(remotes) {
+    var newRemotes = {};
+    for(remote in remotes) {
+        commands = getCommandsForRemote(remote);
+        newRemotes[remote] = commands;
+    };
+    return newRemotes;        
+} 
 
 function getCommandsForRemote(remoteName) {
     var commands = lirc_node.remotes[remoteName];
@@ -96,7 +107,7 @@ app.get('/remotes.json', function(req, res) {
 // List all commands for :remote in JSON format
 app.get('/remotes/:remote.json', function(req, res) {
     if (lirc_node.remotes[req.params.remote]) {
-        res.json(getCommandsForRemote(req.params.remote));
+        res.json(lirc_node.remotes[req.params.remote]);
     } else {
         res.send(404);
     }
