@@ -29,5 +29,14 @@
   },
   "remoteLabels": {
     "LircNamespace": "LIRC namespace"
+  },
+  "blacklists": {
+    "LightControl": [
+      "S2",
+      "S4",
+      "S6",
+      "S7",
+      "S8"
+    ]
   }
 }

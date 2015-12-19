@@ -50,6 +50,23 @@ function _init() {
     }
 }
 
+function getCommandsForRemote(remoteName) {
+    var commands = lirc_node.remotes[remoteName];
+
+    if (isBlacklistExisting(remoteName)){
+        blacklist = config.blacklists[remoteName]
+        commands = commands.filter( function(command) {
+            return blacklist.indexOf(command) < 0;
+        });
+    }
+
+    return commands;
+}
+
+function isBlacklistExisting(remoteName) {
+    return config.blacklists && config.blacklists[remoteName];
+}
+
 // Routes
 
 var labelFor = labels(config.remoteLabels, config.commandLabels)
@@ -79,7 +96,7 @@ app.get('/remotes.json', function(req, res) {
 // List all commands for :remote in JSON format
 app.get('/remotes/:remote.json', function(req, res) {
     if (lirc_node.remotes[req.params.remote]) {
-        res.json(lirc_node.remotes[req.params.remote]);
+        res.json(getCommandsForRemote(req.params.remote));
     } else {
         res.send(404);
     }
