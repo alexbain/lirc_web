@@ -38,8 +38,6 @@ if (process.env.NODE_ENV == 'test' || process.env.NODE_ENV == 'development') {
     _init();
 }
 
-lirc_node.remotes = refineRemotes(lirc_node.remotes);
-
 function _init() {
     lirc_node.init();
 
@@ -52,31 +50,31 @@ function _init() {
     }
 }
 
-function refineRemotes(remotes) {
+function refineRemotes(myRemotes) {
+    function getCommandsForRemote(remoteName) {
+        var commands = myRemotes[remoteName];
+
+        if (isBlacklistExisting(remoteName)){
+            blacklist = config.blacklists[remoteName]
+            commands = commands.filter( function(command) {
+                return blacklist.indexOf(command) < 0;
+            });
+        }
+
+        return commands;
+    }
+
+    function isBlacklistExisting(remoteName) {
+        return config.blacklists && config.blacklists[remoteName];
+    }
+
     var newRemotes = {};
-    for(remote in remotes) {
+    for(remote in myRemotes) {
         commands = getCommandsForRemote(remote);
         newRemotes[remote] = commands;
     };
     return newRemotes;        
 } 
-
-function getCommandsForRemote(remoteName) {
-    var commands = lirc_node.remotes[remoteName];
-
-    if (isBlacklistExisting(remoteName)){
-        blacklist = config.blacklists[remoteName]
-        commands = commands.filter( function(command) {
-            return blacklist.indexOf(command) < 0;
-        });
-    }
-
-    return commands;
-}
-
-function isBlacklistExisting(remoteName) {
-    return config.blacklists && config.blacklists[remoteName];
-}
 
 // Routes
 
@@ -84,8 +82,9 @@ var labelFor = labels(config.remoteLabels, config.commandLabels)
 
 // Web UI
 app.get('/', function(req, res) {
+    var refined_remotes = refineRemotes(lirc_node.remotes);
     res.send(JST['index'].render({
-        remotes: lirc_node.remotes,
+        remotes: refined_remotes,
         macros: config.macros,
         repeaters: config.repeaters,
         labelForRemote: labelFor.remote,
@@ -101,13 +100,13 @@ app.get('/refresh', function(req, res) {
 
 // List all remotes in JSON format
 app.get('/remotes.json', function(req, res) {
-    res.json(lirc_node.remotes);
+    res.json(refineRemotes(lirc_node.remotes));
 });
 
 // List all commands for :remote in JSON format
 app.get('/remotes/:remote.json', function(req, res) {
     if (lirc_node.remotes[req.params.remote]) {
-        res.json(lirc_node.remotes[req.params.remote]);
+        res.json(refineRemotes(lirc_node.remotes)[req.params.remote]);
     } else {
         res.send(404);
     }
@@ -180,7 +179,6 @@ app.post('/macros/:macro', function(req, res) {
     res.setHeader('Cache-Control', 'no-cache');
     res.send(200);
 });
-
 
 // Default port is 3000
 app.listen(3000);
