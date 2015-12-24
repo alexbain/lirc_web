@@ -180,6 +180,23 @@ app.post('/macros/:macro', function(req, res) {
     res.send(200);
 });
 
-// Default port is 3000
-app.listen(3000);
-console.log("Open Source Universal Remote UI + API has started on port 3000.");
+// Listen (http)
+var port = 3000;
+if ( config.server && config.server.port){
+    port = config.server.port;
+}
+app.listen(port);
+console.log("Open Source Universal Remote UI + API has started on port " + port + "(http).");
+
+// Listen (https)
+if ( config.server && config.server.ssl &&  config.server.ssl_cert && config.server.ssl_key && config.server.ssl_port){
+    var https = require('https');
+    var fs = require('fs');
+    
+    var options = {
+        key: fs.readFileSync(config.server.ssl_key),
+        cert: fs.readFileSync(config.server.ssl_cert)
+    };
+    https.createServer(options, app).listen(config.server.ssl_port);
+    console.log("Open Source Universal Remote UI + API has started on port " + config.server.ssl_port + "(https).");
+}
