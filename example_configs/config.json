@@ -1,4 +1,11 @@
 {
+  "server" : {
+    "port" : 3000,
+    "ssl" : false,
+    "ssl_cert" : "/home/pi/lirc_web/server.cert",
+    "ssl_key" : "/home/pi/lirc_web/server.key",
+    "ssl_port" : 3001
+  },
   "repeaters": {
     "SonyTV": {
       "VolumeUp": true,
@@ -7,11 +14,11 @@
   },
   "macros": {
     "Xbox360": [
-      { "SonyTV": "Power" },
-      { "SonyTV": "Xbox360" },
-      { "Yamaha": "Power" },
-      { "Yamaha": "Xbox360" },
-      { "Xbox360": "Power" }
+      [ "SonyTV", "Power" ],
+      [ "SonyTV", "Xbox360" ],
+      [ "Yamaha", "Power" ],
+      [ "Yamaha", "Xbox360" ],
+      [ "Xbox360", "Power" ]
     ]
   },
   "commandLabels": {
