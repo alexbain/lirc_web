@@ -16,7 +16,7 @@
   <body ontouchstart="">
     <div id="container">
       <h1 id="titlebar">
-        <a class="back hidden"><img src="/images/left-arrow.png" height="40" width="40" /></a>
+        <a class="back hidden"><img src="images/left-arrow.png" height="40" width="40" /></a>
         <span id="title" data-text="Universal Remote">Universal Remote</span>
       </h1>
       <ul class="remotes-nav">
