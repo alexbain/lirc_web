@@ -3,7 +3,21 @@ var assert = require('assert');
 var sinon = require('sinon');
 
 // config fixture
-var config = require('../fixtures/config.json');
+var config = {
+  'macros': {
+    'Play Xbox 360': [
+      ['SonyTV', 'Power'],
+      ['SonyTV', 'Xbox360'],
+      ['Yamaha', 'Power'],
+      ['Yamaha', 'Xbox360'],
+      ['Xbox360', 'Power'],
+    ],
+    'Macro With Delay': [
+      ['delay', 500],
+      ['Yamaha', 'Power'],
+    ],
+  },
+};
 
 describe('macros', function () {
   var lircNode;

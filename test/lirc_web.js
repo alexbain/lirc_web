@@ -4,8 +4,14 @@ var request = require('supertest');
 var jsdom = require('jsdom');
 var fs = require('fs');
 var jquery = fs.readFileSync('node_modules/jquery/dist/jquery.js', 'utf-8');
+var configFixture = require(__dirname + '/fixtures/config.json');
+var gpioMock = require('./lib/wiring-pi-mock');
+var gpio = require('../lib/gpio');
 
 describe('lirc_web', function () {
+  before(function () {
+    gpio.init(configFixture.gpios);
+  });
   describe('routes', function () {
     // Root route
     it('should have an index route "/"', function (done) {
@@ -25,6 +31,10 @@ describe('lirc_web', function () {
       assert(request(app).get('/remotes/Xbox360.json').expect(200, done));
     });
 
+    it('should return 404 for unknown remote', function (done) {
+      assert(request(app).get('/remotes/DOES_NOT_EXIST.json').expect(404, done));
+    });
+
     it('should have GET route for JSON list of commands for macro', function (done) {
       assert(request(app).get('/macros/Play%20Xbox%20360.json').expect(200, done));
     });
@@ -33,8 +43,8 @@ describe('lirc_web', function () {
       assert(request(app).get('/macros/Listen%20to%20Music%20%2F%20Jams.json').expect(200, done));
     });
 
-    it('should return 404 for unknown remote', function (done) {
-      assert(request(app).get('/remotes/DOES_NOT_EXIST.json').expect(404, done));
+    it('should have GET route for JSON list of gpio pins', function (done) {
+      assert(request(app).get('/gpios.json').expect(200, done));
     });
 
     // Sending commands
@@ -53,6 +63,22 @@ describe('lirc_web', function () {
     // Sending macros
     it('should have POST route for sending a macro', function (done) {
       assert(request(app).post('/macros/Play%20Xbox%20360').expect(200, done));
+    });
+
+    // Sending GPIO change requests
+    it('should have POST route for gpio toggle', function (done) {
+      var before = 0;
+      gpioMock.initPinsWith(before);
+      request(app)
+        .post('/gpios/26')
+        .set('Accept', 'application/json')
+        .expect(200, function (err, result) {
+          var pinDescription = JSON.parse(result.text);
+          assert(pinDescription.pin, 26, 'response contains requested pin number');
+          assert(pinDescription.state, 1, 'response contains requested pin state');
+          assert.equal(gpioMock.emulatedPins[26], 1, 'pin state has been changed');
+          done();
+        });
     });
   });
 
@@ -98,6 +124,15 @@ describe('lirc_web', function () {
       $('ul.remotes-nav').each(function (idx, elem) {
         assert(elem.textContent.match(/LIRC namespace/) !== null);
         assert(elem.textContent.match(/LircNamespace/) === null);
+      });
+    });
+
+    it('should contain all gpio buttons', function () {
+      var gpioButtons = $('button.gpio-link');
+      assert.equal(gpioButtons.length, configFixture.gpios.length);
+      gpioButtons.each(function (idx, elem) {
+        var pin = $(elem).attr('pin');
+        assert.equal(pin, configFixture.gpios[idx].pin);
       });
     });
   });

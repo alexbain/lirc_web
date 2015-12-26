@@ -10,6 +10,7 @@ var swig = require('swig');
 var labels = require('./lib/labels');
 var https = require('https');
 var fs = require('fs');
+var gpio = require('./lib/gpio');
 var macros = require('./lib/macros');
 
 // Precompile templates
@@ -94,6 +95,7 @@ function refineRemotes(myRemotes) {
 if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
   lircNode.remotes = require(__dirname + '/test/fixtures/remotes.json');
   config = require(__dirname + '/test/fixtures/config.json');
+  gpio.overrideWiringPi(require('./test/lib/wiring-pi-mock'));
 } else {
   _init();
 }
@@ -110,6 +112,7 @@ app.get('/', function (req, res) {
     remotes: refinedRemotes,
     macros: config.macros,
     repeaters: config.repeaters,
+    gpios: config.gpios,
     labelForRemote: labelFor.remote,
     labelForCommand: labelFor.command,
   }));
@@ -135,6 +138,20 @@ app.get('/remotes/:remote.json', function (req, res) {
   }
 });
 
+function respondWithGpioState(res) {
+  if (config.gpios) {
+    gpio.updatePinStates();
+    res.json(config.gpios);
+  } else {
+    res.send(404);
+  }
+}
+
+// List all gpio switches in JSON format
+app.get('/gpios.json', function (req, res) {
+  respondWithGpioState(res);
+});
+
 // List all macros in JSON format
 app.get('/macros.json', function (req, res) {
   res.json(config.macros);
@@ -148,7 +165,6 @@ app.get('/macros/:macro.json', function (req, res) {
     res.sendStatus(404);
   }
 });
-
 
 // Send :remote/:command one time
 app.post('/remotes/:remote/:command', function (req, res) {
@@ -171,18 +187,32 @@ app.post('/remotes/:remote/:command/send_stop', function (req, res) {
   res.sendStatus(200);
 });
 
+// toggle /gpios/:gpio_pin
+app.post('/gpios/:gpio_pin', function (req, res) {
+  var newValue = gpio.togglePin(req.params.gpio_pin);
+  res.setHeader('Cache-Control', 'no-cache');
+  res.json(newValue);
+  res.end();
+});
+
+
 // Execute a macro (a collection of commands to one or more remotes)
 app.post('/macros/:macro', function (req, res) {
-  // If the macro exists, execute it
   if (config.macros && config.macros[req.params.macro]) {
     macros.exec(config.macros[req.params.macro], lircNode);
     res.setHeader('Cache-Control', 'no-cache');
-    res.sendStatus(200);
+    if (config.gpios) {
+      respondWithGpioState(res);
+    } else {
+      res.sendStatus(200);
+    }
   } else {
     res.setHeader('Cache-Control', 'no-cache');
     res.sendStatus(404);
   }
 });
+
+gpio.init(config.gpios);
 
 // Listen (http)
 if (config.server && config.server.port) {

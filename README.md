@@ -16,7 +16,7 @@ You'll need to have [LIRC](http://lirc.org) installed and configured on your mac
     npm install -g lirc_web
     lirc_web
 
-Note that you may need to run the `npm install` command with `sudo`.
+Note that you probably have to run the `npm install -g` command with `sudo`.
 
 ### Viewing
 
@@ -36,11 +36,12 @@ You may place this configuration file in one of two locations and `lirc_web` wil
 These are the available configuration options:
 
 1. ``repeaters`` - buttons that repeatedly send their commands while pressed. A common example are the volume buttons on most remote controls. While you hold the volume buttons down, the remote will repeatedly send the volume command to your device.
-2. ``macros`` - a collection of commands that should be executed one after another. This allows you to automate actions like "Play Xbox 360" or "Listen to music via AirPlay". Each step in a macro is described in the format ``[ "REMOTE", "COMMAND" ]``, where ``REMOTE`` and ``COMMAND`` are defined by what you have programmed into LIRC. You can add delays between steps of macros in the format of ``[ "delay", 500 ]``. Note that the delay is measured in milliseconds so 1000 milliseconds = 1 second.
+2. ``macros`` - a collection of commands that should be executed one after another. This allows you to automate actions like "Play Xbox 360" or "Listen to music via AirPlay". Each step in a macro is described in the format ``[ "REMOTE", "COMMAND" ]``, where ``REMOTE`` and ``COMMAND`` are defined by what you have programmed into LIRC. You can add delays between steps of macros in the format of ``[ "delay", 500 ]``. Note that the delay is measured in milliseconds so 1000 milliseconds = 1 second. You can switch GPIO pins in the format of ``[ "gpio", "Receiver", 0 ] `` to set the gpio pin named "Receiver" to off.
 3. ``commandLabels`` - a way to rename commands that LIRC understands (``KEY_POWER``, ``KEY_VOLUMEUP``) with labels that humans prefer (``Power``, ``Volume Up``).
 4. ``remoteLabels`` - a way to rename the remotes that LIRC understands (``XBOX360``) with labels that humans prefer (``Xbox 360``).
 5. ``blacklists`` - a way to hide unused commands from your remotes.
 6. ``server`` - server configuration settings (ports, [SSL](http://serverfault.com/a/366374)).
+7. ``gpios`` - configure gpio pins that drive some hardware like a relais switching the power supply of a device.
 
 
 #### Example config.json:
@@ -62,6 +63,9 @@ These are the available configuration options:
       },
       "macros": {
         "Play Xbox 360": [
+          [ "gpio", "TV", 1],
+          [ "gpio", "Receiver", 1],
+          [ "gpio", "Xbox", 1],
           [ "SonyTV", "Power" ],
           [ "delay", 500 ],
           [ "SonyTV", "Xbox360" ],
@@ -71,10 +75,16 @@ These are the available configuration options:
           [ "Xbox360", "Power" ]
         ],
         "Listen to Music": [
+          [ "gpio", "Receiver", 1],
           [ "Yamaha", "Power" ],
           [ "delay", 500 ],
           [ "Yamaha", "AirPlay" ]
-        ]
+        ],
+        "all off": [
+          [ "gpio", "TV", 0],
+          [ "gpio", "Receiver", 0],
+          [ "gpio", "Xbox", 0]
+        ],
       },
       "commandLabels": {
         "Yamaha": {
@@ -92,7 +102,15 @@ These are the available configuration options:
            "AUX2",
            "AUX3"
          ]
-      }
+      },
+      "gpios": [
+        {"name": "Receiver",
+         "pin": 19},
+        {"name": "TV",
+         "pin": 16},
+        {"name": "Xbox",
+         "pin": 13}
+      ]
     }
 
 Please see the `example_configs/` directory.
@@ -107,10 +125,12 @@ API endpoints:
 * ``GET`` ``/remotes.json`` - Returns all known remotes and commands
 * ``GET`` ``/remotes/:remote.json`` - Returns all known commands for remote ``:remote``
 * ``GET`` ``/macros.json`` - Returns all known macros
+* ``GET`` ``/gpios.json`` - Returns all configured GPIO pins
 * ``POST`` ``/remotes/:remote/:command`` - Send ``:command`` to ``:remote`` one time
 * ``POST`` ``/remotes/:remote/:command/send_start`` - Begin sending ``:command``
 * ``POST`` ``/remotes/:remote/:command/send_stop`` - Stop sending ``:command``
 * ``POST`` ``/macros/:macro`` - Send all commands for ``:macro`` one time
+* ``POST`` ``/gpios/:gpio-pin`` - Change the state of the pin
 
 
 ## Development
@@ -130,6 +150,7 @@ Install GruntJS (build environment):
     npm install -g grunt-init
     grunt server
 
+Note that you probably have to run the `npm install -g` command with `sudo`.
 
 **You may need to reload your shell before continuing so the Grunt binares are detected.**
 
