@@ -5,3 +5,5 @@ node_modules/
 .settings/
 *.swp
 npm-debug.log
+server.cert
+server.key

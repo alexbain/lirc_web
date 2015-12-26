@@ -54,6 +54,15 @@ h1.is-remote {
 .remote-link.active {
   background: #5dade2 !important;
 }
+.gpio-link {
+  background: #d3898a !important;
+}
+.gpio-link.switch_on {
+  background: #9bcc9c !important;
+}
+.gpio-link.active {
+  background: #cccccc !important;
+}
 .btn-wide {
   padding-left: 0;
   padding-right: 0;
@@ -65,7 +74,8 @@ h1.is-remote {
   position: relative;
 }
 .remotes-nav li,
-.macros-nav li {
+.macros-nav li,
+.gpios-nav li {
   margin: 20px 0;
 }
 .back {
