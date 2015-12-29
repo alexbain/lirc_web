@@ -99,7 +99,6 @@ app.get('/macros/:macro.json', function(req, res) {
     }
 });
 
-
 // Send :remote/:command one time
 app.post('/remotes/:remote/:command', function(req, res) {
     lirc_node.irsend.send_once(req.params.remote, req.params.command, function() {});
@@ -122,15 +121,15 @@ app.post('/remotes/:remote/:command/send_stop', function(req, res) {
 });
 
 // Execute a macro (a collection of commands to one or more remotes)
-app.post('/macros/:macro', function(req, res) {
+app.post('/macros/:area/:macro', function(req, res) {
 
     // If the macro exists, execute each command in the macro with 100msec
     // delay between each command.
-    if (config.macros && config.macros[req.params.macro]) {
+    if (config.macros && config.macros[req.params.area]) {
         var i = 0;
 
         var nextCommand = function() {
-            var command = config.macros[req.params.macro][i];
+            var command = config.macros[req.params.area][req.params.macro][i];
 
     	    if (!command) { return true; }
 

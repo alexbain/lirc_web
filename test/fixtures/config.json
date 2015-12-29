@@ -6,17 +6,32 @@
     }
   },
   "macros": {
-    "Play Xbox 360": [
-      [ "SonyTV", "Power" ],
-      [ "SonyTV", "Xbox360" ],
-      [ "Yamaha", "Power" ],
-      [ "Yamaha", "Xbox360" ],
-      [ "Xbox360", "Power" ]
-    ],
-    "Listen to Music": [
-      [ "Yamaha", "Power" ],
-      [ "Yamaha", "AirPlay" ]
-    ]
+    "LivingRoom": {
+      "Play Xbox 360": [
+        [ "SonyTV", "Power" ],
+        [ "SonyTV", "Xbox360" ],
+        [ "Yamaha", "Power" ],
+        [ "Yamaha", "Xbox360" ],
+        [ "Xbox360", "Power" ]
+      ],
+      "Listen to Music": [
+        [ "Yamaha", "Power" ],
+        [ "Yamaha", "AirPlay" ]
+      ]
+    },
+    "Downstairs": {
+      "Play Nintendo": [
+        [ "SonyTV", "Power" ],
+        [ "SonyTV", "Xbox360" ],
+        [ "Yamaha", "Power" ],
+        [ "Yamaha", "Xbox360" ],
+        [ "Xbox360", "Power" ]
+      ],
+      "Listen to Radio": [
+        [ "Yamaha", "Power" ],
+        [ "Yamaha", "AirPlay" ]
+      ]
+    }
   },
   "commandLabels": {
     "LircNamespace": {
@@ -28,6 +43,7 @@
     }
   },
   "remoteLabels": {
-    "LircNamespace": "LIRC namespace"
+    "LircNamespace": "LIRC namespace",
+    "Xbox360": "Xbox 360"
   }
 }
