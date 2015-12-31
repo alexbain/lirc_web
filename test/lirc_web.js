@@ -32,6 +32,10 @@ describe('lirc_web', function() {
             assert(request(app).get('/macros/Play%20Xbox%20360.json').expect(200, done));
         });
 
+        it ('should properly handle macros with / in them', function(done) {
+            assert(request(app).get('/macros/Listen%20to%20Music%20%2F%20Jams.json').expect(200, done));
+        });
+
         it('should return 404 for unknown remote', function(done) {
             assert(request(app).get('/remotes/DOES_NOT_EXIST.json').expect(404, done));
         });
