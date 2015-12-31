@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 As of `v0.1.0`, this project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+
+* `lirc_web` can now be installed globally and called by `lirc_web` from CLI
+* Adding ESLint to the mix and ensuring all JS conforms to Airbnb ES5 standards
+
 ## [0.2.0] - 2015-12-30
 
 * Adding `blacklist` configuration option to hide unused keys from UI (thanks @OvisMaximus)
