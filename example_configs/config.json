@@ -30,5 +30,11 @@
   },
   "remoteLabels": {
      "Xbox360": "Xbox 360"
+  },
+  "blacklists": {
+     "Yamaha": [
+       "AUX2",
+       "AUX3"
+     ]
   }
 }
