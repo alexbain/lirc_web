@@ -1,5 +1,4 @@
-// lirc_web - v0.0.8
-// Alex Bain <alex@alexba.in>
+#! /usr/bin/env node
 
 // Requirements
 var express = require('express'),
@@ -43,7 +42,13 @@ function _init() {
 
     // Config file is optional
     try {
-        config = require(__dirname + '/config.json');
+        try {
+          // Check for config file in current directory
+          config = require(__dirname + '/config.json');
+        } catch(e) {
+          var home = process.env['HOME'];
+          config = require(home + '/.lirc_web_config.json');
+        }
     } catch(e) {
         console.log("DEBUG:", e);
         console.log("WARNING: Cannot find config.json!");

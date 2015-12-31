@@ -12,19 +12,40 @@ This is part of the [Open Source Universal Remote](http://opensourceuniversalrem
 
 You'll need to have [LIRC](http://lirc.org) installed and configured on your machine to use ``lirc_web``. In addition, you'll need to install [nodejs](http://nodejs.org). Once you have LIRC and nodejs installed and configured, you'll be able to install ``lirc_web`` and it's dependencies:
 
+### Method 1: global installation, `lirc_web` available as binary
+
+This is the new, preferred, method.
+
+    npm install -g lirc_web
+    lirc_web
+
+Note that you may need to run the `npm install` command as `sudo`.
+
+### Method 2: local installation
+
+This method is ideal if you expect to tinker with the source code.
+
     git clone git://github.com/alexbain/lirc_web.git
     cd lirc_web
     npm install
     node app.js
 
-You're set! Verify the web interface works by opening ``http://SERVER:3000/`` in a web browser.
+### Viewing
 
-If you want to have the app available via port 80 and start on boot, there are example NGINX and Upstart configuration files included in the ``example_configs/`` directory.
+Verify the web interface works by opening ``http://SERVER:3000/`` in a web browser.
 
+If you want to have `lirc_web`  available via port 80 and start on boot, there are example NGINX and Upstart configuration files included in the ``example_configs/`` directory.
 
 ## Configuration
 
-As of v0.0.8, ``lirc_web`` supports customization through a configuration file (``config.json``) in the root of the project. There are currently six configuration options:
+As of v0.0.8, ``lirc_web`` supports customization through a configuration file.
+
+You may place this configuration file in one of two locations and `lirc_web` will detect it:
+
+1. Place a file named `.lirc_web_config.json` in the home directory of the user running `lirc_web` (Global installation)
+2. Place a file named `config.json` in the root of the `lirc_web` project directory (Local installation)
+
+These are the available configuration options:
 
 1. ``repeaters`` - buttons that repeatedly send their commands while pressed. A common example are the volume buttons on most remote controls. While you hold the volume buttons down, the remote will repeatedly send the volume command to your device.
 2. ``macros`` - a collection of commands that should be executed one after another. This allows you to automate actions like "Play Xbox 360" or "Listen to music via AirPlay". Each step in a macro is described in the format ``[ "REMOTE", "COMMAND" ]``, where ``REMOTE`` and ``COMMAND`` are defined by what you have programmed into LIRC. You can add delays between steps of macros in the format of ``[ "delay", 500 ]``. Note that the delay is measured in milliseconds so 1000 milliseconds = 1 second.
@@ -85,6 +106,8 @@ As of v0.0.8, ``lirc_web`` supports customization through a configuration file (
          ]
       }
     }
+
+Please see the `example_configs/` directory, as well.
 
 
 ## Using the JSON API

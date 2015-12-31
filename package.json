@@ -3,7 +3,8 @@
   "description": "A NodeJS / Express app that creates a web UI + API for LIRC",
   "main": "app.js",
   "version": "0.2.0",
-  "private": true,
+  "private": false,
+  "preferGlobal": true,
   "dependencies": {
     "express": "3.0.6",
     "lirc_node": "0.0.4",
@@ -22,6 +23,9 @@
     "grunt-contrib-watch": "0.6.1",
     "jsdom": "1.1.0",
     "grunt-develop": "0.3.0"
+  },
+  "bin": {
+    "lirc_web" : "./app.js"
   },
   "scripts": {
     "test": "make test"
