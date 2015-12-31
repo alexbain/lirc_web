@@ -31,7 +31,7 @@ As of v0.0.8, ``lirc_web`` supports customization through a configuration file (
 3. ``commandLabels`` - a way to rename commands that LIRC understands (``KEY_POWER``, ``KEY_VOLUMEUP``) with labels that humans prefer (``Power``, ``Volume Up``).
 4. ``remoteLabels`` - a way to rename the remotes that LIRC understands (``XBOX360``) with labels that humans prefer (``Xbox 360``).
 5. ``blacklists`` - a way to ban unused keys of your remote from the GUI.
-6. ``server`` - You can configure the server here. Listener ports, and [SSL](http://serverfault.com/a/366374) settings.
+5. ``server`` - You can configure the server here. Listener ports, and [SSL](http://serverfault.com/a/366374) settings.
 
 
 #### Example config.json:
