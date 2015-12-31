@@ -10,25 +10,12 @@ This is part of the [Open Source Universal Remote](http://opensourceuniversalrem
 
 ## Installation
 
-You'll need to have [LIRC](http://lirc.org) installed and configured on your machine to use ``lirc_web``. In addition, you'll need to install [nodejs](http://nodejs.org). Once you have LIRC and nodejs installed and configured, you'll be able to install ``lirc_web`` and it's dependencies:
-
-### Method 1: global installation, `lirc_web` available as binary
-
-This is the new, preferred, method.
+You'll need to have [LIRC](http://lirc.org) installed and configured on your machine to use ``lirc_web``. In addition, you'll need to install [nodejs](http://nodejs.org). Once you have LIRC and nodejs installed and configured, you'll be able to install ``lirc_web``:
 
     npm install -g lirc_web
     lirc_web
 
-Note that you may need to run the `npm install` command as `sudo`.
-
-### Method 2: local installation
-
-This method is ideal if you expect to tinker with the source code.
-
-    git clone git://github.com/alexbain/lirc_web.git
-    cd lirc_web
-    npm install
-    node app.js
+Note that you may need to run the `npm install` command with `sudo`.
 
 ### Viewing
 
