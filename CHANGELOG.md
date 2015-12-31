@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 As of `v0.1.0`, this project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+
+* Adding `blacklist` configuration option to hide unused keys from UI (thanks @OvisMaximus)
+
 ## [0.1.0] - 2015-12-30
 
 * Locking npm versions to ensure future install work
