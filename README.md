@@ -128,9 +128,13 @@ API endpoints:
 ## Development
 
 Would you like to contribute to and improve ``lirc_web``? Fantastic. To contribute
-patches, run tests or benchmarks, install ``lirc_web`` using the instructions above. Once that is complete, you'll need to setup the development environment.
+patches, run tests or benchmarks, install ``lirc_web`` locally:
 
-Now, you'll need to setup the development environment. ``lirc_web`` uses the [GruntJS](http://gruntjs.com/) built system to make development easier.
+    git clone git://github.com/alexbain/lirc_web.git
+    cd lirc_web
+    npm install
+
+Next, you'll need to setup the development environment. ``lirc_web`` uses the [GruntJS](http://gruntjs.com/) built system to make development easier.
 
 Install GruntJS (build environment):
 
@@ -147,7 +151,7 @@ Install GruntJS (build environment):
 You can run the test suite by running:
 
 ```
-make test
+npm test
 ```
 
 ## Contributing
@@ -168,7 +172,7 @@ The exception to this would be refactoring existing code or changing documentati
 
 (The MIT License)
 
-Copyright (c) 2013 Alex Bain &lt;alex@alexba.in&gt;
+Copyright (c) 2013-2016 Alex Bain &lt;alex@alexba.in&gt;
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
