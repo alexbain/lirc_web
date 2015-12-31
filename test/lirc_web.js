@@ -85,22 +85,40 @@ describe('lirc_web', function() {
     });
 
     describe('json api', function() {
+        var XBOX_COMMANDS = [ 'OpenClose', 'FancyButton', 'OnOff', 'Stop',
+            'Pause', 'Rewind', 'FastForward', 'Prev', 'Next', 'Play',
+            'Display', 'Title', 'DVD_Menu', 'Back', 'Info', 'UpArrow',
+            'LeftArrow', 'RightArrow', 'DownArrow', 'OK', 'Y', 'X', 'A', 'B' ];
+
+        var LIGHT_COMMANDS = ['S1','S3','S5'];
+
+        var REFINED_REMOTES = {
+            "Yamaha": [ 'Power', 'Xbox360', 'Wii', 'VolumeUp', 'VolumeDown', 'DTV/CBL' ],
+            "SonyTV": [ 'Power', 'VolumeUp', 'VolumeDown', 'ChannelUp', 'ChannelDown' ],
+            "Xbox360" : XBOX_COMMANDS,
+            "LightControl": LIGHT_COMMANDS, 
+            "LircNamespace": [ 'KEY_POWER', 'KEY_VOLUMEUP', 'KEY_VOLUMEDOWN', 'KEY_CHANNELUP', 'KEY_CHANNELDOWN' ] 
+        };
+
         it('should return a list of all remotes (and commands) when /remotes.json is accessed', function(done) {
             request(app)
             .get('/remotes.json')
-            .end(function(err, res) {
-                assert.equal(res.status, 200);
-                done();
-            });
+            .set('Accept', 'application/json')
+            .expect(200, REFINED_REMOTES, done);
         });
 
         it('should return a list of all commands for a remote when /remotes/:remote.json is accessed', function(done) {
             request(app)
             .get('/remotes/Xbox360.json')
-            .end(function(err, res) {
-                assert.equal(res.status, 200);
-                done();
-            });
+            .set('Accept', 'application/json')
+            .expect(200, XBOX_COMMANDS, done)
+        });
+
+        it('should return a filtered list of commands when a blacklist exists', function(done) {
+            request(app)
+            .get('/remotes/LightControl.json')
+            .set('Accept', 'application/json')
+            .expect(200, LIGHT_COMMANDS, done)
         });
 
         it('should return a 404 for an unknown remote', function(done) {
