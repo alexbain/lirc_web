@@ -29,8 +29,8 @@ As of v0.0.8, ``lirc_web`` supports customization through a configuration file.
 
 You may place this configuration file in one of two locations and `lirc_web` will detect it:
 
-1. Place a file named `.lirc_web_config.json` in the home directory of the user running `lirc_web` (Global installation)
-2. Place a file named `config.json` in the root of the `lirc_web` project directory (Local installation)
+1. Place a file named `.lirc_web_config.json` in the home directory of the user running `lirc_web` (global installation)
+2. Place a file named `config.json` in the root of the `lirc_web` project directory (local / development installation)
 
 These are the available configuration options:
 
@@ -38,8 +38,8 @@ These are the available configuration options:
 2. ``macros`` - a collection of commands that should be executed one after another. This allows you to automate actions like "Play Xbox 360" or "Listen to music via AirPlay". Each step in a macro is described in the format ``[ "REMOTE", "COMMAND" ]``, where ``REMOTE`` and ``COMMAND`` are defined by what you have programmed into LIRC. You can add delays between steps of macros in the format of ``[ "delay", 500 ]``. Note that the delay is measured in milliseconds so 1000 milliseconds = 1 second.
 3. ``commandLabels`` - a way to rename commands that LIRC understands (``KEY_POWER``, ``KEY_VOLUMEUP``) with labels that humans prefer (``Power``, ``Volume Up``).
 4. ``remoteLabels`` - a way to rename the remotes that LIRC understands (``XBOX360``) with labels that humans prefer (``Xbox 360``).
-5. ``blacklists`` - a way to ban unused keys of your remote from the GUI.
-5. ``server`` - You can configure the server here. Listener ports, and [SSL](http://serverfault.com/a/366374) settings.
+5. ``blacklists`` - a way to hide unused commands from your remotes.
+5. ``server`` - server configuration settings (ports, [SSL](http://serverfault.com/a/366374)).
 
 
 #### Example config.json:
@@ -94,12 +94,12 @@ These are the available configuration options:
       }
     }
 
-Please see the `example_configs/` directory, as well.
+Please see the `example_configs/` directory.
 
 
 ## Using the JSON API
 
-Building an app on top of lirc_web is straight forward with the included JSON based RESTful API.
+Building an app on top of `lirc_web` is straight forward with the included JSON based RESTful API.
 
 API endpoints:
 
