@@ -154,12 +154,19 @@ You can run the test suite by running:
 npm test
 ```
 
+You can run the linter to confirm JS conforms to standards by running:
+
+```
+npm run lint-js
+```
+
 ## Contributing
 
 Before you submit a pull request with your change, please be sure to:
 
 * Add new tests that prove your change works as expected.
 * Ensure all existing tests are still passing.
+* Run the linter to ensure your code conforms to JS standards
 
 Once you're sure everything is still working, open a pull request with a clear
 description of what you changed and why. I will not accept a pull request which
