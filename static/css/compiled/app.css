@@ -16,9 +16,15 @@ ul {
   margin: 0;
   padding: 0;
 }
+.macrocommands li {
+  margin: 20px 0;
+  padding: 0;
+}
 .commands li {
   margin: 20px 0;
   padding: 0;
+  width: 120px;
+  display: inline-block;
 }
 h1 {
   background: #34495e;
@@ -34,6 +40,21 @@ h1 {
   width: 100%;
 }
 h1.is-remote {
+  background: #3498db;
+}
+h2 {
+  background: #34495e;
+  color: #fff;
+  font-family: LatoBold;
+  margin: 0 0 30px;
+  padding: 10px 0;
+  text-align: center;
+  z-index: 6;
+  left: 5px;
+  position: fixed;
+  top: 0;
+}
+h2.is-remote {
   background: #3498db;
 }
 .command {
@@ -59,6 +80,11 @@ h1.is-remote {
   padding-right: 0;
   width: 100%;
 }
+.macro {
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
 .remote {
   margin: 0;
   padding: 0;
@@ -69,9 +95,9 @@ h1.is-remote {
   margin: 20px 0;
 }
 .back {
-  position: absolute;
+  position: fixed;
   top: 7px;
-  left: 8px;
+  left: 30px;
   cursor: pointer;
 }
 a,
@@ -88,6 +114,12 @@ a:active,
 }
 #container {
   margin: 0 40px;
+}
+.macro {
+  display: none;
+}
+.macro.active {
+  display: block;
 }
 .remote {
   display: none;

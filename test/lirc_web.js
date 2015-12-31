@@ -29,7 +29,7 @@ describe('lirc_web', function() {
         });
 
         it('should have GET route for JSON list of commands for macro', function(done) {
-            assert(request(app).get('/macros/Play%20Xbox%20360.json').expect(200, done));
+            assert(request(app).get('/macros/Play Xbox 360.json').expect(200, done));
         });
 
         it('should return 404 for unknown remote', function(done) {
@@ -53,7 +53,7 @@ describe('lirc_web', function() {
 
         // Sending macros
         it('should have POST route for sending a macro', function(done) {
-            assert(request(app).post('/macros/xbox_360').expect(200, done));
+            assert(request(app).post('/macros/LivingRoom/Play Xbox 360').expect(200, done));
         });
 
     });
