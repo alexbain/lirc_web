@@ -7,6 +7,8 @@ As of `v0.1.0`, this project adheres to [Semantic Versioning](http://semver.org/
 ## Unreleased
 
 * Adding `blacklist` configuration option to hide unused keys from UI (thanks @OvisMaximus)
+* Adding support for SSL (thanks @de-live-gdev)
+* Fixing example config in the README (thanks @de-live-gdev)
 
 ## [0.1.0] - 2015-12-30
 
