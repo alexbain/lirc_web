@@ -3,5 +3,5 @@ node_modules/
 .DS_Store
 .project
 .settings/
-*.sw*
+*.swp
 npm-debug.log
