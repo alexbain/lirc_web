@@ -93,6 +93,7 @@ $(function() {
         $('.remotes-nav').removeClass('hidden');
         $('.macros-nav').removeClass('hidden');
         $('.back').addClass('hidden');
+        $('hr').removeClass('hidden');
         $('#title').html($('#title').attr('data-text'));
         $('#titlebar').removeClass('is-remote');
     });
@@ -105,6 +106,16 @@ $(function() {
         $('.macros-nav').addClass('hidden');
         $(href).addClass('active');
         $('.back').removeClass('hidden');
+        $('hr').addClass('hidden');
+        $('#title').html($('#title').attr('data-text'));
+        $('#titlebar').removeClass('is-remote');
+    });
+
+    // Navigate to remote pages
+    $('.remotes-nav a').on('click', function(evt) {
+        evt.preventDefault();
+        var href = $(this).attr('href');
+        $('.remotes-nav').addClass('hidden');
         $('#title').html($(this).html());
         $('#titlebar').addClass('is-remote');
     });

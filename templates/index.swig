@@ -29,6 +29,16 @@
 
       <hr />
 
+      <ul class="remotes-nav">
+      {% for device in devices %}
+        {% set deviceName = device.name %}
+        <li><a class="btn btn-wide btn-large btn-info" href="#{{ deviceName|url_encode }}">{{ deviceName }}</a></li>
+      {% endfor %}
+      </ul>
+
+
+      <hr />
+
       <ul class="macros-nav">
       {% for macro in macros %}
         {% set macroName = loop.key %}
@@ -53,6 +63,25 @@
         </li>
       {% endfor %}
       </ul>
+
+      <hr />
+
+      <ul class="remotes">
+      {% for device in devices %}
+        {% set deviceName = device.name %}
+        <li class="remote" id="{{ deviceName|url_encode }}">
+          <ul class="commands">
+          {% for command in device.commands %}
+            {% set commandName = loop.key %}
+             <li class="command">
+               <button class="command-link {% if repeaters[remoteName][command] %}command-repeater{% else %}command-once{% endif %} btn btn-wide btn-large btn-primary" href="/devices/{{ deviceName }}/{{ commandName|url_encode }}">{{ commandName }}</button>
+             </li>
+          {% endfor %}
+          </ul>
+        </li>
+      {% endfor %}
+      </ul>
+
     </div>
 
     <div class="next"></div>
