@@ -119,6 +119,7 @@ app.get('/', function (req, res) {
   var refinedRemotes = refineRemotes(lircNode.remotes);
   res.send(JST.index({
     remotes: refinedRemotes,
+    devices: config.devices,
     macros: config.macros,
     repeaters: config.repeaters,
     labelForRemote: labelFor.remote,
@@ -195,14 +196,18 @@ app.post('/devices/:device/:command', function(req, res) {
     // access command:
     // config.devices[req.param.device].commands[req.params.command]
 
-    var device = config.devices[req.param.device],
-        command = device.commands[req.param.command];
+    var device = config.devices[req.params.device];
+    var command = device.commands[req.params.command];
 
-    request({
+    var commandReq = {
         method: command.method,
         url: command.url,
         form: command.body
-    });
+    };
+
+    console.log(commandReq);
+
+    request(commandReq);
 
     res.setHeader('Cache-Control', 'no-cache');
     res.send(200);
