@@ -6,7 +6,10 @@ As of `v0.1.0`, this project adheres to [Semantic Versioning](http://semver.org/
 
 ## Unreleased
 
+## [0.2.2] - 2016-01-01
+
 * Removing `Makefile` for running tests. Only need `package.json`.
+* Fixing .gitignore error for the global lirc_web build
 
 ## [0.2.1] - 2015-12-31
 
