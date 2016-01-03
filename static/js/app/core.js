@@ -91,6 +91,7 @@ $(function() {
     $('.back').on('click', function(evt) {
         $('.remote.active').removeClass('active');
         $('.remotes-nav').removeClass('hidden');
+        $('.devices-nav').removeClass('hidden');
         $('.macros-nav').removeClass('hidden');
         $('.back').addClass('hidden');
         $('hr').removeClass('hidden');
@@ -99,10 +100,11 @@ $(function() {
     });
 
     // Navigate to remote pages
-    $('.remotes-nav a').on('click', function(evt) {
+    $('.remotes-nav a, .devices-nav a').on('click', function(evt) {
         evt.preventDefault();
         var href = $(this).attr('href');
         $('.remotes-nav').addClass('hidden');
+        $('.devices-nav').addClass('hidden');
         $('.macros-nav').addClass('hidden');
         $(href).addClass('active');
         $('.back').removeClass('hidden');
@@ -112,10 +114,11 @@ $(function() {
     });
 
     // Navigate to remote pages
-    $('.remotes-nav a').on('click', function(evt) {
+    $('.remotes-nav a, .devices-nav a').on('click', function(evt) {
         evt.preventDefault();
         var href = $(this).attr('href');
         $('.remotes-nav').addClass('hidden');
+        $('.devices-nav').addClass('hidden');
         $('#title').html($(this).html());
         $('#titlebar').addClass('is-remote');
     });
