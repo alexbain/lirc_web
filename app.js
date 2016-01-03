@@ -27,9 +27,6 @@ var sslOptions = {
   cert: null,
 };
 
-// Labels for remotes / commands
-var labelFor = labels(config.remoteLabels, config.commandLabels);
-
 // App configuration
 app.engine('.html', consolidate.swig);
 app.configure(function () {
@@ -97,6 +94,9 @@ if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
 } else {
   _init();
 }
+
+// Labels for remotes / commands
+var labelFor = labels(config.remoteLabels, config.commandLabels);
 
 // Routes
 
