@@ -54,17 +54,22 @@ h1.is-remote {
 .remote-link.active {
   background: #5dade2 !important;
 }
+.device-link.active {
+  background: #5dade2 !important;
+}
 .btn-wide {
   padding-left: 0;
   padding-right: 0;
   width: 100%;
 }
-.remote {
+.remote,
+.device {
   margin: 0;
   padding: 0;
   position: relative;
 }
 .remotes-nav li,
+.devices-nav li,
 .macros-nav li {
   margin: 20px 0;
 }
@@ -89,10 +94,12 @@ a:active,
 #container {
   margin: 0 40px;
 }
-.remote {
+.remote,
+.device {
   display: none;
 }
-.remote.active {
+.remote.active,
+.device.active {
   display: block;
 }
 .hidden {

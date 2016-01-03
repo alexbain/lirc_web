@@ -32,7 +32,7 @@
       <ul class="remotes-nav">
       {% for device in devices %}
         {% set deviceName = device.name %}
-        <li><a class="btn btn-wide btn-large btn-info" href="#{{ deviceName|url_encode }}">{{ deviceName }}</a></li>
+        <li><a class="btn btn-wide btn-large btn-inverse" href="#{{ deviceName|url_encode }}">{{ deviceName }}</a></li>
       {% endfor %}
       </ul>
 
