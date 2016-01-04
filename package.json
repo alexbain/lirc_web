@@ -2,7 +2,7 @@
   "name": "lirc_web",
   "description": "A NodeJS / Express app that creates a web UI + API for LIRC",
   "main": "app.js",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "preferGlobal": true,
   "dependencies": {
     "express": "3.0.6",
