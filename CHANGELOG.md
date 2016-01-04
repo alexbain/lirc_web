@@ -6,6 +6,10 @@ As of `v0.1.0`, this project adheres to [Semantic Versioning](http://semver.org/
 
 ## Unreleased
 
+## [0.2.3] - 2016-01-03
+
+* Fixing bug where labels were loaded before config (thanks @flochtililoch)
+
 ## [0.2.2] - 2016-01-01
 
 * Removing `Makefile` for running tests. Only need `package.json`.
