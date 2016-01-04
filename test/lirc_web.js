@@ -64,26 +64,39 @@ describe('lirc_web', function() {
 
     describe('index action', function() {
 
-        it('should return an HTML document', function(done) {
-            assert(request(app).get('/').expect('Content-Type', /html/, done));
-        });
+        var error, response, $;
 
-        it('should return an HTML document in which all button elements of class command-link have an href of the form /remotes/:remote/:command', function(done) {
-            request(app)
-            .get('/')
-            .end(function(err, res) {
-                assert.equal(err, null);
+        before(function(done){
+            request(app).get('/').end(function(err, res) {
+                error = err;
+                response = res;
                 // TODO: Remove external dependency so offline development and testing is possible
-                jsdom.env(res.text, ["http://code.jquery.com/jquery.js"], function (errors, window) {
-                    var $ = window.$;
-                    $("button.command-link").each(function(idx, elem) {
-                        var s = $(elem).attr('href').split("/");
-                        assert.equal(4, s.length);
-                        assert.equal("", s[0]);
-                        assert.equal("remotes", s[1]);
-                    });
+                jsdom.env(response.text, ["http://code.jquery.com/jquery.js"], function (errors, window) {
+                    $ = window.$;
                     done();
                 });
+            });
+        });
+
+        it('should return an HTML document', function() {
+            assert(response.headers['content-type'].match(/html/));
+        });
+
+        it('should return an HTML document in which all button elements of class command-link have an href of the form /remotes/:remote/:command', function() {
+            assert.equal(error, null);
+
+            $("button.command-link").each(function(idx, elem) {
+                var s = $(elem).attr('href').split("/");
+                assert.equal(4, s.length);
+                assert.equal("", s[0]);
+                assert.equal("remotes", s[1]);
+            });
+        });
+
+        it('should apply remotes configured labels', function() {
+            $("ul.remotes-nav").each(function(idx, elem) {
+                assert(elem.textContent.match(/LIRC namespace/) !== null);
+                assert(elem.textContent.match(/LircNamespace/) === null);
             });
         });
     });
@@ -100,8 +113,8 @@ describe('lirc_web', function() {
             "Yamaha": [ 'Power', 'Xbox360', 'Wii', 'VolumeUp', 'VolumeDown', 'DTV/CBL' ],
             "SonyTV": [ 'Power', 'VolumeUp', 'VolumeDown', 'ChannelUp', 'ChannelDown' ],
             "Xbox360" : XBOX_COMMANDS,
-            "LightControl": LIGHT_COMMANDS, 
-            "LircNamespace": [ 'KEY_POWER', 'KEY_VOLUMEUP', 'KEY_VOLUMEDOWN', 'KEY_CHANNELUP', 'KEY_CHANNELDOWN' ] 
+            "LightControl": LIGHT_COMMANDS,
+            "LircNamespace": [ 'KEY_POWER', 'KEY_VOLUMEUP', 'KEY_VOLUMEDOWN', 'KEY_CHANNELUP', 'KEY_CHANNELDOWN' ]
         };
 
         it('should return a list of all remotes (and commands) when /remotes.json is accessed', function(done) {
