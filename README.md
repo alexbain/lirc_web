@@ -7,6 +7,7 @@ This project allows you to control LIRC from any web browser - phone, tablet, or
 
 This is part of the [Open Source Universal Remote](http://opensourceuniversalremote.com) project.
 
+[![Build Status](https://travis-ci.org/alexbain/lirc_web.png)](https://travis-ci.org/alexbain/lirc_web)
 
 ## Installation
 
