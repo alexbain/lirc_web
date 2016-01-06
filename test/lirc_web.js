@@ -83,16 +83,29 @@ describe('lirc_web', function () {
       assert(response.headers['content-type'].match(/html/));
     });
 
-    it('should return an HTML document in which all button elements of class command-link have an href of the form /remotes/:remote/:command', function () {
+    it('should return an HTML document in which all button elements of class remote-link have an href of the form /remotes/:remote/:command', function () {
       assert.equal(error, null);
 
-      $('button.command-link').each(function (idx, elem) {
+      $('button.remote-link').each(function (idx, elem) {
         var s = $(elem).attr('href').split('/');
         assert.equal(4, s.length);
         assert.equal('', s[0]);
         assert.equal('remotes', s[1]);
       });
     });
+
+    it('should return an HTML document in which all button elements of class device-link have an href of the form /devices/:device/:command', function () {
+      assert.equal(error, null);
+
+      $('button.device-link').each(function (idx, elem) {
+        var s = $(elem).attr('href').split('/');
+        assert.equal(4, s.length);
+        assert.equal('', s[0]);
+        assert.equal('devices', s[1]);
+      });
+    });
+
+
 
     it('should apply remotes configured labels', function () {
       $('ul.remotes-nav').each(function (idx, elem) {
