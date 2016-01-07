@@ -5,7 +5,9 @@
   "version": "0.2.3",
   "preferGlobal": true,
   "dependencies": {
-    "express": "3.0.6",
+    "express": "^4.13.0",
+    "morgan":"^1.6.1",
+    "compression": "^1.6.0",
     "lirc_node": "0.0.4",
     "swig": "0.13.5",
     "consolidate": "0.11.0"
