@@ -6,7 +6,7 @@
   "preferGlobal": true,
   "dependencies": {
     "compression": "^1.6.0",
-    "consolidate": "0.11.0",
+    "consolidate": "^0.13.1",
     "express": "^4.13.0",
     "lirc_node": "0.0.4",
     "lodash": "^3.10.1",
