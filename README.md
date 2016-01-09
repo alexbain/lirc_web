@@ -142,6 +142,12 @@ You can run the test suite by running:
 npm test
 ```
 
+If you develop test driven, you may want to launch a continuous test which automatically restarts when server or tests are modified:
+
+```
+npm run test:watch
+```
+
 You can run the linter to confirm JS conforms to standards by running:
 
 ```

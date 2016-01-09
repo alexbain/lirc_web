@@ -204,8 +204,11 @@ app.post('/macros/:macro', function (req, res) {
 if (config.server && config.server.port) {
   port = config.server.port;
 }
-app.listen(port);
-console.log('Open Source Universal Remote UI + API has started on port ' + port + ' (http).');
+// only start server, when called as application
+if(!module.parent) {
+  app.listen(port);
+  console.log('Open Source Universal Remote UI + API has started on port ' + port + ' (http).');
+}
 
 // Listen (https)
 if (config.server && config.server.ssl && config.server.ssl_cert && config.server.ssl_key && config.server.ssl_port) {
