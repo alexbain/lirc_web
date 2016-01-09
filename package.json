@@ -26,7 +26,8 @@
     "nodemon": "1.8.1",
     "should": "7.1.0",
     "sinon": "1.17.2",
-    "supertest": "1.1.0"
+    "supertest": "1.1.0",
+    "jquery": "2.1.0"
   },
   "bin": {
     "lirc_web": "./app.js"
