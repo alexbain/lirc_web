@@ -21,13 +21,15 @@
     "grunt-contrib-uglify": "0.9.2",
     "grunt-contrib-watch": "0.6.1",
     "grunt-develop": "0.3.0",
+    "grunt-eslint": "17.3.1",
+    "jquery": "2.1.0",
     "jsdom": "1.1.0",
+    "load-grunt-tasks": "^3.4.0",
     "mocha": "2.3.4",
     "nodemon": "1.8.1",
     "should": "7.1.0",
     "sinon": "1.17.2",
-    "supertest": "1.1.0",
-    "jquery": "2.1.0"
+    "supertest": "1.1.0"
   },
   "bin": {
     "lirc_web": "./app.js"
