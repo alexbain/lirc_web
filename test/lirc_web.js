@@ -6,9 +6,6 @@ jsdom = require("jsdom");
 var fs = require('fs');
 var jquery = fs.readFileSync('node_modules/jquery/dist/jquery.js', 'utf-8');
 
-
-console.log('jquery: ' + jquery + ' :jquery');
-
 describe('lirc_web', function() {
 
     describe('routes', function() {
