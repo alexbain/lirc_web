@@ -7,3 +7,5 @@ node_modules/
 npm-debug.log
 server.cert
 server.key
+.idea
+lirc_web.iml
