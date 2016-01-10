@@ -154,6 +154,12 @@ You can run the linter to confirm JS conforms to standards by running:
 npm run lint-js
 ```
 
+You can also run the linter continuously via grunt:
+```
+grunt watch
+```
+
+
 ## Contributing
 
 Before you submit a pull request with your change, please be sure to:
