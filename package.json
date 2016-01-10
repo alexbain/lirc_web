@@ -34,8 +34,8 @@
   },
   "scripts": {
     "test": "NODE_ENV=test mocha --require should --require test/common.js --reporter dot test/*.js",
-    "test:watch": "NODE_ENV=test mocha --require should --require test/common.js --watch --reporter min test/*.js",
-    "lint-js": "eslint app.js lib/**"
+    "test:watch": "NODE_ENV=test mocha --require should --require test/common.js --watch --reporter min test/*.js lib/** test/** ",
+    "lint-js": "eslint app.js lib/** test/**"
   },
   "repository": {
     "type": "git",
