@@ -105,6 +105,7 @@ footer {
   width: 100%;
   padding: 10px 0;
 }
+footer p,
 footer a {
   font-size: 12px;
   font-weight: 300;

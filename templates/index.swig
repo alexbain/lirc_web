@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/bootstrap.css" />
     <link rel="stylesheet" href="css/flat-ui.css" />
     <link rel="stylesheet" href="css/compiled/app.css" />
+    {% include "./favicons.swig" %}
   </head>
   <body ontouchstart="">
     <div id="container">
@@ -59,6 +60,7 @@
     <footer>
 	    <p><a href="/refresh">Refresh</a></p>
       <p><a href="http://opensourceuniversalremote.com/">Powered by Open Source Universal Remote</a></p>
+      <p><a href="http://thenounproject.com/noun/remote-control/#icon-No10870">Remote Control</a> designed by <a href="http://thenounproject.com/esteves_emerick">Adriano Emerick</a> from The Noun Project</p>
     </footer>
 
     <script src="js/compiled/app.js" type="text/javascript" charset="utf-8"></script>
