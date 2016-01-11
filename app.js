@@ -2,8 +2,8 @@
 
 // Requirements
 var express = require('express');
-var logger = require('morgan')
-var compress = require('compression')
+var logger = require('morgan');
+var compress = require('compression');
 var lircNode = require('lirc_node');
 var consolidate = require('consolidate');
 var swig = require('swig');
@@ -28,6 +28,8 @@ var sslOptions = {
   key: null,
   cert: null,
 };
+
+var labelFor = {};
 
 // App configuration
 app.engine('.html', consolidate.swig);
@@ -95,8 +97,8 @@ if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
   _init();
 }
 
-// Labels for remotes / commands
-var labelFor = labels(config.remoteLabels, config.commandLabels);
+// initialize Labels for remotes / commands
+labelFor = labels(config.remoteLabels, config.commandLabels);
 
 // Routes
 
@@ -204,8 +206,11 @@ app.post('/macros/:macro', function (req, res) {
 if (config.server && config.server.port) {
   port = config.server.port;
 }
-app.listen(port);
-console.log('Open Source Universal Remote UI + API has started on port ' + port + ' (http).');
+// only start server, when called as application
+if (!module.parent) {
+  app.listen(port);
+  console.log('Open Source Universal Remote UI + API has started on port ' + port + ' (http).');
+}
 
 // Listen (https)
 if (config.server && config.server.ssl && config.server.ssl_cert && config.server.ssl_key && config.server.ssl_port) {
