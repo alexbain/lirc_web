@@ -175,16 +175,13 @@ app.post('/remotes/:remote/:command/send_stop', function (req, res) {
 app.post('/macros/:macro', function (req, res) {
   // If the macro exists, execute it
   if (config.macros && config.macros[req.params.macro]) {
-    macros.exec(req.params.macro, lircNode);
+    macros.exec(config.macros[req.params.macro], lircNode);
     res.setHeader('Cache-Control', 'no-cache');
     res.sendStatus(200);
   } else {
     res.setHeader('Cache-Control', 'no-cache');
     res.sendStatus(404);
   }
-
-  res.setHeader('Cache-Control', 'no-cache');
-  res.sendStatus(200);
 });
 
 // Listen (http)
