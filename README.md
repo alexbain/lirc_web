@@ -164,9 +164,10 @@ grunt watch
 
 Before you submit a pull request with your change, please be sure to:
 
-* Add new tests that prove your change works as expected.
-* Ensure all existing tests are still passing.
-* Run the linter to ensure your code conforms to JS standards
+* Add new tests that prove your change works as expected
+* Ensure all existing tests are still passing
+* Run the linter to ensure your code conforms to the js styleguide
+* Update CHANGELOG.md file ('Unreleased' section) with concise bullet points
 
 Once you're sure everything is still working, open a pull request with a clear
 description of what you changed and why. I will not accept a pull request which

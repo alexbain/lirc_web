@@ -35,8 +35,8 @@
     "lirc_web": "./app.js"
   },
   "scripts": {
-    "test": "NODE_ENV=test mocha --require should --require test/common.js --reporter dot test/*.js",
-    "test:watch": "NODE_ENV=test mocha --require should --require test/common.js --watch --reporter min test/*.js lib/** test/** ",
+    "test": "NODE_ENV=test mocha --require should --require test/common.js --reporter dot test/**",
+    "test:watch": "NODE_ENV=test mocha --require should --require test/common.js --watch --reporter dot lib/** test/** ",
     "lint-js": "eslint app.js lib/** test/**"
   },
   "repository": {

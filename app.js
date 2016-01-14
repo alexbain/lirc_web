@@ -10,6 +10,7 @@ var swig = require('swig');
 var labels = require('./lib/labels');
 var https = require('https');
 var fs = require('fs');
+var macros = require('./lib/macros');
 
 // Precompile templates
 var JST = {
@@ -172,30 +173,14 @@ app.post('/remotes/:remote/:command/send_stop', function (req, res) {
 
 // Execute a macro (a collection of commands to one or more remotes)
 app.post('/macros/:macro', function (req, res) {
-  var i = 0;
-  var nextCommand = null;
-
-  // If the macro exists, execute each command in the macro with 100msec
-  // delay between each command.
+  // If the macro exists, execute it
   if (config.macros && config.macros[req.params.macro]) {
-    nextCommand = function () {
-      var command = config.macros[req.params.macro][i];
-
-      if (!command) { return true; }
-
-      // increment
-      i = i + 1;
-
-      if (command[0] === 'delay') {
-        setTimeout(nextCommand, command[1]);
-      } else {
-        // By default, wait 100msec before calling next command
-        lircNode.irsend.send_once(command[0], command[1], function () { setTimeout(nextCommand, 100); });
-      }
-    };
-
-    // kick off macro w/ first command
-    nextCommand();
+    macros.exec(req.params.macro, lircNode);
+    res.setHeader('Cache-Control', 'no-cache');
+    res.sendStatus(200);
+  } else {
+    res.setHeader('Cache-Control', 'no-cache');
+    res.sendStatus(404);
   }
 
   res.setHeader('Cache-Control', 'no-cache');
