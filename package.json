@@ -2,7 +2,7 @@
   "name": "lirc_web",
   "description": "A NodeJS / Express app that creates a web UI + API for LIRC",
   "main": "app.js",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "preferGlobal": true,
   "dependencies": {
     "compression": "^1.6.0",
@@ -36,8 +36,8 @@
     "lirc_web": "./app.js"
   },
   "scripts": {
-    "test": "NODE_ENV=test mocha --require should --require test/common.js --reporter dot test/*.js",
-    "test:watch": "NODE_ENV=test mocha --require should --require test/common.js --watch --reporter min test/*.js lib/** test/** ",
+    "test": "NODE_ENV=test mocha --require should --require test/common.js --reporter dot test/**",
+    "test:watch": "NODE_ENV=test mocha --require should --require test/common.js --watch --reporter dot lib/** test/** ",
     "lint-js": "eslint app.js lib/** test/**"
   },
   "repository": {

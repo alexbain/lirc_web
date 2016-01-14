@@ -52,7 +52,7 @@ describe('lirc_web', function () {
 
     // Sending macros
     it('should have POST route for sending a macro', function (done) {
-      assert(request(app).post('/macros/xbox_360').expect(200, done));
+      assert(request(app).post('/macros/Play%20Xbox%20360').expect(200, done));
     });
   });
 

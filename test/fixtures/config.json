@@ -16,6 +16,10 @@
     "Listen to Music / Jams": [
       [ "Yamaha", "Power" ],
       [ "Yamaha", "AirPlay" ]
+    ],
+    "Macro With Delay": [
+      [ "delay", 500 ],
+      [ "Yamaha", "Power" ]
     ]
   },
   "commandLabels": {

@@ -6,6 +6,15 @@ As of `v0.1.0`, this project adheres to [Semantic Versioning](http://semver.org/
 
 ## Unreleased
 
+## [0.2.4] - 2016-01-13
+
+* Extracts macros into a standalone lib/macros.js file
+* Adds Favicon (thanks @flochtililoch)
+* Adds npm run test:watch action (thanks @OvisMaximus)
+* Travis build will now run linter
+* Updated dependencies
+* Uses local version of jQuery for testing now
+
 ## [0.2.3] - 2016-01-03
 
 * Fixing bug where labels were loaded before config (thanks @flochtililoch)
