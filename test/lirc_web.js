@@ -111,11 +111,11 @@ describe('lirc_web', function () {
     var LIGHT_COMMANDS = ['S1', 'S3', 'S5'];
 
     var REFINED_REMOTES = {
-      'Yamaha': ['Power', 'Xbox360', 'Wii', 'VolumeUp', 'VolumeDown', 'DTV/CBL'],
-      'SonyTV': ['Power', 'VolumeUp', 'VolumeDown', 'ChannelUp', 'ChannelDown'],
-      'Xbox360': XBOX_COMMANDS,
-      'LightControl': LIGHT_COMMANDS,
-      'LircNamespace': ['KEY_POWER', 'KEY_VOLUMEUP', 'KEY_VOLUMEDOWN', 'KEY_CHANNELUP', 'KEY_CHANNELDOWN'],
+      Yamaha: ['Power', 'Xbox360', 'Wii', 'VolumeUp', 'VolumeDown', 'DTV/CBL'],
+      SonyTV: ['Power', 'VolumeUp', 'VolumeDown', 'ChannelUp', 'ChannelDown'],
+      Xbox360: XBOX_COMMANDS,
+      LightControl: LIGHT_COMMANDS,
+      LircNamespace: ['KEY_POWER', 'KEY_VOLUMEUP', 'KEY_VOLUMEDOWN', 'KEY_CHANNELUP', 'KEY_CHANNELDOWN'],
     };
 
     it('should return a list of all remotes (and commands) when /remotes.json is accessed', function (done) {

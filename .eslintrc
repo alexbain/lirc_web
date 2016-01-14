@@ -3,7 +3,8 @@
   "rules": {
     "func-names": 0,
     "no-console": 0,
-    "guard-for-in": 0
+    "guard-for-in": 0,
+    "max-len": 1
   },
   "env": {
     "node": true,
