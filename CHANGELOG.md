@@ -6,6 +6,8 @@ As of `v0.1.0`, this project adheres to [Semantic Versioning](http://semver.org/
 
 ## Unreleased
 
+* Extracts macros into a standalone lib/macros.js file
+
 ## [0.2.3] - 2016-01-03
 
 * Fixing bug where labels were loaded before config (thanks @flochtililoch)
