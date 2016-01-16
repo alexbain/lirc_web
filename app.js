@@ -42,20 +42,27 @@ app.use(compress());
 app.use(express.static(__dirname + '/static'));
 
 function _init() {
-  var home = process.env.HOME;
+  var searchPaths = [];
+
+  function configure(configFileName) {
+    searchPaths.push(configFileName);
+    config = require(configFileName);
+    console.log('Open Source Universal Remote is configured by ' + configFileName);
+  }
 
   lircNode.init();
 
   // Config file is optional
   try {
     try {
-      config = require(__dirname + '/config.json');
+      configure(__dirname + '/config.json');
     } catch (e) {
-      config = require(home + '/.lirc_web_config.json');
+      configure(process.env.HOME + '/.lirc_web_config.json');
     }
   } catch (e) {
     console.log('DEBUG:', e);
     console.log('WARNING: Cannot find config.json!');
+    console.log('DEBUG: tried: ' + JSON.stringify(searchPaths));
   }
 }
 

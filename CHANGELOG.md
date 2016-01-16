@@ -6,6 +6,7 @@ As of `v0.1.0`, this project adheres to [Semantic Versioning](http://semver.org/
 
 ## Unreleased
 * Adds support for gpio controlled devices (thanks @OvisMaximus)
+* Improves log output on used configuration (thanks @OvisMaximus)
 
 ## [0.2.4] - 2016-01-13
 
