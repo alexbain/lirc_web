@@ -11,7 +11,8 @@
     "lirc_node": "0.0.4",
     "lodash": "^3.10.1",
     "morgan": "^1.6.1",
-    "swig": "^1.4.2"
+    "swig": "^1.4.2",
+    "wiring-pi": "2.1.0"
   },
   "devDependencies": {
     "eslint": "^1.10.0",

@@ -7,6 +7,9 @@
   },
   "macros": {
     "Play Xbox 360": [
+      [ "gpio", "TV", 1],
+      [ "gpio", "Receiver", 1],
+      [ "gpio", "Xbox", 1],
       [ "SonyTV", "Power" ],
       [ "SonyTV", "Xbox360" ],
       [ "Yamaha", "Power" ],
@@ -14,13 +17,20 @@
       [ "Xbox360", "Power" ]
     ],
     "Listen to Music / Jams": [
+      [ "gpio", "Receiver", 1],
       [ "Yamaha", "Power" ],
       [ "Yamaha", "AirPlay" ]
+    ],
+    "all off": [
+      [ "gpio", "TV", 0],
+      [ "gpio", "Receiver", 0],
+      [ "gpio", "Xbox", 0]
     ],
     "Macro With Delay": [
       [ "delay", 500 ],
       [ "Yamaha", "Power" ]
     ]
+
   },
   "commandLabels": {
     "LircNamespace": {
@@ -42,5 +52,13 @@
       "S7",
       "S8"
     ]
-  }
+  },
+  "gpios": [
+    {"name": "Receiver",
+     "pin": 19},
+    {"name": "TV",
+     "pin": 16},
+    {"name": "Xbox",
+     "pin": 13}
+  ]
 }

@@ -36,6 +36,13 @@
       {% endfor %}
       </ul>
 
+      <hr />
+
+      <ul class="gpios-nav">
+      {% for io in gpios %}
+      <li><button class="btn btn-wide btn-large gpio-link" pin="{{ io.pin }}">{{ io.name }}</button></li>
+      {% endfor %}
+      </ul>
 
       <div class="prev"></div>
 

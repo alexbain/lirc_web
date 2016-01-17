@@ -10,6 +10,7 @@ var swig = require('swig');
 var labels = require('./lib/labels');
 var https = require('https');
 var fs = require('fs');
+var gpio = require('./lib/gpio');
 var macros = require('./lib/macros');
 
 // Precompile templates
@@ -22,6 +23,8 @@ var app = module.exports = express();
 
 // lirc_web configuration
 var config = {};
+var hasServerPortConfig = false;
+var hasSSLConfig = false;
 
 // Server & SSL options
 var port = 3000;
@@ -41,21 +44,33 @@ app.use(compress());
 app.use(express.static(__dirname + '/static'));
 
 function _init() {
-  var home = process.env.HOME;
+  var searchPaths = [];
+
+  function configure(configFileName) {
+    searchPaths.push(configFileName);
+    config = require(configFileName);
+    console.log('Open Source Universal Remote is configured by ' + configFileName);
+  }
 
   lircNode.init();
 
   // Config file is optional
   try {
     try {
-      config = require(__dirname + '/config.json');
+      configure(__dirname + '/config.json');
     } catch (e) {
-      config = require(home + '/.lirc_web_config.json');
+      configure(process.env.HOME + '/.lirc_web_config.json');
     }
   } catch (e) {
     console.log('DEBUG:', e);
     console.log('WARNING: Cannot find config.json!');
+    console.log('DEBUG: tried: ' + JSON.stringify(searchPaths));
   }
+
+  hasServerPortConfig = config.server && config.server.port;
+  hasSSLConfig =
+    config.server && config.server.ssl && config.server.ssl_cert
+    && config.server.ssl_key && config.server.ssl_port;
 }
 
 function refineRemotes(myRemotes) {
@@ -94,6 +109,7 @@ function refineRemotes(myRemotes) {
 if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
   lircNode.remotes = require(__dirname + '/test/fixtures/remotes.json');
   config = require(__dirname + '/test/fixtures/config.json');
+  gpio.overrideWiringPi(require('./test/lib/wiring-pi-mock'));
 } else {
   _init();
 }
@@ -110,6 +126,7 @@ app.get('/', function (req, res) {
     remotes: refinedRemotes,
     macros: config.macros,
     repeaters: config.repeaters,
+    gpios: config.gpios,
     labelForRemote: labelFor.remote,
     labelForCommand: labelFor.command,
   }));
@@ -135,6 +152,20 @@ app.get('/remotes/:remote.json', function (req, res) {
   }
 });
 
+function respondWithGpioState(res) {
+  if (config.gpios) {
+    gpio.updatePinStates();
+    res.json(config.gpios);
+  } else {
+    res.send(404);
+  }
+}
+
+// List all gpio switches in JSON format
+app.get('/gpios.json', function (req, res) {
+  respondWithGpioState(res);
+});
+
 // List all macros in JSON format
 app.get('/macros.json', function (req, res) {
   res.json(config.macros);
@@ -148,7 +179,6 @@ app.get('/macros/:macro.json', function (req, res) {
     res.sendStatus(404);
   }
 });
-
 
 // Send :remote/:command one time
 app.post('/remotes/:remote/:command', function (req, res) {
@@ -171,21 +201,35 @@ app.post('/remotes/:remote/:command/send_stop', function (req, res) {
   res.sendStatus(200);
 });
 
+// toggle /gpios/:gpio_pin
+app.post('/gpios/:gpio_pin', function (req, res) {
+  var newValue = gpio.togglePin(req.params.gpio_pin);
+  res.setHeader('Cache-Control', 'no-cache');
+  res.json(newValue);
+  res.end();
+});
+
+
 // Execute a macro (a collection of commands to one or more remotes)
 app.post('/macros/:macro', function (req, res) {
-  // If the macro exists, execute it
   if (config.macros && config.macros[req.params.macro]) {
     macros.exec(config.macros[req.params.macro], lircNode);
     res.setHeader('Cache-Control', 'no-cache');
-    res.sendStatus(200);
+    if (config.gpios) {
+      respondWithGpioState(res);
+    } else {
+      res.sendStatus(200);
+    }
   } else {
     res.setHeader('Cache-Control', 'no-cache');
     res.sendStatus(404);
   }
 });
 
+gpio.init(config.gpios);
+
 // Listen (http)
-if (config.server && config.server.port) {
+if (hasServerPortConfig) {
   port = config.server.port;
 }
 // only start server, when called as application
@@ -195,7 +239,7 @@ if (!module.parent) {
 }
 
 // Listen (https)
-if (config.server && config.server.ssl && config.server.ssl_cert && config.server.ssl_key && config.server.ssl_port) {
+if (hasSSLConfig) {
   sslOptions = {
     key: fs.readFileSync(config.server.ssl_key),
     cert: fs.readFileSync(config.server.ssl_cert),
@@ -203,5 +247,6 @@ if (config.server && config.server.ssl && config.server.ssl_cert && config.serve
 
   https.createServer(sslOptions, app).listen(config.server.ssl_port);
 
-  console.log('Open Source Universal Remote UI + API has started on port ' + config.server.ssl_port + ' (https).');
+  console.log('Open Source Universal Remote UI + API has started on port '
+    + config.server.ssl_port + ' (https).');
 }
