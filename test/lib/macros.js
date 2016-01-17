@@ -4,7 +4,7 @@ var sinon = require('sinon');
 
 // config fixture
 var config = {
-  'macros': {
+  macros: {
     'Play Xbox 360': [
       ['SonyTV', 'Power'],
       ['SonyTV', 'Xbox360'],

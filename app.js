@@ -23,6 +23,8 @@ var app = module.exports = express();
 
 // lirc_web configuration
 var config = {};
+var hasServerPortConfig = false;
+var hasSSLConfig = false;
 
 // Server & SSL options
 var port = 3000;
@@ -64,6 +66,11 @@ function _init() {
     console.log('WARNING: Cannot find config.json!');
     console.log('DEBUG: tried: ' + JSON.stringify(searchPaths));
   }
+
+  hasServerPortConfig = config.server && config.server.port;
+  hasSSLConfig =
+    config.server && config.server.ssl && config.server.ssl_cert
+    && config.server.ssl_key && config.server.ssl_port;
 }
 
 function refineRemotes(myRemotes) {
@@ -222,7 +229,7 @@ app.post('/macros/:macro', function (req, res) {
 gpio.init(config.gpios);
 
 // Listen (http)
-if (config.server && config.server.port) {
+if (hasServerPortConfig) {
   port = config.server.port;
 }
 // only start server, when called as application
@@ -232,7 +239,7 @@ if (!module.parent) {
 }
 
 // Listen (https)
-if (config.server && config.server.ssl && config.server.ssl_cert && config.server.ssl_key && config.server.ssl_port) {
+if (hasSSLConfig) {
   sslOptions = {
     key: fs.readFileSync(config.server.ssl_key),
     cert: fs.readFileSync(config.server.ssl_cert),
@@ -240,5 +247,6 @@ if (config.server && config.server.ssl && config.server.ssl_cert && config.serve
 
   https.createServer(sslOptions, app).listen(config.server.ssl_port);
 
-  console.log('Open Source Universal Remote UI + API has started on port ' + config.server.ssl_port + ' (https).');
+  console.log('Open Source Universal Remote UI + API has started on port '
+    + config.server.ssl_port + ' (https).');
 }

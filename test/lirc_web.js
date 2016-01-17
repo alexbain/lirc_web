@@ -109,7 +109,8 @@ describe('lirc_web', function () {
       assert(response.headers['content-type'].match(/html/));
     });
 
-    it('should return an HTML document in which all button elements of class command-link have an href of the form /remotes/:remote/:command', function () {
+    it('should return an HTML document in which all button elements of class command-link have an '
+      + 'href of the form /remotes/:remote/:command', function () {
       assert.equal(error, null);
 
       $('button.command-link').each(function (idx, elem) {
@@ -150,17 +151,21 @@ describe('lirc_web', function () {
       SonyTV: ['Power', 'VolumeUp', 'VolumeDown', 'ChannelUp', 'ChannelDown'],
       Xbox360: XBOX_COMMANDS,
       LightControl: LIGHT_COMMANDS,
-      LircNamespace: ['KEY_POWER', 'KEY_VOLUMEUP', 'KEY_VOLUMEDOWN', 'KEY_CHANNELUP', 'KEY_CHANNELDOWN'],
+      LircNamespace:
+        ['KEY_POWER', 'KEY_VOLUMEUP', 'KEY_VOLUMEDOWN', 'KEY_CHANNELUP', 'KEY_CHANNELDOWN'],
     };
 
-    it('should return a list of all remotes (and commands) when /remotes.json is accessed', function (done) {
-      request(app)
-      .get('/remotes.json')
-      .set('Accept', 'application/json')
-      .expect(200, REFINED_REMOTES, done);
-    });
+    it('should return a list of all remotes (and commands) when /remotes.json is accessed',
+      function (done) {
+        request(app)
+        .get('/remotes.json')
+        .set('Accept', 'application/json')
+        .expect(200, REFINED_REMOTES, done);
+      }
+    );
 
-    it('should return a list of all commands for a remote when /remotes/:remote.json is accessed', function (done) {
+    it('should return a list of all commands for a remote when /remotes/:remote.json is '
+      + 'accessed', function (done) {
       request(app)
       .get('/remotes/Xbox360.json')
       .set('Accept', 'application/json')

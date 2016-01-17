@@ -3,8 +3,8 @@ var assert = require('assert');
 var gpioProbe = require('./wiring-pi-mock.js');
 
 var config = [
-  { 'name': 'a', 'pin': 47, 'state': 0 },
-  { 'name': 'b', 'pin': 11, 'state': 0 }];
+  { name: 'a', pin: 47, state: 0 },
+  { name: 'b', pin: 11, state: 0 }];
 
 describe('gpio', function () {
   var realWpi;
@@ -24,8 +24,8 @@ describe('gpio', function () {
       gpio.updatePinStates();
       assert.deepEqual(
         config,
-        [{ 'name': 'a', 'pin': 47, 'state': 1 },
-         { 'name': 'b', 'pin': 11, 'state': 1 }],
+        [{ name: 'a', pin: 47, state: 1 },
+         { name: 'b', pin: 11, state: 1 }],
         'states are not updated properly');
     });
   });
@@ -37,7 +37,7 @@ describe('gpio', function () {
       res = gpio.togglePin(47);
       assert.deepEqual(
         res,
-        { 'pin': 47, 'state': 0 },
+        { pin: 47, state: 0 },
         'pin has not changed its state');
     });
 
@@ -47,7 +47,7 @@ describe('gpio', function () {
       res = gpio.togglePin(47);
       assert.deepEqual(
         res,
-        { 'pin': 47, 'state': 1 },
+        { pin: 47, state: 1 },
         'pin has not changed its state');
     });
   });
