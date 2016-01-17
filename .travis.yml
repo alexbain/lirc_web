@@ -1,6 +1,14 @@
 language: node_js
 node_js:
   - "node"
+env:
+  - CXX=gcc-4.9
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-4.9
 script:
   - npm run lint-js
   - npm test
