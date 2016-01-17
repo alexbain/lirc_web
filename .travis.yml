@@ -2,6 +2,8 @@ language: node_js
 sudo: required
 node_js:
   - "node"
+env:
+  - CXX=g++-4.9
 addons:
   apt:
     sources:
@@ -10,7 +12,5 @@ addons:
       - g++-4.9
       - gcc-4.9
 script:
-  - sudo ln -s -v -f $(which g++-4.9) /usr/bin/g++
-  - sudo ln -s -v -f $(which gcc-4.9) /usr/bin/gcc
   - npm run lint-js
   - npm test
