@@ -6,6 +6,7 @@
     }
   },
   "macros": {
+<<<<<<< HEAD
     "LivingRoom": {
       "Play Xbox 360": [
         [ "SonyTV", "Power" ],
@@ -32,6 +33,23 @@
         [ "Yamaha", "AirPlay" ]
       ]
     }
+=======
+    "Play Xbox 360": [
+      [ "SonyTV", "Power" ],
+      [ "SonyTV", "Xbox360" ],
+      [ "Yamaha", "Power" ],
+      [ "Yamaha", "Xbox360" ],
+      [ "Xbox360", "Power" ]
+    ],
+    "Listen to Music / Jams": [
+      [ "Yamaha", "Power" ],
+      [ "Yamaha", "AirPlay" ]
+    ],
+    "Macro With Delay": [
+      [ "delay", 500 ],
+      [ "Yamaha", "Power" ]
+    ]
+>>>>>>> refs/remotes/alexbain/master
   },
   "commandLabels": {
     "LircNamespace": {
@@ -43,7 +61,20 @@
     }
   },
   "remoteLabels": {
+<<<<<<< HEAD
     "LircNamespace": "LIRC namespace",
     "Xbox360": "Xbox 360"
+=======
+    "LircNamespace": "LIRC namespace"
+  },
+  "blacklists": {
+    "LightControl": [
+      "S2",
+      "S4",
+      "S6",
+      "S7",
+      "S8"
+    ]
+>>>>>>> refs/remotes/alexbain/master
   }
 }

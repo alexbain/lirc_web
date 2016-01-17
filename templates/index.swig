@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/bootstrap.css" />
     <link rel="stylesheet" href="css/flat-ui.css" />
     <link rel="stylesheet" href="css/compiled/app.css" />
+<<<<<<< HEAD
     <link rel="stylesheet" href="css/pushy.css" />
   </head>
   <body ontouchstart="">
@@ -19,6 +20,21 @@
   <nav class="pushy pushy-left">
       <ul>
         <a class="" href="/">Home</a>
+=======
+    {% include "./favicons.swig" %}
+  </head>
+  <body ontouchstart="">
+    <div id="container">
+      <h1 id="titlebar">
+        <a class="back hidden"><img src="images/left-arrow.png" height="40" width="40" /></a>
+        <span id="title" data-text="Universal Remote">Universal Remote</span>
+      </h1>
+      <ul class="remotes-nav">
+      {% for remote in remotes %}
+        {% set remoteName = loop.key %}
+        <li><a class="btn btn-wide btn-large btn-info" href="#{{ remoteName }}">{{ labelForRemote(remoteName) }}</a></li>
+      {% endfor %}
+>>>>>>> refs/remotes/alexbain/master
       </ul>
       <ul class="macros-navmenu">
           {% for macro in macros %}
@@ -51,6 +67,15 @@
             <span id="title" data-text="Universal Remote">Universal Remote</span>
         </h1>
 
+<<<<<<< HEAD
+=======
+      <ul class="macros-nav">
+      {% for macro in macros %}
+        {% set macroName = loop.key %}
+        <li><button class="btn btn-wide btn-large btn-warning macro-link" href="/macros/{{ macroName|url_encode }}">{{ macroName }}</button></li>
+      {% endfor %}
+      </ul>
+>>>>>>> refs/remotes/alexbain/master
 
     {% for macro in macros %}
         {% set area = loop.key %}
@@ -67,6 +92,7 @@
 
       <div class="prev"></div>
 
+<<<<<<< HEAD
     <ul class="macros">
         {% for macro in macros %}
             {% set area = loop.key %}
@@ -94,6 +120,20 @@
                     {% endfor %}
                 </ul>
                 </li>
+=======
+      <ul class="remotes">
+      {% for remote in remotes %}
+        {% set remoteName = loop.key %}
+        <li class="remote" id="{{ remoteName }}">
+          <ul class="commands">
+          {% for command in remote %}
+             <li class="command">
+               <button class="command-link {% if repeaters[remoteName] && repeaters[remoteName][command] %}command-repeater{% else %}command-once{% endif %} btn btn-wide btn-large btn-primary" href="/remotes/{{ remoteName|url_encode }}/{{ command|url_encode }}">{{ labelForCommand(remoteName, command) }}</button>
+             </li>
+          {% endfor %}
+          </ul>
+        </li>
+>>>>>>> refs/remotes/alexbain/master
       {% endfor %}
     </ul>
     </div>
@@ -103,6 +143,7 @@
     <footer>
 	    <p><a href="/refresh">Refresh</a></p>
       <p><a href="http://opensourceuniversalremote.com/">Powered by Open Source Universal Remote</a></p>
+      <p><a href="http://thenounproject.com/noun/remote-control/#icon-No10870">Remote Control</a> designed by <a href="http://thenounproject.com/esteves_emerick">Adriano Emerick</a> from The Noun Project</p>
     </footer>
 
     <script src="js/compiled/app.js" type="text/javascript" charset="utf-8"></script>
