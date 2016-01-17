@@ -8,6 +8,7 @@ addons:
     sources:
       - ubuntu-toolchain-r-test
     packages:
+      - g++
       - gcc-4.9
 script:
   - npm run lint-js
