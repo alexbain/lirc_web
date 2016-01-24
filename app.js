@@ -106,6 +106,7 @@ labelFor = labels(config.remoteLabels, config.commandLabels);
 // Index
 app.get('/', function (req, res) {
   var refinedRemotes = refineRemotes(lircNode.remotes);
+
   res.send(JST.index({
     remotes: refinedRemotes,
     devices: config.devices,
