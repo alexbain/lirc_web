@@ -6,6 +6,9 @@
 @colorPeterRiver: #3498DB;
 @colorGreenSea: #16A085;
 @colorTurqoise: #1ABC9C;
+@colorGreyBtn: #cccccc;
+@colorRedBtn: #d3898a;
+@colorGreenBtn: #9bcc9c;
 
 html, body {
   min-height: 100%;
@@ -76,6 +79,18 @@ h1 {
   background: #5dade2 !important;
 }
 
+.gpio-link {
+  background: @colorRedBtn !important;
+}
+
+.gpio-link.switch_on {
+  background: @colorGreenBtn !important;
+}
+
+.gpio-link.active {
+  background: @colorGreyBtn !important;
+}
+
 .btn-wide {
   padding-left: 0;
   padding-right: 0;
@@ -89,11 +104,13 @@ h1 {
 }
 
 .remotes-nav,
-.macros-nav {
+.macros-nav,
+.gpios-nav {
 }
 
 .remotes-nav li,
-.macros-nav li {
+.macros-nav li,
+.gpios-nav li {
   margin: 20px 0;
 }
 
