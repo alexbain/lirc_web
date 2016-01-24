@@ -11,6 +11,7 @@ var labels = require('./lib/labels');
 var https = require('https');
 var fs = require('fs');
 var macros = require('./lib/macros');
+var request = require('request');
 
 // Precompile templates
 var JST = {
