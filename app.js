@@ -12,6 +12,7 @@ var https = require('https');
 var fs = require('fs');
 var gpio = require('./lib/gpio');
 var macros = require('./lib/macros');
+var request = require('request');
 
 // Precompile templates
 var JST = {
@@ -122,8 +123,10 @@ labelFor = labels(config.remoteLabels, config.commandLabels);
 // Index
 app.get('/', function (req, res) {
   var refinedRemotes = refineRemotes(lircNode.remotes);
+
   res.send(JST.index({
     remotes: refinedRemotes,
+    devices: config.devices,
     macros: config.macros,
     repeaters: config.repeaters,
     gpios: config.gpios,
@@ -136,6 +139,14 @@ app.get('/', function (req, res) {
 app.get('/refresh', function (req, res) {
   _init();
   res.redirect('/');
+});
+
+// Get all capabilities of remote
+app.get('/capabilities.json', function (req, res) {
+  res.json({
+    devices: config.devices,
+    remotes: lircNode.remotes,
+  });
 });
 
 // List all remotes in JSON format
@@ -178,6 +189,70 @@ app.get('/macros/:macro.json', function (req, res) {
   } else {
     res.sendStatus(404);
   }
+});
+
+// List all devices in JSON format
+app.get('/devices.json', function (req, res) {
+  // TODO: Should return a nicely formatted response, not just the config object
+  res.json(config.devices);
+});
+
+// List all commands for :device in JSON format
+app.get('/devices/:device.json', function (req, res) {
+  if (config.devices && config.devices[req.params.device]) {
+    // TODO: Should return a nicely formatted response, not just the config object
+    res.json(config.devices[req.params.device]);
+  } else {
+    res.send(404);
+  }
+});
+
+// Get device state
+app.get('/devices/:device', function (req, res) {
+  var state = null;
+  var bodyJson = null;
+  var stateReq = null;
+
+  if (config.devices &&
+    config.devices[req.params.device] &&
+    config.devices[req.params.device].state) {
+    state = config.devices[req.params.device].state;
+    bodyJson = null;
+
+    // Build request to make to get device state
+    stateReq = {
+      method: state.method || 'GET',
+      url: state.url,
+      form: state.body,
+    };
+
+    // Make request for state, include body of response in response
+    request(stateReq, function (error, response, body) {
+      // TODO: How to parse the response and only return relevant portion?
+      bodyJson = JSON.parse(body);
+      res.json(bodyJson);
+    });
+  } else {
+    // Device doesn't have a state, return 404
+    res.sendStatus(404);
+  }
+});
+
+// Execute device action
+app.post('/devices/:device/:command', function (req, res) {
+  var device = config.devices[req.params.device];
+  var command = device.commands[req.params.command];
+
+  var commandReq = {
+    method: command.method,
+    url: command.url,
+    form: command.body,
+  };
+
+  request(commandReq);
+
+  res.setHeader('Cache-Control', 'no-cache');
+  res.sendStatus(200);
 });
 
 // Send :remote/:command one time

@@ -60,5 +60,26 @@
      "pin": 16},
     {"name": "Xbox",
      "pin": 13}
-  ]
+  ],
+  "devices": {
+    "GarageDoor": {
+      "name": "GarageDoor",
+      "commands": {
+        "TriggerDoor": {
+          "url": "https://api.spark.io/v1/devices/123/do_thing",
+          "method": "POST",
+          "body": {
+            "access_token": "abcdefg"
+          }
+        }
+      },
+      "state": {
+        "url": "https://api.spark.io/v1/devices/123/get_state",
+        "method": "POST",
+        "body": {
+          "access_token": "abcdefg"
+        }
+      }
+    }
+  }
 }

@@ -133,22 +133,36 @@ $(function() {
     $('.back').on('click', function(evt) {
         $('.remote.active').removeClass('active');
         $('.remotes-nav').removeClass('hidden');
+        $('.devices-nav').removeClass('hidden');
         $('.macros-nav').removeClass('hidden');
         $('.gpios-nav').removeClass('hidden');
         $('.back').addClass('hidden');
+        $('hr').removeClass('hidden');
         $('#title').html($('#title').attr('data-text'));
         $('#titlebar').removeClass('is-remote');
     });
 
     // Navigate to remote pages
-    $('.remotes-nav a').on('click', function(evt) {
+    $('.remotes-nav a, .devices-nav a').on('click', function(evt) {
         evt.preventDefault();
         var href = $(this).attr('href');
         $('.remotes-nav').addClass('hidden');
+        $('.devices-nav').addClass('hidden');
         $('.macros-nav').addClass('hidden');
         $('.gpios-nav').addClass('hidden');
         $(href).addClass('active');
         $('.back').removeClass('hidden');
+        $('hr').addClass('hidden');
+        $('#title').html($('#title').attr('data-text'));
+        $('#titlebar').removeClass('is-remote');
+    });
+
+    // Navigate to remote pages
+    $('.remotes-nav a, .devices-nav a').on('click', function(evt) {
+        evt.preventDefault();
+        var href = $(this).attr('href');
+        $('.remotes-nav').addClass('hidden');
+        $('.devices-nav').addClass('hidden');
         $('#title').html($(this).html());
         $('#titlebar').addClass('is-remote');
     });
