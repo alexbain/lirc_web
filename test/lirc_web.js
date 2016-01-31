@@ -5,7 +5,7 @@ var jsdom = require('jsdom');
 var fs = require('fs');
 var jquery = fs.readFileSync('node_modules/jquery/dist/jquery.js', 'utf-8');
 var configFixture = require(__dirname + '/fixtures/config.json');
-var gpioMock = require('./lib/wiring-pi-mock');
+var gpioMock = require('./../lib/gpio-la-mock');
 var gpio = require('../lib/gpio');
 
 describe('lirc_web', function () {

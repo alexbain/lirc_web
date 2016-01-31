@@ -77,7 +77,7 @@ function overrideConfigurationForDebugOrDevelopment() {
     console.log('we are in test mode!');
     lircTest = require('./test/lib/lirc');
     lircTest.replaceLircByMock();
-    gpio.overrideWiringPi(require('./test/lib/wiring-pi-mock'));
+    gpio.setGpioLibrary(require('./lib/gpio-la-mock'));
     config = require('./test/fixtures/config.json');
     hasServerPortConfig = false;
     hasSSLConfig = false;
@@ -149,8 +149,9 @@ app.get('/remotes/:remote.json', function (req, res) {
 
 function respondWithGpioState(res) {
   if (config.gpios) {
-    gpio.updatePinStates();
-    res.json(config.gpios);
+    gpio.updatePinStates(function (result) {
+      res.json(result);
+    }, config.gpios);
   } else {
     res.send(404);
   }
@@ -189,10 +190,11 @@ app.post('/remotes/:remote/:command/send_stop', function (req, res) {
 
 // toggle /gpios/:gpio_pin
 app.post('/gpios/:gpio_pin', function (req, res) {
-  var newValue = gpio.togglePin(req.params.gpio_pin);
-  res.setHeader('Cache-Control', 'no-cache');
-  res.json(newValue);
-  res.end();
+  gpio.togglePin(function (result) {
+    res.setHeader('Cache-Control', 'no-cache');
+    res.json(result);
+    res.end();
+  }, req.params.gpio_pin);
 });
 
 
