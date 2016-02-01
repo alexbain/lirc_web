@@ -81,6 +81,8 @@ function overrideConfigurationForDebugOrDevelopment() {
     config = require('./test/fixtures/config.json');
     hasServerPortConfig = false;
     hasSSLConfig = false;
+  } else {
+    gpio.setGpioLibrary(require('./lib/gpio-la-gpio'));
   }
 }
 
