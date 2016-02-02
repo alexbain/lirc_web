@@ -27,8 +27,19 @@
       ]
     },
     {
-      "name": "all off",
+      "name": "lights off",
+      "defaultDelay": 40,
       "sequence": [
+        [ "Lightcontrol", "C01off"],
+        [ "Lightcontrol", "C02off"],
+        [ "Lightcontrol", "C03off"]
+      ]
+    },
+    {
+      "name": "all off",
+      "defaultDelay": 20,
+      "sequence": [
+        [ "call", "lights off"],
         [ "gpio", "TV", 0 ],
         [ "gpio", "Receiver", 0 ],
         [ "gpio", "Xbox", 0 ]
