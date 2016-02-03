@@ -21,32 +21,6 @@ var CONFIG_DELAYED_HELLO_WORLD = [{
   ],
 }];
 
-var CONFIG_HELLO_STATES = [{
-  name: 'hello!',
-  provides: 'hello',
-  sequence: [
-    ['say', 'hello'],
-  ],
-}, {
-  name: 'world!',
-  requires: 'hello',
-  sequence: [
-    ['say', 'world'],
-  ],
-}, {
-  name: 'goodbye!',
-  resets: 'hello',
-  sequence: [
-    ['say', 'goodbye'],
-  ],
-}, {
-  name: 'something',
-  resets: 'world',
-  sequence: [
-    ['say', 'goodbye'],
-  ],
-}];
-
 var CONFIG_HELLO = [
   {
     name: 'hello',
@@ -350,6 +324,32 @@ describe('macros', function () {
   });
 
   describe('state', function () {
+    var CONFIG_STATES = [{
+      name: 'hello!',
+      provides: 'hello',
+      sequence: [
+        ['say', 'hello'],
+      ],
+    }, {
+      name: 'world!',
+      requires: 'hello',
+      sequence: [
+        ['say', 'world'],
+      ],
+    }, {
+      name: 'goodbye!',
+      resets: 'hello',
+      sequence: [
+        ['say', 'goodbye'],
+      ],
+    }, {
+      name: 'something',
+      resets: 'world',
+      sequence: [
+        ['say', 'goodbye'],
+      ],
+    }];
+
     describe('set, reset and query', function () {
       beforeEach(function () {
         resetMockAndFixture();
@@ -361,27 +361,27 @@ describe('macros', function () {
       });
 
       it('should deliver current states as key value map', function () {
-        macros.init(CONFIG_HELLO_STATES);
+        macros.init(CONFIG_STATES);
         assert.deepEqual(macros.getCurrentStates(), { hello: 'clear', world: 'clear' });
       });
 
       it('should set state after execution', function () {
-        macros.init(CONFIG_HELLO_STATES);
+        macros.init(CONFIG_STATES);
         assert.deepEqual(macros.getCurrentStates(),
           { hello: 'clear', world: 'clear' }, 'not called');
-        macros.execute(CONFIG_HELLO_STATES[0].name);
+        macros.execute(CONFIG_STATES[0].name);
         clock.tick(51);
         assert.deepEqual(macros.getCurrentStates(),
           { hello: 'set', world: 'clear' }, 'macro called');
       });
 
       it('should reset state after execution', function () {
-        macros.init(CONFIG_HELLO_STATES);
-        macros.execute(CONFIG_HELLO_STATES[0].name);
+        macros.init(CONFIG_STATES);
+        macros.execute(CONFIG_STATES[0].name);
         clock.tick(51);
         assert.deepEqual(macros.getCurrentStates(), { hello: 'set', world: 'clear' },
           'state set called');
-        macros.execute(CONFIG_HELLO_STATES[2].name);
+        macros.execute(CONFIG_STATES[2].name);
         clock.tick(51);
         assert.deepEqual(macros.getCurrentStates(), { hello: 'clear', world: 'clear' },
           'state reset called');
@@ -396,7 +396,31 @@ describe('macros', function () {
       });
     });
 
+    // TODO validation of providers, requesters, resetters and deniers:
+    // providers and deniers need match!
+
     describe('dependency call', function () {
+      var CONFIG_MULTI_STATES = [{
+        name: 'Lamp',
+        provides: 'light',
+        sequence: [
+          ['delay', '50'],
+          ['say', 'shiny'],
+        ],
+      }, {
+        name: 'he',
+        requires: 'light',
+        sequence: [
+          ['say', 'uh'],
+        ],
+      }, {
+        name: 'she',
+        requires: 'light',
+        sequence: [
+          ['say', 'ah'],
+        ],
+      }];
+
       beforeEach(function () {
         resetMockAndFixture();
         clock = sinon.useFakeTimers();
@@ -406,14 +430,56 @@ describe('macros', function () {
         clock.restore();
       });
 
-      it.skip('should call macro if state is requested', function () {
-        macros.init(CONFIG_HELLO_STATES);
-        macros.execute(CONFIG_HELLO_STATES[1].name);
+      it('should call macro if state is requested', function () {
+        macros.init(CONFIG_STATES);
+        macros.execute(CONFIG_STATES[1].name);
         clock.tick(51);
         assert.deepEqual(deviceMock.operations,
           [['say', 'hello'], ['say', 'world']], 'calls are not done as expected');
-        assert.deepEqual(macros.getCurrentStates(), { hello: true, world: false },
+        assert.deepEqual(macros.getCurrentStates(), { hello: 'set', world: 'clear' },
           'states are not set as required');
+      });
+
+      it('should call a macro only once, if two triggered macros request it simultaneously',
+        function () {
+          macros.init(CONFIG_MULTI_STATES);
+          macros.execute(CONFIG_MULTI_STATES[1].name);
+          clock.tick(20);
+          macros.execute(CONFIG_MULTI_STATES[2].name);
+          assert.deepEqual(macros.getCurrentStates(), { light: 'going_to_be_set' },
+            'states are not in progress as they should');
+          clock.tick(131);
+          assert.deepEqual(deviceMock.operations,
+            [['say', 'shiny'], ['say', 'uh'], ['say', 'ah']], 'calls are not done as expected');
+          assert.deepEqual(macros.getCurrentStates(), { light: 'set' },
+            'states are not set as required');
+        }
+      );
+
+      it('should call a macro only if the required state is not already set.',
+        function () {
+          macros.init(CONFIG_MULTI_STATES);
+          macros.execute(CONFIG_MULTI_STATES[1].name);
+          clock.tick(101);
+          assert.deepEqual(deviceMock.operations,
+            [['say', 'shiny'], ['say', 'uh']], 'first calls are not done as expected');
+          assert.deepEqual(macros.getCurrentStates(), { light: 'set' },
+            'first states are not set as required');
+          macros.execute(CONFIG_MULTI_STATES[2].name);
+          clock.tick(51);
+          assert.deepEqual(deviceMock.operations,
+            [['say', 'shiny'], ['say', 'uh'], ['say', 'ah']],
+            'final calls are not done as expected');
+          assert.deepEqual(macros.getCurrentStates(), { light: 'set' },
+            'final states are not set as required');
+        }
+      );
+
+      it.skip('should call multiple macros if multiple states are requested', function () {
+        macros.init(CONFIG_MULTI_STATES);
+        macros.execute(CONFIG_MULTI_STATES[1].name);
+        clock.tick(51);
+        // TODO
       });
     });
   });
