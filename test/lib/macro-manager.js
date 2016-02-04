@@ -321,6 +321,11 @@ describe('macros', function () {
       assert.equal(macros.isMacroDefined('hello world'), true);
       assert.equal(macros.isMacroDefined('Slartibartfass'), false);
     });
+
+    // TODO validation of providers, requesters, reseters:
+    // if a requester exist, provider and resetter need to match!
+    // if states are used at initialization, these have to be defined in config and have a valid
+    // value, else a error message has to be provided.
   });
 
   describe('state', function () {
@@ -366,9 +371,7 @@ describe('macros', function () {
       });
 
       it('should set state after execution', function () {
-        macros.init(CONFIG_STATES);
-        assert.deepEqual(macros.getCurrentStates(),
-          { hello: 'clear', world: 'clear' }, 'not called');
+        macros.init(CONFIG_STATES, { hello: 'clear', world: 'clear' });
         macros.execute(CONFIG_STATES[0].name);
         clock.tick(51);
         assert.deepEqual(macros.getCurrentStates(),
@@ -376,11 +379,7 @@ describe('macros', function () {
       });
 
       it('should reset state after execution', function () {
-        macros.init(CONFIG_STATES);
-        macros.execute(CONFIG_STATES[0].name);
-        clock.tick(51);
-        assert.deepEqual(macros.getCurrentStates(), { hello: 'set', world: 'clear' },
-          'state set called');
+        macros.init(CONFIG_STATES, { hello: 'set', world: 'clear' });
         macros.execute(CONFIG_STATES[2].name);
         clock.tick(51);
         assert.deepEqual(macros.getCurrentStates(), { hello: 'clear', world: 'clear' },
@@ -395,9 +394,6 @@ describe('macros', function () {
           'state set called');
       });
     });
-
-    // TODO validation of providers, requesters, resetters and deniers:
-    // providers and deniers need match!
 
     describe('dependency call', function () {
       var CONFIG_MULTI_STATES = [{
@@ -433,7 +429,6 @@ describe('macros', function () {
       it('should call macro if state is requested', function () {
         macros.init(CONFIG_STATES);
         macros.execute(CONFIG_STATES[1].name);
-        clock.tick(51);
         assert.deepEqual(deviceMock.operations,
           [['say', 'hello'], ['say', 'world']], 'calls are not done as expected');
         assert.deepEqual(macros.getCurrentStates(), { hello: 'set', world: 'clear' },
@@ -456,30 +451,63 @@ describe('macros', function () {
         }
       );
 
-      it('should call a macro only if the required state is not already set.',
+      it('should call a macro only if the requested state is not already set.',
         function () {
-          macros.init(CONFIG_MULTI_STATES);
-          macros.execute(CONFIG_MULTI_STATES[1].name);
-          clock.tick(101);
-          assert.deepEqual(deviceMock.operations,
-            [['say', 'shiny'], ['say', 'uh']], 'first calls are not done as expected');
-          assert.deepEqual(macros.getCurrentStates(), { light: 'set' },
-            'first states are not set as required');
+          macros.init(CONFIG_MULTI_STATES, { light: 'set' });
           macros.execute(CONFIG_MULTI_STATES[2].name);
-          clock.tick(51);
-          assert.deepEqual(deviceMock.operations,
-            [['say', 'shiny'], ['say', 'uh'], ['say', 'ah']],
-            'final calls are not done as expected');
+          assert.deepEqual(deviceMock.operations, [['say', 'ah']],
+            'calls are not done as expected');
           assert.deepEqual(macros.getCurrentStates(), { light: 'set' },
-            'final states are not set as required');
+            'states are not set as required');
         }
       );
+    });
 
-      it.skip('should call multiple macros if multiple states are requested', function () {
-        macros.init(CONFIG_MULTI_STATES);
-        macros.execute(CONFIG_MULTI_STATES[1].name);
-        clock.tick(51);
-        // TODO
+    describe('dependency call', function () {
+      var CONFIG_MULTI_STATES = [{
+        name: 'Screen down',
+        provides: 'screen',
+        sequence: [
+          ['say', 'screen down'],
+        ],
+      }, {
+        name: 'Projector on',
+        requires: 'screen',
+        provides: 'projector',
+        sequence: [
+          ['say', 'projector on'],
+        ],
+      }, {
+        name: 'Screen up',
+        resets: 'screen',
+        sequence: [
+          ['say', 'screen up'],
+        ],
+      }, {
+        name: 'Projector off',
+        resets: 'projector',
+        sequence: [
+          ['say', 'projector off'],
+        ],
+      }];
+
+      beforeEach(function () {
+        resetMockAndFixture();
+        clock = sinon.useFakeTimers();
+      });
+
+      afterEach(function () {
+        clock.restore();
+      });
+
+      it.skip('should call a state X resetting macro, if X requires Y and this one resets Y',
+      function () {
+        macros.init(CONFIG_MULTI_STATES, { screen: 'set', projector: 'set' });
+        macros.execute(CONFIG_MULTI_STATES[2].name);
+        assert.deepEqual(deviceMock.operations, [['say', 'projector off'], ['say', 'screen up']],
+          'calls are not done as expected');
+        assert.deepEqual(macros.getCurrentStates(), { screen: 'clear', projector: 'clear' },
+          'states are not set as required');
       });
     });
   });
