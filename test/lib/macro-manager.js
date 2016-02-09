@@ -500,7 +500,7 @@ describe('macros', function () {
         clock.restore();
       });
 
-      it.skip('should call a state X resetting macro, if X requires Y and this one resets Y',
+      it('should call a state X resetting macro, if X requires Y and this one resets Y',
       function () {
         macros.init(CONFIG_MULTI_STATES, { screen: 'set', projector: 'set' });
         macros.execute(CONFIG_MULTI_STATES[2].name);
