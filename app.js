@@ -21,7 +21,7 @@ var JST = {
 // Create app
 var app = module.exports = express();
 
-// lirc_web configuration
+// osur configuration
 var config = {};
 var hasServerPortConfig = false;
 var hasSSLConfig = false;
@@ -57,7 +57,8 @@ function readConfiguration() {
     try {
       configure(__dirname + '/config.json');
     } catch (e) {
-      configure(process.env.HOME + '/.lirc_web_config.json');
+        console.log (e);
+      configure(process.env.HOME + '/.osur-config.json');
     }
   } catch (e) {
     console.log('DEBUG:', e);
