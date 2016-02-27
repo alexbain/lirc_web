@@ -89,16 +89,20 @@ function overrideConfigurationForDebugOrDevelopment() {
 
 function initializeModules(done) {
   lirc.init(config, function () {
+    var currentStates = null;
+
     if (config.gpios) {
       gpio.init(config.gpios);
     }
 
     if (config.macros) {
+      currentStates = macros.getCurrentStates();
+
       if (config.gpios) {
         macros.registerDevice(gpio);
       }
       macros.registerDevice(lirc);
-      macros.init(config.macros);
+      macros.init(config.macros, currentStates);
     }
 
     // initialize Labels for remotes / commands
