@@ -57,7 +57,7 @@ function readConfiguration() {
     try {
       configure(__dirname + '/config.json');
     } catch (e) {
-        console.log (e);
+      console.log('DEBUG:', e);
       configure(process.env.HOME + '/.osur-config.json');
     }
   } catch (e) {
