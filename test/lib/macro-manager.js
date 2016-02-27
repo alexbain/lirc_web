@@ -463,7 +463,7 @@ describe('macros', function () {
       );
     });
 
-    describe('dependency call', function () {
+    describe('dependency switch off', function () {
       var CONFIG_MULTI_STATES = [{
         name: 'Screen down',
         provides: 'screen',
@@ -505,6 +505,17 @@ describe('macros', function () {
         macros.init(CONFIG_MULTI_STATES, { screen: 'set', projector: 'set' });
         macros.execute(CONFIG_MULTI_STATES[2].name);
         assert.deepEqual(deviceMock.operations, [['say', 'projector off'], ['say', 'screen up']],
+          'calls are not done as expected');
+        assert.deepEqual(macros.getCurrentStates(), { screen: 'clear', projector: 'clear' },
+          'states are not set as required');
+      });
+
+      it('should call a state X resetting macro only, if X requires Y, ' +
+        'X is set and this one resets Y',
+      function () {
+        macros.init(CONFIG_MULTI_STATES, { screen: 'set', projector: 'clear' });
+        macros.execute(CONFIG_MULTI_STATES[2].name);
+        assert.deepEqual(deviceMock.operations, [['say', 'screen up']],
           'calls are not done as expected');
         assert.deepEqual(macros.getCurrentStates(), { screen: 'clear', projector: 'clear' },
           'states are not set as required');
