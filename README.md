@@ -41,6 +41,7 @@ These are the available configuration options:
 4. ``remoteLabels`` - a way to rename the remotes that LIRC understands (``XBOX360``) with labels that humans prefer (``Xbox 360``).
 5. ``blacklists`` - a way to hide unused commands from your remotes.
 6. ``server`` - server configuration settings (ports, [SSL](http://serverfault.com/a/366374)).
+7. ``socket`` - to specify the lircd socket for irsend.
 
 
 #### Example config.json:
@@ -86,13 +87,14 @@ These are the available configuration options:
       },
       "remoteLabels": {
          "Xbox360": "Xbox 360"
-      }
+      },
       "blacklists": {
          "Yamaha": [
            "AUX2",
            "AUX3"
          ]
-      }
+      },
+      "socket": "/run/lirc/lircd1"
     }
 
 Please see the `example_configs/` directory.
@@ -192,4 +194,3 @@ the following conditions:
 
 The above copyright notice and this permission notice shall be
 included in all copies or substantial portions of the Software.
-

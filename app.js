@@ -56,6 +56,10 @@ function _init() {
     console.log('DEBUG:', e);
     console.log('WARNING: Cannot find config.json!');
   }
+
+  if (config.socket) {
+    lircNode.setSocket(config.socket);
+  }
 }
 
 function refineRemotes(myRemotes) {
