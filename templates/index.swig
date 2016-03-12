@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html manifest="app.appcache">
   <head>
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">

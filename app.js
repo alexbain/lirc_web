@@ -15,7 +15,11 @@ var macros = require('./lib/macros');
 // Precompile templates
 var JST = {
   index: swig.compileFile(__dirname + '/templates/index.swig'),
+  appcache: swig.compileFile(__dirname + '/templates/appcache.swig'),
 };
+
+// Set bootup time as the cache busting hash for the app cache manifest
+var bootupTime = Date.now();
 
 // Create app
 var app = module.exports = express();
@@ -60,6 +64,9 @@ function _init() {
   if (config.socket) {
     lircNode.setSocket(config.socket);
   }
+
+  // Refresh the app cache manifest hash
+  bootupTime = Date.now();
 }
 
 function refineRemotes(myRemotes) {
@@ -116,6 +123,13 @@ app.get('/', function (req, res) {
     repeaters: config.repeaters,
     labelForRemote: labelFor.remote,
     labelForCommand: labelFor.command,
+  }));
+});
+
+// application cache manifest
+app.get('/app.appcache', function (req, res) {
+  res.send(JST.appcache({
+    hash: bootupTime,
   }));
 });
 

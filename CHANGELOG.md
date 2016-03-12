@@ -9,6 +9,7 @@ As of `v0.1.0`, this project adheres to [Semantic Versioning](http://semver.org/
 * Adds `grunt-contrib-cssmin` task to combine all CSS requests into one
 * Adds ability to set lirc socket in `config.json` (thanks @pmgration)
 * Base64 `left-arrow.png` image to reduce a request
+* Adds application cache manifest file for offline caching
 
 ## [0.2.4] - 2016-01-13
 
