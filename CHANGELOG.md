@@ -6,6 +6,8 @@ As of `v0.1.0`, this project adheres to [Semantic Versioning](http://semver.org/
 
 ## Unreleased
 
+* Adds `grunt-contrib-cssmin` task to combine all CSS requests into one
+
 ## [0.2.4] - 2016-01-13
 
 * Extracts macros into a standalone lib/macros.js file
