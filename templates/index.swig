@@ -9,9 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0">
     <title>Universal Remote</title>
-    <link rel="stylesheet" href="css/bootstrap.css" />
-    <link rel="stylesheet" href="css/flat-ui.css" />
-    <link rel="stylesheet" href="css/compiled/app.css" />
+    <link rel="stylesheet" href="css/compiled/compiled.css" />
     {% include "./favicons.swig" %}
   </head>
   <body ontouchstart="">

@@ -21,7 +21,7 @@ ul {
   padding: 0;
 }
 h1 {
-  background: #34495e;
+  background: #34495E;
   color: #fff;
   font-family: LatoBold;
   margin: 0 0 30px;
@@ -34,13 +34,13 @@ h1 {
   width: 100%;
 }
 h1.is-remote {
-  background: #3498db;
+  background: #3498DB;
 }
 .command {
   margin: 20px 0;
 }
 .command:nth-child(even) .btn-primary {
-  background: #16a085;
+  background: #16A085;
 }
 .no-touch .command-link:hover {
   background: #2fe2bf;

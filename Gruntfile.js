@@ -28,6 +28,18 @@ module.exports = function (grunt) {
       },
     },
 
+    cssmin: {
+      target: {
+        files: {
+          'static/css/compiled/compiled.css': [
+            'static/css/bootstrap.css',
+            'static/css/flat-ui.css',
+            'static/css/compiled/app.css',
+          ],
+        },
+      },
+    },
+
     eslint: {
       target: ['Gruntfile.js', 'app.js', 'lib/**/*.js', 'test/**/*.js'],
     },
@@ -55,6 +67,6 @@ module.exports = function (grunt) {
     },
   });
 
-  grunt.registerTask('default', ['uglify', 'less', 'eslint']);
-  grunt.registerTask('server', ['uglify', 'less', 'eslint', 'develop', 'watch']);
+  grunt.registerTask('default', ['uglify', 'less', 'cssmin', 'eslint']);
+  grunt.registerTask('server', ['uglify', 'less', 'cssmin', 'eslint', 'develop', 'watch']);
 };
