@@ -24,6 +24,14 @@ Verify the web interface works by opening ``http://SERVER:3000/`` in a web brows
 
 If you want to have `lirc_web`  available via port 80 and start on boot, there are example NGINX and Upstart configuration files included in the ``example_configs/`` directory.
 
+#### Mobile optimizations
+
+`lirc_web` includes performance and user experience optimizations for mobile devices. These can be enabled by adding the `lirc_web` URL as a bookmark to the home screen of your device. Bookmarking `lirc_web` is performed from your phone's web browser. `lirc_web` will then load full screen, as if it was a native iOS or Android app. The URL bar will no longer be visible and `lirc_web` will be selectable from the device's multitasking screen.
+
+Bookmarking is higly recommended for the best mobile experience.
+
+As of v0.3.0, `lirc_web` uses an Application Cache. The enables all assets to be cached locally on the phone. This reduces load time dramatically.
+
 ## Configuration
 
 As of v0.0.8, ``lirc_web`` supports customization through a configuration file.
