@@ -1,29 +1,4 @@
 @font-face {
-    font-family: 'Lato';
-    src: url('/fonts/LatoLatin-Regular.eot'); /* IE9 Compat Modes */
-    src: url('/fonts/LatoLatin-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-         url('/fonts/LatoLatin-Regular.woff2') format('woff2'), /* Modern Browsers */
-         url('/fonts/LatoLatin-Regular.woff') format('woff'), /* Modern Browsers */
-         url('/fonts/LatoLatin-Regular.ttf') format('truetype');
-    font-style: normal;
-    font-weight: normal;
-    text-rendering: optimizeLegibility;
-}
-
-@font-face {
-    font-family: 'LatoBold';
-    src: url('/fonts/LatoLatin-Bold.eot'); /* IE9 Compat Modes */
-    src: url('/fonts/LatoLatin-Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-         url('/fonts/LatoLatin-Bold.woff2') format('woff2'), /* Modern Browsers */
-         url('/fonts/LatoLatin-Bold.woff') format('woff'), /* Modern Browsers */
-         url('/fonts/LatoLatin-Bold.ttf') format('truetype');
-    font-style: normal;
-    font-weight: normal;
-    text-rendering: optimizeLegibility;
-}
-
-
-@font-face {
   font-family: "Flat-UI-Icons-16";
   src: url("../fonts/Flat-UI-Icons-16.eot");
   src: url("../fonts/Flat-UI-Icons-16.eot?#iefix") format("embedded-opentype"), url("../fonts/Flat-UI-Icons-16.woff") format("woff"), url("../fonts/Flat-UI-Icons-16.ttf") format("truetype"), url("../fonts/Flat-UI-Icons-16.svg#Flat-UI-Icons-16") format("svg");
@@ -201,7 +176,7 @@
 
 body {
   color: #34495e;
-  font: 14px/1.231 "Lato", sans-serif; }
+  font: 14px/1.231 sans-serif; }
 
 a {
   color: #1abc9c;
@@ -832,7 +807,6 @@ input[type="color"],
 .uneditable-input {
   border: 2px solid #dce4ec;
   color: #34495e;
-  font-family: "Lato", sans-serif;
   font-size: 14px;
   padding: 8px 0 9px 10px;
   text-indent: 1px;
@@ -1297,7 +1271,6 @@ textarea,
     background: transparent;
     border: none;
     color: #34495e;
-    font-family: "Lato", sans-serif;
     font-size: 14px;
     margin: 0px;
     padding: 0 0 0 5px;
@@ -1962,8 +1935,7 @@ body.vjs-full-window {
   position: absolute;
   bottom: 4em;
   left: 1em;
-  right: 1em;
-  font-family: "Lato", sans-serif; }
+  right: 1em; }
 .video-js .vjs-text-track {
   display: none;
   color: white;
@@ -2178,8 +2150,7 @@ body.vjs-full-window {
   position: absolute;
   height: 20px;
   width: 50px;
-  top: 16px;
-  font: 300 13px "Lato", sans-serif; }
+  top: 16px; }
 
 .vjs-current-time {
   right: 128px;
