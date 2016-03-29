@@ -115,6 +115,7 @@ describe('lirc_web', function () {
       SonyTV: ['Power', 'VolumeUp', 'VolumeDown', 'ChannelUp', 'ChannelDown'],
       Xbox360: XBOX_COMMANDS,
       LightControl: LIGHT_COMMANDS,
+      XboxOne: ["Power", "Up", "Select"],
       LircNamespace: ['KEY_POWER', 'KEY_VOLUMEUP', 'KEY_VOLUMEDOWN', 'KEY_CHANNELUP', 'KEY_CHANNELDOWN'],
     };
 

@@ -13,6 +13,11 @@
       [ "Yamaha", "Xbox360" ],
       [ "Xbox360", "Power" ]
     ],
+    "XboxOne Off": [
+      [ "XboxOne", ["Power", 1600]],
+      [ "XboxOne", "Up"],
+      [ "XboxOne", "Select"]
+    ],
     "Listen to Music / Jams": [
       [ "Yamaha", "Power" ],
       [ "Yamaha", "AirPlay" ]
