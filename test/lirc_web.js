@@ -8,7 +8,7 @@ var jquery = fs.readFileSync('node_modules/jquery/dist/jquery.js', 'utf-8');
 describe('lirc_web', function () {
   describe('routes', function () {
     // Root route
-    it('should have an index route "/"', function (done) {
+    it('should have an index route \'/\'', function (done) {
       assert(request(app).get('/').expect(200, done));
     });
 
@@ -115,7 +115,7 @@ describe('lirc_web', function () {
       SonyTV: ['Power', 'VolumeUp', 'VolumeDown', 'ChannelUp', 'ChannelDown'],
       Xbox360: XBOX_COMMANDS,
       LightControl: LIGHT_COMMANDS,
-      XboxOne: ["Power", "Up", "Select"],
+      XboxOne: ['Power', 'Up', 'Select'],
       LircNamespace: ['KEY_POWER', 'KEY_VOLUMEUP', 'KEY_VOLUMEDOWN', 'KEY_CHANNELUP', 'KEY_CHANNELDOWN'],
     };
 
