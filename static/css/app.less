@@ -23,6 +23,21 @@ body {
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
+body.offline {
+    filter: grayscale(100%);
+}
+
+.offline-message {
+    display: none;
+}
+
+.offline .offline-message {
+    display: block;
+    text-align: center;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
 h1,
 h2,
 h3,
