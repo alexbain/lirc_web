@@ -18,6 +18,7 @@
         <a class="back hidden"><div class="left-arrow"></div></a>
         <span id="title" data-text="Universal Remote">Universal Remote</span>
       </h1>
+      <p class="offline-message">You are currently offline. <a id="offline-retry" href="/">Retry?</a></p>
       <ul class="remotes-nav">
       {% for remote in remotes %}
         {% set remoteName = loop.key %}

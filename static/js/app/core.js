@@ -122,4 +122,13 @@ $(function() {
     if(window.applicationCache.status === window.applicationCache.UPDATEREADY) {
         onUpdateReady();
     }
+
+    $.ajax({
+      url: '/remotes.json',
+      timeout: 1500,
+      error: function (e) {
+        $('body').addClass('offline');
+      }
+    });
+
 });
