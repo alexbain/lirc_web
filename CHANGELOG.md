@@ -7,6 +7,7 @@ As of `v0.1.0`, this project adheres to [Semantic Versioning](http://semver.org/
 ## Unreleased
 
 * Replace third party Lato font w/ system fonts. Improves load time.
+* Adds an offline message shown when the client can't contact server
 
 ## [0.3.0] - 2016-03-13
 
