@@ -28,6 +28,22 @@
 
       <hr />
 
+      <ul class="devices-nav">
+      {% for device in devices %}
+        {% set deviceName = device.name %}
+        <li><a class="btn btn-wide btn-large btn-inverse" href="#{{ deviceName|url_encode }}">{{ deviceName }}</a></li>
+      {% endfor %}
+      </ul>
+
+      <hr />
+
+      <ul class="remotes-nav">
+        <li><button class="btn btn-wide btn-large btn-inverse command-once" href="/zwave/2/on">Light On</button></li>
+        <li><button class="btn btn-wide btn-large btn-inverse command-once" href="/zwave/2/off">Light Off</button></li>
+      </ul>
+
+      <hr />
+
       <ul class="macros-nav">
       {% for macro in macros %}
         {% set macroName = loop.key %}
@@ -45,13 +61,32 @@
           <ul class="commands">
           {% for command in remote %}
              <li class="command">
-               <button class="command-link {% if repeaters[remoteName] && repeaters[remoteName][command] %}command-repeater{% else %}command-once{% endif %} btn btn-wide btn-large btn-primary" href="/remotes/{{ remoteName|url_encode }}/{{ command|url_encode }}">{{ labelForCommand(remoteName, command) }}</button>
+               <button class="remote-link command-link {% if repeaters[remoteName] && repeaters[remoteName][command] %}command-repeater{% else %}command-once{% endif %} btn btn-wide btn-large btn-primary" href="/remotes/{{ remoteName|url_encode }}/{{ command|url_encode }}">{{ labelForCommand(remoteName, command) }}</button>
              </li>
           {% endfor %}
           </ul>
         </li>
       {% endfor %}
       </ul>
+
+      <hr />
+
+      <ul class="devices">
+      {% for device in devices %}
+        {% set deviceName = device.name %}
+        <li class="remote" id="{{ deviceName|url_encode }}">
+          <ul class="commands">
+          {% for command in device.commands %}
+            {% set commandName = loop.key %}
+             <li class="command">
+               <button class="device-link command-link {% if repeaters[remoteName] && repeaters[remoteName][command] %}command-repeater{% else %}command-once{% endif %} btn btn-wide btn-large btn-primary" href="/devices/{{ deviceName }}/{{ commandName|url_encode }}">{{ commandName }}</button>
+             </li>
+          {% endfor %}
+          </ul>
+        </li>
+      {% endfor %}
+      </ul>
+
     </div>
 
     <div class="next"></div>

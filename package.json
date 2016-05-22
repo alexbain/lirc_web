@@ -11,6 +11,7 @@
     "lirc_node": "0.0.4",
     "lodash": "^3.10.1",
     "morgan": "^1.6.1",
+    "openzwave-shared": "^1.1.7",
     "swig": "^1.4.2"
   },
   "devDependencies": {
@@ -30,6 +31,7 @@
     "mocha": "2.3.4",
     "nodemon": "1.8.1",
     "should": "^8.1.1",
+    "request": "~2.53.0",
     "sinon": "1.17.2",
     "supertest": "1.1.0"
   },
