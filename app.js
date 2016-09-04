@@ -90,14 +90,20 @@ function refineRemotes(myRemotes) {
       });
     }
 
+    remoteCommands = remoteCommands.map(function (command) {
+      return { name: command, label: labelFor.command(remote, command) };
+    });
+
     return remoteCommands;
   }
 
   for (remote in myRemotes) {
     newRemoteCommands = getCommandsForRemote(remote);
-    newRemotes[remote] = newRemoteCommands;
+    newRemotes[remote] = {
+      label: labelFor.remote(remote),
+      commands: newRemoteCommands,
+    };
   }
-
   return newRemotes;
 }
 
@@ -121,8 +127,6 @@ app.get('/', function (req, res) {
     remotes: refinedRemotes,
     macros: config.macros,
     repeaters: config.repeaters,
-    labelForRemote: labelFor.remote,
-    labelForCommand: labelFor.command,
   }));
 });
 
