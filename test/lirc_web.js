@@ -103,20 +103,87 @@ describe('lirc_web', function () {
   });
 
   describe('json api', function () {
-    var XBOX_COMMANDS = ['OpenClose', 'FancyButton', 'OnOff', 'Stop',
-      'Pause', 'Rewind', 'FastForward', 'Prev', 'Next', 'Play',
-      'Display', 'Title', 'DVD_Menu', 'Back', 'Info', 'UpArrow',
-      'LeftArrow', 'RightArrow', 'DownArrow', 'OK', 'Y', 'X', 'A', 'B'];
+    var XBOX_REMOTE = {
+      label: 'Xbox360',
+      commands: [
+        { name: 'OpenClose', label: 'OpenClose' },
+        { name: 'FancyButton', label: 'FancyButton' },
+        { name: 'OnOff', label: 'OnOff' },
+        { name: 'Stop', label: 'Stop' },
+        { name: 'Pause', label: 'Pause' },
+        { name: 'Rewind', label: 'Rewind' },
+        { name: 'FastForward', label: 'FastForward' },
+        { name: 'Prev', label: 'Prev' },
+        { name: 'Next', label: 'Next' },
+        { name: 'Play', label: 'Play' },
+        { name: 'Display', label: 'Display' },
+        { name: 'Title', label: 'Title' },
+        { name: 'DVD_Menu', label: 'DVD_Menu' },
+        { name: 'Back', label: 'Back' },
+        { name: 'Info', label: 'Info' },
+        { name: 'UpArrow', label: 'UpArrow' },
+        { name: 'LeftArrow', label: 'LeftArrow' },
+        { name: 'RightArrow', label: 'RightArrow' },
+        { name: 'DownArrow', label: 'DownArrow' },
+        { name: 'OK', label: 'OK' },
+        { name: 'Y', label: 'Y' },
+        { name: 'X', label: 'X' },
+        { name: 'A', label: 'A' },
+        { name: 'B', label: 'B' },
+      ],
+    };
 
-    var LIGHT_COMMANDS = ['S1', 'S3', 'S5'];
+    var LIGHT_REMOTE = {
+      label: 'LightControl',
+      commands: [
+        { name: 'S1', label: 'S1' },
+        { name: 'S3', label: 'S3' },
+        { name: 'S5', label: 'S5' },
+      ],
+    };
 
     var REFINED_REMOTES = {
-      Yamaha: ['Power', 'Xbox360', 'Wii', 'VolumeUp', 'VolumeDown', 'DTV/CBL'],
-      SonyTV: ['Power', 'VolumeUp', 'VolumeDown', 'ChannelUp', 'ChannelDown'],
-      Xbox360: XBOX_COMMANDS,
-      LightControl: LIGHT_COMMANDS,
-      XboxOne: ['Power', 'Up', 'Select'],
-      LircNamespace: ['KEY_POWER', 'KEY_VOLUMEUP', 'KEY_VOLUMEDOWN', 'KEY_CHANNELUP', 'KEY_CHANNELDOWN'],
+      Yamaha: {
+        label: 'Yamaha',
+        commands: [
+          { name: 'Power', label: 'Power' },
+          { name: 'Xbox360', label: 'Xbox360' },
+          { name: 'Wii', label: 'Wii' },
+          { name: 'VolumeUp', label: 'VolumeUp' },
+          { name: 'VolumeDown', label: 'VolumeDown' },
+          { name: 'DTV/CBL', label: 'DTV/CBL' },
+        ],
+      },
+      SonyTV: {
+        label: 'SonyTV',
+        commands: [
+          { name: 'Power', label: 'Power' },
+          { name: 'VolumeUp', label: 'VolumeUp' },
+          { name: 'VolumeDown', label: 'VolumeDown' },
+          { name: 'ChannelUp', label: 'ChannelUp' },
+          { name: 'ChannelDown', label: 'ChannelDown' },
+        ],
+      },
+      Xbox360: XBOX_REMOTE,
+      LightControl: LIGHT_REMOTE,
+      XboxOne: {
+        label: 'XboxOne',
+        commands: [
+          { name: 'Power', label: 'Power' },
+          { name: 'Up', label: 'Up' },
+          { name: 'Select', label: 'Select' },
+        ],
+      },
+      LircNamespace: {
+        label: 'LIRC namespace',
+        commands: [
+          { name: 'KEY_POWER', label: 'Power' },
+          { name: 'KEY_VOLUMEUP', label: 'Vol+' },
+          { name: 'KEY_VOLUMEDOWN', label: 'Vol-' },
+          { name: 'KEY_CHANNELUP', label: 'Channel Up' },
+          { name: 'KEY_CHANNELDOWN', label: 'Channel Down' },
+        ],
+      },
     };
 
     it('should return a list of all remotes (and commands) when /remotes.json is accessed', function (done) {
@@ -130,14 +197,14 @@ describe('lirc_web', function () {
       request(app)
       .get('/remotes/Xbox360.json')
       .set('Accept', 'application/json')
-      .expect(200, XBOX_COMMANDS, done);
+      .expect(200, XBOX_REMOTE, done);
     });
 
     it('should return a filtered list of commands when a blacklist exists', function (done) {
       request(app)
       .get('/remotes/LightControl.json')
       .set('Accept', 'application/json')
-      .expect(200, LIGHT_COMMANDS, done);
+      .expect(200, LIGHT_REMOTE, done);
     });
 
     it('should return a 404 for an unknown remote', function (done) {
