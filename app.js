@@ -75,7 +75,6 @@ function readConfiguration() {
 function overrideConfigurationForDebugOrDevelopment() {
   var lircTest;
   if (process.env.npm_package_config_test_env) {
-    console.log('we are in test mode!');
     lircTest = require('./test/lib/lirc');
     lircTest.replaceLircByMock();
     gpio.setGpioLibrary(require('./lib/gpio-la-mock'));
