@@ -16,54 +16,54 @@ describe('gpio', function () {
   describe('updatePinStates', function () {
     it('should update all pin states', function (done) {
       gpioProbe.initPinsWith(1);
-      gpio.updatePinStates(function (result) {
+      gpio.updatePinStates(config, function (result) {
         assert.deepEqual(
           result,
           [{ name: 'a', pin: 47, state: 1 },
             { name: 'b', pin: 11, state: 1 }],
           'states are not updated properly');
         done();
-      }, config);
+      });
     });
   });
 
   describe('togglePin', function () {
     it('should change active pin to inactive', function (done) {
       gpioProbe.initPinsWith(1);
-      gpio.togglePin(function (res) {
+      gpio.togglePin(47, function (res) {
         assert.deepEqual(
           res,
           { pin: 47, state: 0 },
           'pin has not changed its state');
         done();
-      }, 47);
+      });
     });
 
     it('should change inactive pin to active', function (done) {
       gpioProbe.initPinsWith(0);
-      gpio.togglePin(function (res) {
+      gpio.togglePin(47, function (res) {
         assert.deepEqual(
           res,
           { pin: 47, state: 1 },
           'pin has not changed its state');
         done();
-      }, 47);
+      });
     });
   });
 
   describe('setPin', function () {
     it('should set a pin by name to the given value', function (done) {
       gpioProbe.initPinsWith(0);
-      gpio.setPin(function () {
+      gpio.setPin('a', 1, function () {
         assert.equal(gpioProbe.emulatedPins[47], 1);
-        gpio.setPin(function () {
+        gpio.setPin('a', 1, function () {
           assert.equal(gpioProbe.emulatedPins[47], 1);
-          gpio.setPin(function () {
+          gpio.setPin('a', 0, function () {
             assert.equal(gpioProbe.emulatedPins[47], 0);
             done();
-          }, 'a', 0);
-        }, 'a', 1);
-      }, 'a', 1);
+          });
+        });
+      });
     });
   });
 });

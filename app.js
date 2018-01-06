@@ -158,9 +158,9 @@ app.get('/remotes/:remote.json', function (req, res) {
 
 function respondWithGpioState(res) {
   if (config.gpios) {
-    gpio.updatePinStates(function (result) {
+    gpio.updatePinStates(config.gpios, function (result) {
       res.json(result);
-    }, config.gpios);
+    });
   } else {
     res.send(404);
   }
@@ -199,11 +199,11 @@ app.post('/remotes/:remote/:command/send_stop', function (req, res) {
 
 // toggle /gpios/:gpio_pin
 app.post('/gpios/:gpio_pin', function (req, res) {
-  gpio.togglePin(function (result) {
+  gpio.togglePin(req.params.gpio_pin, function (result) {
     res.setHeader('Cache-Control', 'no-cache');
     res.json(result);
     res.end();
-  }, req.params.gpio_pin);
+  });
 });
 
 
