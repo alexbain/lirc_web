@@ -8,6 +8,7 @@
     "compression": "^1.6.0",
     "consolidate": "^0.13.1",
     "express": "^4.13.0",
+    "gpio": "^0.2.7",
     "lirc_node": "0.0.4",
     "lodash": "^3.10.1",
     "morgan": "^1.6.1",
