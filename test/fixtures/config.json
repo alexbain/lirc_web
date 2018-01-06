@@ -5,33 +5,44 @@
       "VolumeDown": true
     }
   },
-  "macros": {
-    "Play Xbox 360": [
-      [ "gpio", "TV", 1],
-      [ "gpio", "Receiver", 1],
-      [ "gpio", "Xbox", 1],
-      [ "SonyTV", "Power" ],
-      [ "SonyTV", "Xbox360" ],
-      [ "Yamaha", "Power" ],
-      [ "Yamaha", "Xbox360" ],
-      [ "Xbox360", "Power" ]
-    ],
-    "Listen to Music / Jams": [
-      [ "gpio", "Receiver", 1],
-      [ "Yamaha", "Power" ],
-      [ "Yamaha", "AirPlay" ]
-    ],
-    "all off": [
-      [ "gpio", "TV", 0],
-      [ "gpio", "Receiver", 0],
-      [ "gpio", "Xbox", 0]
-    ],
-    "Macro With Delay": [
-      [ "delay", 500 ],
-      [ "Yamaha", "Power" ]
-    ]
-
-  },
+  "macros": [
+    {
+      "name": "Play Xbox 360",
+      "sequence": [
+        [ "gpio", "TV", 1 ],
+        [ "gpio", "Receiver", 1 ],
+        [ "gpio", "Xbox", 1 ],
+        [ "SonyTV", "Power" ],
+        [ "SonyTV", "Xbox360" ],
+        [ "Yamaha", "Power" ],
+        [ "Yamaha", "Xbox360" ],
+        [ "Xbox360", "Power" ]
+      ]
+    },
+    {
+      "name": "Listen to Music / Jams",
+      "sequence": [
+        [ "gpio", "Receiver", 1 ],
+        [ "Yamaha", "Power" ],
+        [ "Yamaha", "AirPlay" ]
+      ]
+    },
+    {
+      "name": "all off",
+      "sequence": [
+        [ "gpio", "TV", 0 ],
+        [ "gpio", "Receiver", 0 ],
+        [ "gpio", "Xbox", 0 ]
+      ]
+    },
+    {
+      "name": "Macro With Delay",
+      "sequence": [
+        [ "delay", 500 ],
+        [ "Yamaha", "Power" ]
+      ]
+    }
+  ],
   "commandLabels": {
     "LircNamespace": {
       "KEY_POWER": "Power",
@@ -54,11 +65,17 @@
     ]
   },
   "gpios": [
-    {"name": "Receiver",
-     "pin": 19},
-    {"name": "TV",
-     "pin": 16},
-    {"name": "Xbox",
-     "pin": 13}
+    {
+      "name": "Receiver",
+      "pin": 19
+    },
+    {
+      "name": "TV",
+      "pin": 16
+    },
+    {
+      "name": "Xbox",
+      "pin": 13
+    }
   ]
 }

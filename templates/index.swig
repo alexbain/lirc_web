@@ -30,8 +30,7 @@
       <hr />
 
       <ul class="macros-nav">
-      {% for macro in macros %}
-        {% set macroName = loop.key %}
+      {% for macroName in macros %}
         <li><button class="btn btn-wide btn-large btn-warning macro-link" href="/macros/{{ macroName|url_encode }}">{{ macroName }}</button></li>
       {% endfor %}
       </ul>

@@ -8,22 +8,22 @@
     "compression": "^1.6.0",
     "consolidate": "^0.13.1",
     "express": "^4.13.0",
+    "gpio": "^0.2.7",
     "lirc_node": "0.0.4",
     "lodash": "^3.10.1",
     "morgan": "^1.6.1",
-    "swig": "^1.4.2",
-    "wiring-pi": "2.1.0"
+    "swig": "^1.4.2"
   },
   "devDependencies": {
-    "eslint": "^1.10.0",
-    "eslint-config-airbnb": "^3.1.0",
-    "eslint-plugin-react": "^3.15.0",
+    "eslint": "1.10.0",
+    "eslint-config-airbnb": "3.1.0",
+    "eslint-plugin-react": "3.15.0",
     "grunt": "0.4.5",
     "grunt-contrib-less": "^1.1.0",
     "grunt-contrib-uglify": "^0.11.0",
     "grunt-contrib-watch": "0.6.1",
     "grunt-develop": "^0.4.0",
-    "grunt-eslint": "17.3.1",
+    "grunt-eslint": "^17.3.0",
     "jquery": "^2.2.0",
     "jsdom": "^7.2.2",
     "load-grunt-tasks": "^3.4.0",
@@ -36,10 +36,13 @@
   "bin": {
     "lirc_web": "./app.js"
   },
+  "config": {
+    "test_env": true
+  },
   "scripts": {
-    "test": "NODE_ENV=test mocha --require should --require test/common.js --reporter dot test/**",
-    "test:watch": "NODE_ENV=test mocha --require should --require test/common.js --watch --reporter dot lib/** test/** ",
-    "lint-js": "eslint app.js lib/** test/**"
+    "test": "mocha --require should --require test/common.js --reporter min app.js test/*.js test/*/*.js lib/*.js",
+    "test:watch": "mocha --require should --require test/common.js --watch --reporter min app.js test/*.js test/*/*.js lib/*.js",
+    "lint-js": "eslint app.js lib test"
   },
   "repository": {
     "type": "git",

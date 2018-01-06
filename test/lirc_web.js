@@ -5,17 +5,32 @@ var jsdom = require('jsdom');
 var fs = require('fs');
 var jquery = fs.readFileSync('node_modules/jquery/dist/jquery.js', 'utf-8');
 var configFixture = require(__dirname + '/fixtures/config.json');
-var gpioMock = require('./lib/wiring-pi-mock');
+var gpioMock = require('./../lib/gpio-la-mock');
 var gpio = require('../lib/gpio');
 
 describe('lirc_web', function () {
-  before(function () {
+  beforeEach(function () {
+    var deviceMock = require('./lib/lirc').getDeviceMock(require('./fixtures/remotes'));
+    var lirc = require('../lib/lirc');
+    var macros = require('../lib/macro-manager');
+    var config = require('./fixtures/config');
+    macros.resetConfiguration();
     gpio.init(configFixture.gpios);
+    macros.registerDevice(gpio);
+    lirc.overrideHardware(deviceMock);
+    lirc.init(config);
+    macros.registerDevice(lirc);
+    macros.init(config.macros);
   });
+
   describe('routes', function () {
     // Root route
     it('should have an index route "/"', function (done) {
       assert(request(app).get('/').expect(200, done));
+    });
+
+    it('should have GET route for a refresh of configuration', function (done) {
+      assert(request(app).get('/refresh').expect(302, done));
     });
 
     // JSON API
@@ -31,16 +46,8 @@ describe('lirc_web', function () {
       assert(request(app).get('/remotes/Xbox360.json').expect(200, done));
     });
 
-    it('should return 404 for unknown remote', function (done) {
+    it('should give a 404 for a JSON list of commands for unknown remote', function (done) {
       assert(request(app).get('/remotes/DOES_NOT_EXIST.json').expect(404, done));
-    });
-
-    it('should have GET route for JSON list of commands for macro', function (done) {
-      assert(request(app).get('/macros/Play%20Xbox%20360.json').expect(200, done));
-    });
-
-    it('should properly handle macros with / in them', function (done) {
-      assert(request(app).get('/macros/Listen%20to%20Music%20%2F%20Jams.json').expect(200, done));
     });
 
     it('should have GET route for JSON list of gpio pins', function (done) {
@@ -63,6 +70,10 @@ describe('lirc_web', function () {
     // Sending macros
     it('should have POST route for sending a macro', function (done) {
       assert(request(app).post('/macros/Play%20Xbox%20360').expect(200, done));
+    });
+
+    it('should properly handle macros with / in them', function (done) {
+      assert(request(app).post('/macros/Listen%20to%20Music%20%2F%20Jams').expect(200, done));
     });
 
     // Sending GPIO change requests

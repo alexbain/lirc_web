@@ -1,10 +1,10 @@
 {
-  "server" : {
-    "port" : 3000,
-    "ssl" : false,
-    "ssl_cert" : "/home/pi/lirc_web/server.cert",
-    "ssl_key" : "/home/pi/lirc_web/server.key",
-    "ssl_port" : 3001
+  "server": {
+    "port": 3000,
+    "ssl": false,
+    "ssl_cert": "/home/pi/lirc_web/server.cert",
+    "ssl_key": "/home/pi/lirc_web/server.key",
+    "ssl_port": 3001
   },
   "repeaters": {
     "SonyTV": {
@@ -12,23 +12,40 @@
       "VolumeDown": true
     }
   },
-  "macros": {
-    "Xbox360": [
-      [ "gpio", "TV", 1],
-      [ "gpio", "Receiver", 1],
-      [ "gpio", "Xbox", 1],
-      [ "SonyTV", "Power" ],
-      [ "SonyTV", "Xbox360" ],
-      [ "Yamaha", "Power" ],
-      [ "Yamaha", "Xbox360" ],
-      [ "Xbox360", "Power" ]
-    ],
-    "all off": [
-      [ "gpio", "TV", 0],
-      [ "gpio", "Receiver", 0],
-      [ "gpio", "Xbox", 0]
-    ]
-  },
+  "macros": [
+    {
+      "name": "Xbox360",
+      "sequence": [
+        [ "gpio", "TV", 1 ],
+        [ "gpio", "Receiver", 1 ],
+        [ "gpio", "Xbox", 1 ],
+        [ "SonyTV", "Power" ],
+        [ "SonyTV", "Xbox360" ],
+        [ "Yamaha", "Power" ],
+        [ "Yamaha", "Xbox360" ],
+        [ "Xbox360", "Power" ]
+      ]
+    },
+    {
+      "name": "lights off",
+      "defaultDelay": 40,
+      "sequence": [
+        [ "Lightcontrol", "C01off"],
+        [ "Lightcontrol", "C02off"],
+        [ "Lightcontrol", "C03off"]
+      ]
+    },
+    {
+      "name": "all off",
+      "defaultDelay": 20,
+      "sequence": [
+        [ "call", "lights off"],
+        [ "gpio", "TV", 0 ],
+        [ "gpio", "Receiver", 0 ],
+        [ "gpio", "Xbox", 0 ]
+      ]
+    }
+  ],
   "commandLabels": {
     "Yamaha": {
       "Xbox360": "Xbox 360",
@@ -37,20 +54,26 @@
     }
   },
   "remoteLabels": {
-     "Xbox360": "Xbox 360"
+    "Xbox360": "Xbox 360"
   },
   "blacklists": {
-     "Yamaha": [
-       "AUX2",
-       "AUX3"
-     ]
+    "Yamaha": [
+      "AUX2",
+      "AUX3"
+    ]
   },
   "gpios": [
-      {"name": "Receiver",
-       "pin": 19},
-      {"name": "TV",
-       "pin": 16},
-      {"name": "Xbox",
-       "pin": 13}
+    {
+      "name": "Receiver",
+      "pin": 19
+    },
+    {
+      "name": "TV",
+      "pin": 16
+    },
+    {
+      "name": "Xbox",
+      "pin": 13
+    }
   ]
 }

@@ -1,0 +1,47 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          osur
+# Required-Start:    $lirc
+# Required-Stop:     $lirc
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts the open source universal remote web service.
+# Description:       osur is a universal remote web interface.
+#                    
+### END INIT INFO
+
+. /lib/lsb/init-functions
+
+NODE=/usr/local/bin/node
+HOME=/home/pi
+OSUR=$HOME/osur/app.js
+LOGFILE=/var/log/osur.log
+USER=pi
+GROUP=gpio
+
+test -f $NODE || exit 0
+test -f $OSUR || exit 0
+
+case "$1" in
+	start)
+        log_daemon_msg "Starting open source remote control web interface:"
+        cd $HOME
+        start-stop-daemon --start --chuid $USER:$GROUP --exec $NODE $OSUR >>$LOGFILE 2>&1 &
+        log_end_msg $?
+		;;
+	stop)
+	    log_daemon_msg "Stopping execution daemon: osur"
+		start-stop-daemon --stop --exec $NODE $OSUR
+	    log_end_msg $?
+		;;
+	reload|force-reload|restart)
+		$0 stop
+		sleep 1
+		$0 start $2
+		;;
+	*)
+		echo "Usage: /etc/init.d/osur {start|stop|reload|restart|force-reload}"
+	exit 1
+esac
+
+exit 0

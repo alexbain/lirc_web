@@ -4,14 +4,14 @@
 var express = require('express');
 var logger = require('morgan');
 var compress = require('compression');
-var lircNode = require('lirc_node');
+var lirc = require('./lib/lirc');
 var consolidate = require('consolidate');
 var swig = require('swig');
 var labels = require('./lib/labels');
 var https = require('https');
 var fs = require('fs');
+var macros = require('./lib/macro-manager.js');
 var gpio = require('./lib/gpio');
-var macros = require('./lib/macros');
 
 // Precompile templates
 var JST = {
@@ -21,7 +21,7 @@ var JST = {
 // Create app
 var app = module.exports = express();
 
-// lirc_web configuration
+// osur configuration
 var config = {};
 var hasServerPortConfig = false;
 var hasSSLConfig = false;
@@ -43,7 +43,7 @@ app.set('view engine', 'jade');
 app.use(compress());
 app.use(express.static(__dirname + '/static'));
 
-function _init() {
+function readConfiguration() {
   var searchPaths = [];
 
   function configure(configFileName) {
@@ -52,14 +52,13 @@ function _init() {
     console.log('Open Source Universal Remote is configured by ' + configFileName);
   }
 
-  lircNode.init();
-
   // Config file is optional
   try {
     try {
       configure(__dirname + '/config.json');
     } catch (e) {
-      configure(process.env.HOME + '/.lirc_web_config.json');
+      console.log('DEBUG:', e);
+      configure(process.env.HOME + '/.osur-config.json');
     }
   } catch (e) {
     console.log('DEBUG:', e);
@@ -73,80 +72,85 @@ function _init() {
     && config.server.ssl_key && config.server.ssl_port;
 }
 
-function refineRemotes(myRemotes) {
-  var newRemotes = {};
-  var newRemoteCommands = null;
-  var remote = null;
+function overrideConfigurationForDebugOrDevelopment() {
+  var lircTest;
+  if (process.env.npm_package_config_test_env) {
+    lircTest = require('./test/lib/lirc');
+    lircTest.replaceLircByMock();
+    gpio.setGpioLibrary(require('./lib/gpio-la-mock'));
+    config = require('./test/fixtures/config.json');
+    hasServerPortConfig = false;
+    hasSSLConfig = false;
+  } else {
+    gpio.setGpioLibrary(require('./lib/gpio-la-gpio'));
+  }
+}
 
-  function isBlacklistExisting(remoteName) {
-    return config.blacklists && config.blacklists[remoteName];
+function initializeModules(done) {
+  function initializeMacros() {
+    var currentStates = macros.getCurrentStates();
+    macros.resetConfiguration();
+
+    if (config.gpios) {
+      macros.registerDevice(gpio);
+    }
+    macros.registerDevice(lirc);
+    macros.init(config.macros, currentStates);
   }
 
-  function getCommandsForRemote(remoteName) {
-    var remoteCommands = myRemotes[remoteName];
-    var blacklist = null;
-
-    if (isBlacklistExisting(remoteName)) {
-      blacklist = config.blacklists[remoteName];
-
-      remoteCommands = remoteCommands.filter(function (command) {
-        return blacklist.indexOf(command) < 0;
-      });
+  lirc.init(config, function () {
+    if (config.gpios) {
+      gpio.init(config.gpios);
     }
 
-    return remoteCommands;
-  }
+    if (config.macros) {
+      initializeMacros();
+    }
 
-  for (remote in myRemotes) {
-    newRemoteCommands = getCommandsForRemote(remote);
-    newRemotes[remote] = newRemoteCommands;
-  }
-
-  return newRemotes;
+    // initialize Labels for remotes / commands
+    labelFor = labels(config.remoteLabels, config.commandLabels);
+    done();
+  });
 }
 
-// Based on node environment, initialize connection to lircNode or use test data
-if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
-  lircNode.remotes = require(__dirname + '/test/fixtures/remotes.json');
-  config = require(__dirname + '/test/fixtures/config.json');
-  gpio.overrideWiringPi(require('./test/lib/wiring-pi-mock'));
-} else {
-  _init();
+function init(done) {
+  readConfiguration();
+  overrideConfigurationForDebugOrDevelopment();
+  initializeModules(done);
 }
-
-// initialize Labels for remotes / commands
-labelFor = labels(config.remoteLabels, config.commandLabels);
 
 // Routes
 
 // Index
 app.get('/', function (req, res) {
-  var refinedRemotes = refineRemotes(lircNode.remotes);
-  res.send(JST.index({
-    remotes: refinedRemotes,
-    macros: config.macros,
+  var indexPage = JST.index({
+    remotes: lirc.getRemotes(),
+    macros: macros.getGuiMacroLabels(),
     repeaters: config.repeaters,
     gpios: config.gpios,
     labelForRemote: labelFor.remote,
     labelForCommand: labelFor.command,
-  }));
+  });
+  res.send(indexPage);
 });
 
 // Refresh
 app.get('/refresh', function (req, res) {
-  _init();
-  res.redirect('/');
+  init(function () {
+    res.redirect('/');
+  });
 });
 
 // List all remotes in JSON format
 app.get('/remotes.json', function (req, res) {
-  res.json(refineRemotes(lircNode.remotes));
+  res.json(lirc.getRemotes());
 });
 
 // List all commands for :remote in JSON format
 app.get('/remotes/:remote.json', function (req, res) {
-  if (lircNode.remotes[req.params.remote]) {
-    res.json(refineRemotes(lircNode.remotes)[req.params.remote]);
+  var commands = lirc.getCommandsForRemote(req.params.remote);
+  if (commands) {
+    res.json(commands);
   } else {
     res.sendStatus(404);
   }
@@ -154,8 +158,9 @@ app.get('/remotes/:remote.json', function (req, res) {
 
 function respondWithGpioState(res) {
   if (config.gpios) {
-    gpio.updatePinStates();
-    res.json(config.gpios);
+    gpio.updatePinStates(config.gpios, function (result) {
+      res.json(result);
+    });
   } else {
     res.send(404);
   }
@@ -171,49 +176,42 @@ app.get('/macros.json', function (req, res) {
   res.json(config.macros);
 });
 
-// List all commands for :macro in JSON format
-app.get('/macros/:macro.json', function (req, res) {
-  if (config.macros && config.macros[req.params.macro]) {
-    res.json(config.macros[req.params.macro]);
-  } else {
-    res.sendStatus(404);
-  }
-});
-
 // Send :remote/:command one time
 app.post('/remotes/:remote/:command', function (req, res) {
-  lircNode.irsend.send_once(req.params.remote, req.params.command, function () {});
+  lirc.sendOnce(req.params.remote, req.params.command, function () {});
   res.setHeader('Cache-Control', 'no-cache');
   res.sendStatus(200);
 });
 
 // Start sending :remote/:command repeatedly
 app.post('/remotes/:remote/:command/send_start', function (req, res) {
-  lircNode.irsend.send_start(req.params.remote, req.params.command, function () {});
+  lirc.sendStart(req.params.remote, req.params.command, function () {});
   res.setHeader('Cache-Control', 'no-cache');
   res.sendStatus(200);
 });
 
 // Stop sending :remote/:command repeatedly
 app.post('/remotes/:remote/:command/send_stop', function (req, res) {
-  lircNode.irsend.send_stop(req.params.remote, req.params.command, function () {});
+  lirc.sendStop(req.params.remote, req.params.command, function () {});
   res.setHeader('Cache-Control', 'no-cache');
   res.sendStatus(200);
 });
 
 // toggle /gpios/:gpio_pin
 app.post('/gpios/:gpio_pin', function (req, res) {
-  var newValue = gpio.togglePin(req.params.gpio_pin);
-  res.setHeader('Cache-Control', 'no-cache');
-  res.json(newValue);
-  res.end();
+  gpio.togglePin(req.params.gpio_pin, function (result) {
+    res.setHeader('Cache-Control', 'no-cache');
+    res.json(result);
+    res.end();
+  });
 });
 
 
 // Execute a macro (a collection of commands to one or more remotes)
 app.post('/macros/:macro', function (req, res) {
-  if (config.macros && config.macros[req.params.macro]) {
-    macros.exec(config.macros[req.params.macro], lircNode);
+  var macroName = req.params.macro;
+  if (macros.isMacroDefined(macroName)) {
+    macros.execute(macroName);
     res.setHeader('Cache-Control', 'no-cache');
     if (config.gpios) {
       respondWithGpioState(res);
@@ -226,27 +224,27 @@ app.post('/macros/:macro', function (req, res) {
   }
 });
 
-gpio.init(config.gpios);
+init(function () {
+  // only start server, when called as application
+  if (!module.parent) {
+    // Listen (http)
+    if (hasServerPortConfig) {
+      port = config.server.port;
+    }
 
-// Listen (http)
-if (hasServerPortConfig) {
-  port = config.server.port;
-}
-// only start server, when called as application
-if (!module.parent) {
-  app.listen(port);
-  console.log('Open Source Universal Remote UI + API has started on port ' + port + ' (http).');
-}
+    app.listen(port);
+    console.log('Open Source Universal Remote UI + API has started on port ' + port + ' (http).');
 
-// Listen (https)
-if (hasSSLConfig) {
-  sslOptions = {
-    key: fs.readFileSync(config.server.ssl_key),
-    cert: fs.readFileSync(config.server.ssl_cert),
-  };
+    // Listen (https)
+    if (hasSSLConfig) {
+      sslOptions = {
+        key: fs.readFileSync(config.server.ssl_key),
+        cert: fs.readFileSync(config.server.ssl_cert),
+      };
+      https.createServer(sslOptions, app).listen(config.server.ssl_port);
 
-  https.createServer(sslOptions, app).listen(config.server.ssl_port);
-
-  console.log('Open Source Universal Remote UI + API has started on port '
-    + config.server.ssl_port + ' (https).');
-}
+      console.log('Open Source Universal Remote UI + API has started on port '
+        + config.server.ssl_port + ' (https).');
+    }
+  }
+});

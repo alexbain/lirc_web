@@ -46,7 +46,6 @@ These are the available configuration options:
 
 #### Example config.json:
 
-
     {
       "server" : {
         "port" : 3000,
@@ -61,31 +60,38 @@ These are the available configuration options:
           "VolumeDown": true
         }
       },
-      "macros": {
-        "Play Xbox 360": [
-          [ "gpio", "TV", 1],
-          [ "gpio", "Receiver", 1],
-          [ "gpio", "Xbox", 1],
-          [ "SonyTV", "Power" ],
-          [ "delay", 500 ],
-          [ "SonyTV", "Xbox360" ],
-          [ "Yamaha", "Power" ],
-          [ "delay", 250 ],
-          [ "Yamaha", "Xbox360" ],
-          [ "Xbox360", "Power" ]
-        ],
-        "Listen to Music": [
-          [ "gpio", "Receiver", 1],
-          [ "Yamaha", "Power" ],
-          [ "delay", 500 ],
-          [ "Yamaha", "AirPlay" ]
-        ],
-        "all off": [
-          [ "gpio", "TV", 0],
-          [ "gpio", "Receiver", 0],
-          [ "gpio", "Xbox", 0]
-        ],
-      },
+      "macros": [
+        {
+          "name": "Xbox360",
+          "sequence": [
+            [ "gpio", "TV", 1 ],
+            [ "gpio", "Receiver", 1 ],
+            [ "gpio", "Xbox", 1 ],
+            [ "SonyTV", "Power" ],
+            [ "SonyTV", "Xbox360" ],
+            [ "Yamaha", "Power" ],
+            [ "Yamaha", "Xbox360" ],
+            [ "Xbox360", "Power" ]
+          ]},
+        {
+          "name": "lights off",
+          "defaultDelay": 40,
+          "sequence": [
+            [ "Lightcontrol", "C01off"],
+            [ "Lightcontrol", "C02off"],
+            [ "Lightcontrol", "C03off"]
+          ]},
+        {
+          "name": "all off",
+          "defaultDelay": 20,
+          "sequence": [
+            [ "call", "lights off"],
+            [ "gpio", "TV", 0 ],
+            [ "gpio", "Receiver", 0 ],
+            [ "gpio", "Xbox", 0 ]
+          ]
+        }
+      ],
       "commandLabels": {
         "Yamaha": {
           "Power": "Power",
