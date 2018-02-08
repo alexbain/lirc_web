@@ -175,6 +175,13 @@ app.post('/remotes/:remote/:command', function (req, res) {
   res.sendStatus(200);
 });
 
+//  Dummy call to comply with home assistant requirements for status
+app.get('/remotes/:remote/:command', function (req, res) {
+  res.setHeader('Cache-Control', 'no-cache');
+  res.sendStatus(200);
+  res.json({ status: 'OK' });
+});
+
 // Start sending :remote/:command repeatedly
 app.post('/remotes/:remote/:command/send_start', function (req, res) {
   lircNode.irsend.send_start(req.params.remote, req.params.command, function () {});
