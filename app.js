@@ -167,6 +167,9 @@ app.get('/macros/:macro.json', function (req, res) {
   }
 });
 
+app.get('/remotes/:remote/:command', function (req, res) {
+  res.sendStatus(200);
+});
 
 // Send :remote/:command one time
 app.post('/remotes/:remote/:command', function (req, res) {
