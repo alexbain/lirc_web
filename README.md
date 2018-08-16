@@ -1,19 +1,22 @@
-lirc_web
+lircv0.9.4_web
 ========
+This is a fork of [``lirc_web``](https://github.com/alexbain/lirc_web) by Alex
+Bain to accommodate breaking changes in LIRCv0.9.4. ``irsend list``'s output
+format changed in this version, breaking the original ``lirc_node``. This fork
+is not compatible with prior versions of LIRC (i.e. 0.9.0) as it is a quick and
+dirty fix.
 
-``lirc_web`` is a [nodejs](http://nodejs.org) app that creates a web interface & JSON API for the [LIRC](http://lirc.org) project. It uses [lirc_node](https://github.com/alexbain/lirc_node) to handle communication between LIRC and nodejs.
+``lircv0.9.4_web`` is a [nodejs](http://nodejs.org) app that creates a web interface & JSON API for the [LIRC](http://lirc.org) project. It uses [lircv0.9.4_node](https://github.com/juanpescador/lirc_node) to handle communication between LIRC and nodejs.
 
 This project allows you to control LIRC from any web browser - phone, tablet, or desktop. The mobile web interface is responsive and optimized for all sized displays. In addition, with the JSON API, you can control LIRC from any web connected device - pebble watch, myo armband, emotiv EEG headset, or beyond.
 
 This is part of the [Open Source Universal Remote](http://opensourceuniversalremote.com) project.
 
-[![Build Status](https://travis-ci.org/alexbain/lirc_web.png)](https://travis-ci.org/alexbain/lirc_web)
-
 ## Installation
 
-You'll need to have [LIRC](http://lirc.org) installed and configured on your machine to use ``lirc_web``. In addition, you'll need to install [nodejs](http://nodejs.org). Once you have LIRC and nodejs installed and configured, you'll be able to install ``lirc_web``:
+You'll need to have [LIRC](http://lirc.org) installed and configured on your machine to use ``lircv0.9.4_web``. In addition, you'll need to install [nodejs](http://nodejs.org). Once you have LIRC and nodejs installed and configured, you'll be able to install ``lircv0.9.4_web``:
 
-    npm install -g lirc_web
+    npm install -g lircv0.9.4_web
     lirc_web
 
 Note that you may need to run the `npm install` command with `sudo`.
@@ -22,24 +25,24 @@ Note that you may need to run the `npm install` command with `sudo`.
 
 Verify the web interface works by opening ``http://SERVER:3000/`` in a web browser.
 
-If you want to have `lirc_web`  available via port 80 and start on boot, there are example NGINX and Upstart configuration files included in the ``example_configs/`` directory.
+If you want to have `lircv0.9.4_web`  available via port 80 and start on boot, there are example NGINX and Upstart configuration files included in the ``example_configs/`` directory.
 
 #### Mobile optimizations
 
-`lirc_web` includes performance and user experience optimizations for mobile devices. These can be enabled by adding the `lirc_web` URL as a bookmark to the home screen of your device. Bookmarking `lirc_web` is performed from your phone's web browser. `lirc_web` will then load full screen, as if it was a native iOS or Android app. The URL bar will no longer be visible and `lirc_web` will be selectable from the device's multitasking screen.
+`lircv0.9.4_web` includes performance and user experience optimizations for mobile devices. These can be enabled by adding the `lircv0.9.4_web` URL as a bookmark to the home screen of your device. Bookmarking `lircv0.9.4_web` is performed from your phone's web browser. `lircv0.9.4_web` will then load full screen, as if it was a native iOS or Android app. The URL bar will no longer be visible and `lircv0.9.4_web` will be selectable from the device's multitasking screen.
 
 Bookmarking is higly recommended for the best mobile experience.
 
-As of v0.3.0, `lirc_web` uses an Application Cache. The enables all assets to be cached locally on the phone. This reduces load time dramatically.
+As of v0.3.0, `lircv0.9.4_web` uses an Application Cache. The enables all assets to be cached locally on the phone. This reduces load time dramatically.
 
 ## Configuration
 
-As of v0.0.8, ``lirc_web`` supports customization through a configuration file.
+As of v0.0.8, ``lircv0.9.4_web`` supports customization through a configuration file.
 
-You may place this configuration file in one of two locations and `lirc_web` will detect it:
+You may place this configuration file in one of two locations and `lircv0.9.4_web` will detect it:
 
-1. Place a file named `.lirc_web_config.json` in the home directory of the user running `lirc_web` (global installation)
-2. Place a file named `config.json` in the root of the `lirc_web` project directory (local / development installation)
+1. Place a file named `.lirc_web_config.json` in the home directory of the user running `lircv0.9.4_web` (global installation)
+2. Place a file named `config.json` in the root of the `lircv0.9.4_web` project directory (local / development installation)
 
 These are the available configuration options:
 
@@ -59,8 +62,8 @@ These are the available configuration options:
       "server" : {
         "port" : 3000,
         "ssl" : false,
-        "ssl_cert" : "/home/pi/lirc_web/server.cert",
-        "ssl_key" : "/home/pi/lirc_web/server.key",
+        "ssl_cert" : "/home/pi/lircv0.9.4_web/server.cert",
+        "ssl_key" : "/home/pi/lircv0.9.4_web/server.key",
         "ssl_port" : 3001
       },
       "repeaters": {
@@ -116,7 +119,7 @@ Please see the `example_configs/` directory.
 
 ## Using the JSON API
 
-Building an app on top of `lirc_web` is straight forward with the included JSON based RESTful API.
+Building an app on top of `lircv0.9.4_web` is straight forward with the included JSON based RESTful API.
 
 API endpoints:
 
@@ -131,14 +134,14 @@ API endpoints:
 
 ## Development
 
-Would you like to contribute to and improve ``lirc_web``? Fantastic. To contribute
-patches, run tests or benchmarks, install ``lirc_web`` locally:
+Would you like to contribute to and improve ``lircv0.9.4_web``? Fantastic. To contribute
+patches, run tests or benchmarks, install ``lircv0.9.4_web`` locally:
 
     git clone git://github.com/alexbain/lirc_web.git
     cd lirc_web
     npm install
 
-Next, you'll need to setup the development environment. ``lirc_web`` uses the [GruntJS](http://gruntjs.com/) built system to make development easier.
+Next, you'll need to setup the development environment. ``lircv0.9.4_web`` uses the [GruntJS](http://gruntjs.com/) built system to make development easier.
 
 Install GruntJS (build environment):
 
