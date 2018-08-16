@@ -17,7 +17,7 @@ This is part of the [Open Source Universal Remote](http://opensourceuniversalrem
 You'll need to have [LIRC](http://lirc.org) installed and configured on your machine to use ``lircv0.9.4_web``. In addition, you'll need to install [nodejs](http://nodejs.org). Once you have LIRC and nodejs installed and configured, you'll be able to install ``lircv0.9.4_web``:
 
     npm install -g lircv0.9.4_web
-    lirc_web
+    lircv0.9.4_web
 
 Note that you may need to run the `npm install` command with `sudo`.
 
