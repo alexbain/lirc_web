@@ -1,14 +1,14 @@
 {
-  "name": "lirc_web",
-  "description": "A NodeJS / Express app that creates a web UI + API for LIRC",
+  "name": "lircv0.9.4_web",
+  "description": "A NodeJS / Express app that creates a web UI + API for LIRCv0.9.4 and up.",
   "main": "app.js",
-  "version": "0.3.1",
+  "version": "1.0.1",
   "preferGlobal": true,
   "dependencies": {
     "compression": "^1.6.0",
     "consolidate": "^0.13.1",
     "express": "^4.13.0",
-    "lirc_node": "0.0.4",
+    "lircv0.9.4_node": "1.0.0",
     "lodash": "^3.10.1",
     "morgan": "^1.6.1",
     "swig": "^1.4.2"
@@ -34,7 +34,7 @@
     "supertest": "1.1.0"
   },
   "bin": {
-    "lirc_web": "./app.js"
+    "lircv0.9.4_web": "./app.js"
   },
   "scripts": {
     "test": "NODE_ENV=test mocha --require should --require test/common.js --reporter dot test/**",
@@ -43,7 +43,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/alexbain/lirc_web.git"
+    "url": "git://github.com/juanpescador/lirc_web.git"
   },
-  "author": "Alex Bain <alex@alexba.in>"
+  "author": "Alex Bain <alex@alexba.in>",
+  "contributors": [
+    {
+      "name": "John Fisher",
+      "email": ""
+    }
+  ]
 }
