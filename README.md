@@ -50,6 +50,7 @@ These are the available configuration options:
 5. ``blacklists`` - a way to hide unused commands from your remotes.
 6. ``server`` - server configuration settings (ports, [SSL](http://serverfault.com/a/366374)).
 7. ``socket`` - to specify the lircd socket for irsend.
+8. ``simulators`` - a list of remotes that should use the 'simulate' command. This list can contain any remote inside of the lircd.conf file.
 
 
 #### Example config.json:
@@ -108,7 +109,11 @@ These are the available configuration options:
            "AUX3"
          ]
       },
-      "socket": "/run/lirc/lircd1"
+      "socket": "/run/lirc/lircd1",
+			"simulators":[
+				"Outlets",
+				"Plugs"
+			]
     }
 
 Please see the `example_configs/` directory.
