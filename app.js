@@ -117,6 +117,8 @@ labelFor = labels(config.remoteLabels, config.commandLabels);
 // Index
 app.get('/', function (req, res) {
   var refinedRemotes = refineRemotes(lircNode.remotes);
+	
+	console.log(refinedRemotes);
   res.send(JST.index({
     remotes: refinedRemotes,
     macros: config.macros,
@@ -170,7 +172,15 @@ app.get('/macros/:macro.json', function (req, res) {
 
 // Send :remote/:command one time
 app.post('/remotes/:remote/:command', function (req, res) {
-  lircNode.irsend.send_once(req.params.remote, req.params.command, function () {});
+	
+	if(config.simulators.includes(req.params.remote))
+	{
+		console.log("This is a remote that should be simulated");
+		lircNode.irsend.simulate("0000000000000000 00 " + req.params.command + " " + req.params.remote);
+	}
+	else
+		lircNode.irsend.send_once(req.params.remote, req.params.command, function () {});
+	
   res.setHeader('Cache-Control', 'no-cache');
   res.sendStatus(200);
 });
@@ -193,7 +203,7 @@ app.post('/remotes/:remote/:command/send_stop', function (req, res) {
 app.post('/macros/:macro', function (req, res) {
   // If the macro exists, execute it
   if (config.macros && config.macros[req.params.macro]) {
-    macros.exec(config.macros[req.params.macro], lircNode);
+    macros.exec(config.macros[req.params.macro], lircNode, config.simulators);
     res.setHeader('Cache-Control', 'no-cache');
     res.sendStatus(200);
   } else {
